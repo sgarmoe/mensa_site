@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Node.js File",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/app/components/Rosters.js",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}

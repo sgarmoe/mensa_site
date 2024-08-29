@@ -2,7 +2,7 @@
 
 
 const league_id = 1045634813593706496; 
-const url = `https://api.sleeper.app/v1/league/${league_id}/rosters`
+const url = `https://api.sleeper.app/v1/league/1045634813593706496/rosters`
 console.log(url);
 
 const rosterRes = fetch(`https://api.sleeper.app/v1/league/1045634813593706496/rosters`)
@@ -18,6 +18,18 @@ const rosterRes = fetch(`https://api.sleeper.app/v1/league/1045634813593706496/r
     .catch(error => {
         console.error('Error:', error);
     });
+
+
+
+
+
+const url1 = 'http://worldtimeapi.org/api/timezone/America/New_York'
+
+async function getData() {
+    const response = await fetch(url1)
+    console.log(response)
+}
+getData()
         
 
 
