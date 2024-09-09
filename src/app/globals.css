@@ -1,16 +1,22 @@
 .container {
     display: flex;
     flex-wrap: wrap; 
-    justify-content: center;
     gap: 20px;
 }
 
-.item {
-    flex: 1 1 300px;
-    min-width: 200px;
-    max-width: 100%;
-    background-color: gray;
-    padding: 20px; 
+.team-item {
+    flex: 1 1 calc(33.33% - 20px);
+    border: 1px solid #ccc;
+    background-color: lightgray;
+    padding: 10px; 
     margin: 10px; 
-    text-align: center;
+}
+
+hr {
+    height: 2px;
+    background-color: black;
+}
+
+Header {
+    font-family: 'Times New Roman', Times, serif;
 }
