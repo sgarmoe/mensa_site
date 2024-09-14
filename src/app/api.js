@@ -1,42 +1,55 @@
 //MONGO DB SETUP 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const mongoose = require('mongoose');
 const axios = require('axios');
 
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+
+//choosing which data points are saved into mongo
+const playerSchema = new mongoose.Schema({ 
+  player_id: {type: Number, required: true},
+  fantasy_positions: {type: String, required: true},
+  search_full_name: {type: String, required: true}
+}) 
+
+const Player = mongoose.model('Player', playerSchema);
+
+
+// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// const client = new MongoClient(uri, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  //connect to mongoDB using mongoose
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB");
 
     //this is the one to use once a day maximum
-    fetchAndStoreNFLData(); // CALL TO SLEEPER FOR ALL NFL DATA
+    await fetchAndStoreNFLData(); // CALL TO SLEEPER FOR ALL NFL DATA
 
-
-    await listDatabases(client);
+    await listDatabases();
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.connection.close();
   }
 }
 run().catch(console.dir);
 
 
-async function listDatabases(client) {
-    databasesList = await client.db().admin().listDatabases();
+async function listDatabases() {
+    const admin = mongoose.connection.db.admin();
+    const databasesList = await admin().listDatabases();
 
     console.log("Databases: ");
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
@@ -48,7 +61,7 @@ async function fetchAndStoreNFLData() {
         const playerData = response.data;
 
         await Player.deleteMany({});
-
+        console.log("Initial player data cleared");
         await Player.insertMany({});
         console.log("Player data inserted");
     } catch(error) {
