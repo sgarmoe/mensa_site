@@ -5,7 +5,25 @@ import "./globals.css";
 const leagueID = '1045634813593706496'
 const api_url = 'https://api.sleeper.app/v1/user/nastynorwegian';
 const roster_url = 'https://api.sleeper.app/v1/league/1045634813593706496/rosters'
+//const all_player_data = 'https://api.sleeper.app/v1/players/nfl'
 
+
+// fetch(roster_url)
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+
+
+
+
+
+
+
+
+//Fetch roster data for MENSA and test outputs
 fetch(roster_url)
   .then(response => {
     if (!response.ok) {
@@ -14,7 +32,11 @@ fetch(roster_url)
     return response.json();
   })
   .then(data => {
-    console.log(data);
+    console.log(data[0]);
+    console.log("Mark end of API Roster Call");
+
+    const fpts = data[11].settings;
+    console.log(fpts);
   })
   .catch(error => {
     console.error('Error:', error);
