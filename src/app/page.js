@@ -2,21 +2,23 @@
 import "./globals.css";
 
 //API WORK BELOW
-// const leagueID = '1045634813593706496'
-// const api_url = 'https://api.sleeper.app/v1/user/nastynorwegian';
-// fetch(api_url)
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error('Network response not ok');
-//     }
-//     return response.json();
-//   })
-//   .then(data => {
-//     console.log(data);
-//   })
-//   .catch(error => {
-//     console.error('Error:', error);
-//   });
+const leagueID = '1045634813593706496'
+const api_url = 'https://api.sleeper.app/v1/user/nastynorwegian';
+const roster_url = 'https://api.sleeper.app/v1/league/1045634813593706496/rosters'
+
+fetch(roster_url)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 
 
  
