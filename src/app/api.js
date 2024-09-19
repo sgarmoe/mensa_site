@@ -20,11 +20,7 @@ async function run() {
     await client.connect();
     console.log("Connected to MongoDB");
 
-    //this is the one to use once a day maximum
-    //await fetchAndStoreNFLData(); // CALL TO SLEEPER FOR ALL NFL DATA
 
-    //verify that data made it to mongo
-    await listDatabases();
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -33,14 +29,22 @@ async function run() {
 run().catch(console.dir);
 
 
-async function listDatabases(client) {
-    
-    const databasesList = await client.db().admin().listDatabases();
 
-    console.log("Databases: ");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+async function retrievePlayerData() {
+  try {
+    const db = client.db('nfl_data');
+    const collection = db.collection('nfl_players');
+
+    const players = await collection.find().limit(100).toArray();
+    console.log("100 players: ");
+    players.forEach(player => console.log(player));
+  } catch (error) {
+    console.error('Error fetching data: ', error);
+  }
 }
 
+
+//function to call Sleeper API and overwrite MongoDB dataset
 async function fetchAndStoreNFLData() {
     try {
         const response = await axios.get('https://api.sleeper.app/v1/players/nfl');
@@ -50,8 +54,6 @@ async function fetchAndStoreNFLData() {
         const db = client.db('nfl_data');
         const collection = db.collection('nfl_players');
       
-
-
         await collection.deleteMany({});
         console.log("Initial player data cleared");
 
@@ -60,8 +62,15 @@ async function fetchAndStoreNFLData() {
       } else {
         console.log("No player data found/not in expexted format");
       }
-
     } catch(error) {
         console.error('Did not fetch or store data: ', error);
     }
+}
+
+//use to verify that all mongo databases are accounted for
+async function listDatabases(client) {
+    
+  const databasesList = await client.db().admin().listDatabases();
+  console.log("Databases: ");
+  databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 }
