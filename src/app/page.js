@@ -1,26 +1,25 @@
 
 import "./globals.css";
 
+const { retrievePlayerData } = require('./api');
+
 //API WORK BELOW
 const leagueID = '1045634813593706496'
 const api_url = 'https://api.sleeper.app/v1/user/nastynorwegian';
 const roster_url = 'https://api.sleeper.app/v1/league/1045634813593706496/rosters'
-//const all_player_data = 'https://api.sleeper.app/v1/players/nfl'
 
 
-// fetch(roster_url)
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-//     return response.json();
-//   })
+async function test() {
+  try {
+    const players = await retrievePlayerData(); 
+    console.log("Players retrieved: ", players);
 
+  } catch (error) {
+    console.error('Error: ', error);
+  }
+}
 
-
-
-
-
+test();
 
 
 //Fetch roster data for MENSA and test outputs

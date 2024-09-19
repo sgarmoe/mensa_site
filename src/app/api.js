@@ -19,7 +19,7 @@ async function run() {
   //connect to mongoDB 
     await client.connect();
     console.log("Connected to MongoDB");
-
+    await retrievePlayerData();
 
   } finally {
     // Ensures that the client will close when you finish/error
@@ -35,13 +35,16 @@ async function retrievePlayerData() {
     const db = client.db('nfl_data');
     const collection = db.collection('nfl_players');
 
-    const players = await collection.find().limit(100).toArray();
-    console.log("100 players: ");
-    players.forEach(player => console.log(player));
+    const players = await collection.find().limit(5).toArray();
+    return players;
+    //console.log("100 players: ");   //TESTING ACCESS TO MONGO 
+    //players.forEach(player => console.log(player));
   } catch (error) {
     console.error('Error fetching data: ', error);
   }
 }
+
+module.exports = { retrievePlayerData };
 
 
 //function to call Sleeper API and overwrite MongoDB dataset
