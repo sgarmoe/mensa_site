@@ -1,4 +1,4 @@
-//component for rosters in website
+'use client';
 
 import React from 'react';
 

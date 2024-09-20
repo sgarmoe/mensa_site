@@ -18,27 +18,19 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-  //connect to mongoDB 
 
-    //await client.connect();
-    //console.log("Connected to MongoDB");
+    //const players = await retrievePlayerData();
 
-
-    const players = await retrievePlayerData();
-    //console.log("100 players: "); 
-    //players.forEach(player => console.log(player));
-
-
+    //fetch current roster for each team 
     const rosters = await fetchCurrentRosters();
    
     for (const roster of rosters) {
       console.log(`Processing roster for owner ${roster.owner_id}`);
-      await displayPlayerNames(roster.players); 
+      await displayPlayerNames(roster.players); //print player name and ID for each team's roster
     }
 
   } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    await client.close(); //close connection to mongo
   }
 }
 run().catch(console.dir);
@@ -49,13 +41,13 @@ run().catch(console.dir);
 async function fetchCurrentRosters() {
   try {
     const response = await axios.get(roster_url);
-    //console.log(response);
     return response.data;
   } catch (error) {
     console.error('Error fetching rosters: ', error);
   }
 }
 
+//display name and IDs of all rostered players
 async function displayPlayerNames (playerIds) {
   try {
     const db = client.db('nfl_data');
@@ -76,7 +68,7 @@ async function displayPlayerNames (playerIds) {
   }
 
 
-
+//testing connection to database
 async function retrievePlayerData() {
   try {
     const db = client.db('nfl_data');
@@ -89,7 +81,6 @@ async function retrievePlayerData() {
     console.error('Error fetching data: ', error);
   }
 }
-
 module.exports = { retrievePlayerData };
 
 
