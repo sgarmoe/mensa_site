@@ -22,7 +22,7 @@ async function run() {
     //const players = await retrievePlayerData();
 
     //fetch current roster for each team 
-    const rosters = await fetchCurrentRosters();
+    const rosters = await fetchRostersAndPlayers();
    
     for (const roster of rosters) {
       console.log(`Processing roster for owner ${roster.owner_id}`);
@@ -38,10 +38,22 @@ run().catch(console.dir);
 
 
 //fetch current league's rosters from Sleeper
-async function fetchCurrentRosters() {
+async function fetchRostersAndPlayers() {
   try {
     const response = await axios.get(roster_url);
-    return response.data;
+    const rosters = response.data;
+
+    const rostersWithPlayers = await Promise.all(
+      rosters.map(async (roster) => {
+        const players = await displayPlayerNames(roster.players);
+        return {
+          name: `Team ${roster.roster_id}`,
+          players: players, //array of: id, name
+        };
+      })
+    );
+
+    return rostersWithPlayers;
   } catch (error) {
     console.error('Error fetching rosters: ', error);
   }
@@ -52,16 +64,20 @@ async function displayPlayerNames (playerIds) {
   try {
     const db = client.db('nfl_data');
     const collection = db.collection('nfl_players');
+    const players = [];
 
     for (const playerId of playerIds) {
       const player = await collection.findOne({ player_id: playerId });
 
+
       if (player) {
-        console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
+        players.push({ id: playerId, name: player.full_name});
       } else {
-        console.log(`Player ID: ${playerId} not found`);
+        players.push({ id: playerId, name: 'Not found'});
+
       }
     }
+    return players;
     } catch (error) {
       console.error('Error fetching player names: ', error);
     }

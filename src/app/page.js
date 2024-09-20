@@ -16,7 +16,7 @@ function Header({ title }) {
 export default function HomePage() {
 
    const teams = new Array(12).fill({ name: "Team ", roster: ["testing roster", "2", "check", "position 4"] });
- 
+
   return (
     <div>
       <Header title="Rosters for the Minimally Entertaining Nonchildbearing Sport Advocates (MENSA) Dynasty Football League!" />
