@@ -6,40 +6,41 @@ const { retrievePlayerData } = require('./api');
 //API WORK BELOW
 const leagueID = '1045634813593706496'
 const api_url = 'https://api.sleeper.app/v1/user/nastynorwegian';
-const roster_url = 'https://api.sleeper.app/v1/league/1045634813593706496/rosters'
 
 
-async function test() {
-  try {
-    const players = await retrievePlayerData(); 
-    console.log("Players retrieved: ", players);
+//TESTING ABILITY TO GET PLAYER DATA FROM API FILE
+// async function test() {
+//   try {
+//     const players = await retrievePlayerData(); 
+//     console.log("Players retrieved: ", players);
 
-  } catch (error) {
-    console.error('Error: ', error);
-  }
-}
+//   } catch (error) {
+//     console.error('Error: ', error);
+//   }
+// }
 
-test();
+// test();
 
 
-//Fetch roster data for MENSA and test outputs
-fetch(roster_url)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log(data[0]);
-    console.log("Mark end of API Roster Call");
+//DELETE AFTER ROSTERS ARE FETCHED IN API FILE
+// //Fetch roster data for MENSA and test outputs
+// fetch(roster_url)
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log(data[0]);
+//     console.log("Mark end of API Roster Call");
 
-    const fpts = data[11].settings;
-    console.log(fpts);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+//     const fpts = data[11].settings;
+//     console.log(fpts);
+//   })
+//   .catch(error => {
+//     console.error('Error:', error);
+//   });
 
 
  
