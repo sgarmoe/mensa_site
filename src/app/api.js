@@ -22,12 +22,12 @@ async function run() {
     //const players = await retrievePlayerData();
 
     //fetch current roster for each team 
-    const rosters = await fetchRostersAndPlayers();
+    //const rosters = await fetchRostersAndPlayers();
    
-    for (const roster of rosters) {
-      console.log(`Processing roster for owner ${roster.owner_id}`);
-      await displayPlayerNames(roster.players); //print player name and ID for each team's roster
-    }
+    // for (const roster of rosters) {
+    //   console.log(`Processing roster for owner ${roster.owner_id}`);
+    //   await displayPlayerNames(roster.players); //print player name and ID for each team's roster
+    // }
 
   } finally {
     await client.close(); //close connection to mongo

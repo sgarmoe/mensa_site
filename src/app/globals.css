@@ -13,6 +13,8 @@
     padding: 10px; 
     margin: 10px;
     align-items: center; 
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 hr {
@@ -22,9 +24,18 @@ hr {
 
 Header {
     font-family: 'Times New Roman', Times, serif;
+    
 }
 
 ul {
     list-style-type: none;
     padding: 0;
+}
+
+.team-divider {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    border: none;
+    border-radius: 2px;
 }
