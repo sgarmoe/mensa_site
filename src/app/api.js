@@ -18,19 +18,27 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+  //connect to mongoDB 
 
-    //const players = await retrievePlayerData();
+    //await client.connect();
+    //console.log("Connected to MongoDB");
 
-    //fetch current roster for each team 
-    //const rosters = await fetchRostersAndPlayers();
+
+    const players = await retrievePlayerData();
+    //console.log("100 players: "); 
+    //players.forEach(player => console.log(player));
+
+
+    const rosters = await fetchCurrentRosters();
    
-    // for (const roster of rosters) {
-    //   console.log(`Processing roster for owner ${roster.owner_id}`);
-    //   await displayPlayerNames(roster.players); //print player name and ID for each team's roster
-    // }
+    for (const roster of rosters) {
+      console.log(`Processing roster for owner ${roster.owner_id}`);
+      await displayPlayerNames(roster.players); 
+    }
 
   } finally {
-    await client.close(); //close connection to mongo
+    // Ensures that the client will close when you finish/error
+    await client.close();
   }
 }
 run().catch(console.dir);
@@ -38,53 +46,37 @@ run().catch(console.dir);
 
 
 //fetch current league's rosters from Sleeper
-async function fetchRostersAndPlayers() {
+async function fetchCurrentRosters() {
   try {
     const response = await axios.get(roster_url);
-    const rosters = response.data;
-
-    const rostersWithPlayers = await Promise.all(
-      rosters.map(async (roster) => {
-        const players = await displayPlayerNames(roster.players);
-        return {
-          name: `Team ${roster.roster_id}`,
-          players: players, //array of: id, name
-        };
-      })
-    );
-
-    return rostersWithPlayers;
+    //console.log(response);
+    return response.data;
   } catch (error) {
     console.error('Error fetching rosters: ', error);
   }
 }
 
-//display name and IDs of all rostered players
 async function displayPlayerNames (playerIds) {
   try {
     const db = client.db('nfl_data');
     const collection = db.collection('nfl_players');
-    const players = [];
 
     for (const playerId of playerIds) {
       const player = await collection.findOne({ player_id: playerId });
 
-
       if (player) {
-        players.push({ id: playerId, name: player.full_name});
+        console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
       } else {
-        players.push({ id: playerId, name: 'Not found'});
-
+        console.log(`Player ID: ${playerId} not found`);
       }
     }
-    return players;
     } catch (error) {
       console.error('Error fetching player names: ', error);
     }
   }
 
 
-//testing connection to database
+
 async function retrievePlayerData() {
   try {
     const db = client.db('nfl_data');
@@ -97,6 +89,7 @@ async function retrievePlayerData() {
     console.error('Error fetching data: ', error);
   }
 }
+
 module.exports = { retrievePlayerData };
 
 
