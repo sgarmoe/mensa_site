@@ -25,6 +25,7 @@ export default function HomePage() {
     roster: Array.from({ length: 15}, (_, playerIndex) => ({
       name: `Player ${playerIndex + 1}`,
       position: `Position ${playerIndex + 1}`,
+    
 
     }))
    }));
@@ -61,7 +62,7 @@ function Team({ name, roster }) {
       <ul>
         {roster.map((player, index) => (
           <Player key={index} name={player.name} position={player.position}/>
-          
+
         ))}
       </ul>
        
