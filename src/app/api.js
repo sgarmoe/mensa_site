@@ -21,20 +21,20 @@ async function run() {
   //connect to mongoDB 
 
     //await client.connect();
-    //console.log("Connected to MongoDB");
+   // console.log("Connected to MongoDB");
 
 
-    const players = await retrievePlayerData();
+    //const players = await retrievePlayerData();
     //console.log("100 players: "); 
     //players.forEach(player => console.log(player));
 
 
-    const rosters = await fetchCurrentRosters();
+    //const rosters = await fetchCurrentRosters();
    
-    for (const roster of rosters) {
-      console.log(`Processing roster for owner ${roster.owner_id}`);
-      await displayPlayerNames(roster.players); 
-    }
+    // for (const roster of rosters) {
+    //   console.log(`Processing roster for owner ${roster.owner_id}`);
+    //   await displayPlayerNames(roster.players); 
+    // }
 
   } finally {
     // Ensures that the client will close when you finish/error
@@ -45,18 +45,18 @@ run().catch(console.dir);
 
 
 
+
 //fetch current league's rosters from Sleeper
-async function fetchCurrentRosters() {
+export async function fetchCurrentRosters() {
   try {
     const response = await axios.get(roster_url);
-    //console.log(response);
     return response.data;
   } catch (error) {
     console.error('Error fetching rosters: ', error);
   }
 }
 
-async function displayPlayerNames (playerIds) {
+export async function displayPlayerNames (playerIds, db) {
   try {
     const db = client.db('nfl_data');
     const collection = db.collection('nfl_players');
@@ -70,6 +70,9 @@ async function displayPlayerNames (playerIds) {
         console.log(`Player ID: ${playerId} not found`);
       }
     }
+    return players;
+
+    
     } catch (error) {
       console.error('Error fetching player names: ', error);
     }
@@ -90,7 +93,7 @@ async function retrievePlayerData() {
   }
 }
 
-module.exports = { retrievePlayerData };
+
 
 
 //function to call Sleeper API and overwrite MongoDB dataset
@@ -123,6 +126,7 @@ async function fetchAndStoreNFLData() {
         console.error('Did not fetch or store data: ', error);
     }
 }
+
 
 //use to verify that all mongo databases are accounted for
 async function listDatabases(client) {
