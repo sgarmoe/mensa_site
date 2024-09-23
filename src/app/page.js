@@ -44,6 +44,8 @@ export default async function HomePage() {
       };
     }));
 
+    console.log('Roster data: ', JSON.stringify(rosterData, null, 2));
+
   //   const teams = new Array(12).fill(null).map((_, index) => ({
   //   name: `Team ${index +1}`,
   //   roster: Array.from({ length: 15}, (_, playerIndex) => ({
@@ -87,6 +89,8 @@ export default async function HomePage() {
 
 
 function Team({ name, roster }) {
+
+  console.log('Rendering team: ', name, roster);
   return (
     <div className="team-item">
       <h1>{name}</h1>
@@ -97,7 +101,6 @@ function Team({ name, roster }) {
 
         ))}
       </ul>
-       
     </div>
   );
 }

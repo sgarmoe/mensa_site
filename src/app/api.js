@@ -20,7 +20,7 @@ async function run() {
   try {
   //connect to mongoDB 
 
-    //await client.connect();
+    await client.connect();
    // console.log("Connected to MongoDB");
 
 
@@ -58,23 +58,28 @@ export async function fetchCurrentRosters() {
 
 export async function displayPlayerNames (playerIds, db) {
   try {
-    const db = client.db('nfl_data');
     const collection = db.collection('nfl_players');
+    const players = [];
 
     for (const playerId of playerIds) {
       const player = await collection.findOne({ player_id: playerId });
 
       if (player) {
+        players.push({
+          full_name: player.full_name,
+          position: player.position
+          });
         console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
       } else {
         console.log(`Player ID: ${playerId} not found`);
       }
     }
+
     return players;
 
-    
     } catch (error) {
       console.error('Error fetching player names: ', error);
+      return [];
     }
   }
 
