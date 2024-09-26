@@ -5,6 +5,7 @@ const axios = require('axios');
 
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const roster_url = 'https://api.sleeper.app/v1/league/1045634813593706496/rosters'
+const users_url = 'https://api.sleeper.app/v1/league/1045634813593706496/users'
 
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -45,6 +46,16 @@ run().catch(console.dir);
 
 
 
+//fetch users and their team names 
+export async function fetchUserTeamNames() {
+  try {
+    const response = await axios.get(users_url)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching league's users", error);
+  }
+}
+
 
 //fetch current league's rosters from Sleeper
 export async function fetchCurrentRosters() {
@@ -67,11 +78,12 @@ export async function displayPlayerNames (playerIds, db) {
       if (player) {
         players.push({
           full_name: player.full_name,
-          position: player.position
+          position: player.position, 
+          team: player.team
           });
-        console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
+        //console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
       } else {
-        console.log(`Player ID: ${playerId} not found`);
+        //console.log(`Player ID: ${playerId} not found`);
       }
     }
 

@@ -3,7 +3,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 import "./globals.css";
 import axios from 'axios';
 import  { fetchCurrentRosters } from "./api.js";
-import { displayPlayerNames } from "./api.js";
+import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 
 const leagueID = '1045634813593706496'
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -34,25 +34,25 @@ export default async function HomePage() {
     const db = client.db('nfl_data');
 
     const rosters = await fetchCurrentRosters();
-    
+    const users = await fetchUserTeamNames();
 
     const rosterData = await Promise.all(rosters.map(async (roster) => {
       const players = await displayPlayerNames(roster.players, db);
+     
+      const user = users.find(user => user.user_id === roster.owner_id);
+      const teamName = user?.metadata?.team_name || 'Unknown Team';
+      
       return {
         owner_id: roster.owner_id,
+        team_name: teamName,
         players: players,
+        //team: players.team
       };
     }));
 
-    console.log('Roster data: ', JSON.stringify(rosterData, null, 2));
 
-  //   const teams = new Array(12).fill(null).map((_, index) => ({
-  //   name: `Team ${index +1}`,
-  //   roster: Array.from({ length: 15}, (_, playerIndex) => ({
-  //     name: `Player ${playerIndex + 1}`,
-  //     position: `Position ${playerIndex + 1}`,
-  //   }))
-  //  }));
+    //console.log('Roster data: ', JSON.stringify(rosterData, null, 2));
+
 
   return (
     <div>
@@ -65,7 +65,7 @@ export default async function HomePage() {
               <Team 
                 className="team-name" 
                 key={index} 
-                name={team.owner_id} 
+                name={team.team_name} 
                 roster={team.players} />
             ))
             
@@ -90,14 +90,14 @@ export default async function HomePage() {
 
 function Team({ name, roster }) {
 
-  console.log('Rendering team: ', name, roster);
+  //console.log('Rendering team: ', name, roster);
   return (
     <div className="team-item">
       <h1>{name}</h1>
       <hr className="team-divider" />
       <ul>
         {roster.map((player, index) => (
-          <Player key={index} name={player.full_name} position={player.position}/>
+          <Player key={index} name={player.full_name} position={player.position} team={player.team}/>
 
         ))}
       </ul>
@@ -105,10 +105,10 @@ function Team({ name, roster }) {
   );
 }
 
-function Player({ name, position }) {
+function Player({ name, position, team }) {
   return (
     <li>
-      {name} - <strong>{position}</strong>
+      {name} - <strong>{position}</strong> - {team}
     </li>
   );
 }
