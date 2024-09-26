@@ -34,6 +34,7 @@ export default async function HomePage() {
     const db = client.db('nfl_data');
 
     const rosters = await fetchCurrentRosters();
+    //console.log(rosters);
     const users = await fetchUserTeamNames();
 
     const rosterData = await Promise.all(rosters.map(async (roster) => {
@@ -41,12 +42,19 @@ export default async function HomePage() {
      
       const user = users.find(user => user.user_id === roster.owner_id);
       const teamName = user?.metadata?.team_name || 'Unknown Team';
+
+      const { starters, bench, injuredReserve, taxi }= sortRoster(roster);
+      console.log('Starters: ', starters);
+      console.log('Bench: ', bench);
+      console.log('Injured Reserve: ', injuredReserve);
+      console.log('Taxi: ', taxi);
+      console.log("End of team");
+
       
       return {
         owner_id: roster.owner_id,
         team_name: teamName,
         players: players,
-        //team: players.team
       };
     }));
 
@@ -112,3 +120,25 @@ function Player({ name, position, team }) {
     </li>
   );
 }
+
+const sortRoster = (roster, players) => {
+  const { starters, injuredReserve, taxi} = roster;
+
+  const startersSet = new Set(starters);
+  const injuredReserveSet = new Set(injuredReserve);
+  const taxiSet = new Set(taxi);
+
+
+
+
+  const bench = players.filter(player => 
+    !startersSet.has(player) && !injuredReserveSet.has(player) && !taxiSet.has(player)
+  );
+
+  return {
+    starters, 
+    bench, 
+    injuredReserve, 
+    taxi
+  };
+};
