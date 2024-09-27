@@ -43,12 +43,12 @@ export default async function HomePage() {
       const user = users.find(user => user.user_id === roster.owner_id);
       const teamName = user?.metadata?.team_name || 'Unknown Team';
 
-      const { starters, bench, injuredReserve, taxi }= sortRoster(roster);
-      console.log('Starters: ', starters);
-      console.log('Bench: ', bench);
-      console.log('Injured Reserve: ', injuredReserve);
-      console.log('Taxi: ', taxi);
-      console.log("End of team");
+      const { starters, bench, reserve, taxi } = await sortRoster(roster, players, db);
+      // console.log('Starters: ', starters.startersPlayers);
+      // console.log('Bench: ', bench.benchPlayers);
+      // console.log('Injured Reserve: ', injuredReserve.injuredReservePlayers);
+      // console.log('Taxi: ', taxi.taxiPlayers);
+      // console.log("End of team");
 
       
       return {
@@ -121,24 +121,41 @@ function Player({ name, position, team }) {
   );
 }
 
-const sortRoster = (roster, players) => {
-  const { starters, injuredReserve, taxi} = roster;
+
+//USE PLAYERS ARRAY PASSED IN TO MATCH IDS TO NAMES, THEN SORT
+const sortRoster = async (roster, players, db) => {
+
+
+  const { starters, reserve, taxi} = roster;
 
   const startersSet = new Set(starters);
-  const injuredReserveSet = new Set(injuredReserve);
+  const reserveSet = new Set(reserve);
   const taxiSet = new Set(taxi);
 
+  console.log("Starters set: ", startersSet);
+  console.log("IR set: ", reserveSet);
+  console.log("taxi set: ", taxi);
+
+  const startersPlayers = players.filter(player => startersSet.has(player.player_id));
+  const injuredReservePlayers = players.filter(player => reserveSet.has(player.player_id));
+  const taxiPlayers = players.filter(player => taxiSet.has(player.player_id));
 
 
-
-  const bench = players.filter(player => 
-    !startersSet.has(player) && !injuredReserveSet.has(player) && !taxiSet.has(player)
+  const benchPlayers = players.filter(player => 
+    !startersSet.has(player.player_id) && !reserveSet.has(player.player_id) && !taxiSet.has(player.player_id)
   );
 
+  // console.log('Starters:' , startersPlayers)
+  // console.log("IR:", injuredReservePlayers);
+  // console.log("taxi:" , taxiPlayers);
+  // console.log("bench:" , benchPlayers);
+
+
+
   return {
-    starters, 
-    bench, 
-    injuredReserve, 
-    taxi
+    starters: startersPlayers,
+    bench: benchPlayers,
+    injuredReserve: injuredReservePlayers,
+    taxi: taxiPlayers
   };
 };
