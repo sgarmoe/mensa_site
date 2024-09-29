@@ -81,6 +81,8 @@ export async function displayPlayerNames (playerIds, db) {
           position: player.position, 
           team: player.team
           });
+
+
         //console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
       } else {
         //console.log(`Player ID: ${playerId} not found`);
@@ -95,6 +97,33 @@ export async function displayPlayerNames (playerIds, db) {
     }
   }
 
+
+  export function sortRosters(rosters) {
+    try {
+      const sortedRoster = [];
+
+
+      for (const roster of rosters) {
+        sortedRoster.push({
+          starters : roster.starters,
+          taxi : roster.taxi,
+          reserve : roster.reserve
+        });
+        }
+
+        return sortedRoster;
+    } catch (error) {
+      console.log("Error sorting roster: ", error);
+    }
+  } 
+
+//   export async function sortRosters(rosters, db) {
+//     try {
+//       console.log(rosters);
+//   } catch (error) {
+//     console.error('Error fetching rosters: ', error);
+//   }
+// }
 
 
 async function retrievePlayerData() {

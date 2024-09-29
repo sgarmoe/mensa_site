@@ -4,6 +4,7 @@ import "./globals.css";
 import axios from 'axios';
 import  { fetchCurrentRosters } from "./api.js";
 import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
+import { sortRosters } from "./api.js";
 
 const leagueID = '1045634813593706496'
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -35,23 +36,18 @@ export default async function HomePage() {
 
     const rosters = await fetchCurrentRosters();
     //console.log(rosters);
+    const sortedRoster = sortRosters(rosters);
+    console.log(sortedRoster);
     const users = await fetchUserTeamNames();
 
     const rosterData = await Promise.all(rosters.map(async (roster) => {
       const players = await displayPlayerNames(roster.players, db);
-     
       const user = users.find(user => user.user_id === roster.owner_id);
       const teamName = user?.metadata?.team_name || 'Unknown Team';
 
-      const { starters, bench, reserve, taxi } = await sortRoster(roster, players, db);
-      // console.log('Starters: ', starters.startersPlayers);
-      // console.log('Bench: ', bench.benchPlayers);
-      // console.log('Injured Reserve: ', injuredReserve.injuredReservePlayers);
-      // console.log('Taxi: ', taxi.taxiPlayers);
-      // console.log("End of team");
-
       
       return {
+        starters: roster.starters,
         owner_id: roster.owner_id,
         team_name: teamName,
         players: players,
@@ -94,11 +90,8 @@ export default async function HomePage() {
 
 
 
-
-
 function Team({ name, roster }) {
 
-  //console.log('Rendering team: ', name, roster);
   return (
     <div className="team-item">
       <h1>{name}</h1>
@@ -122,40 +115,36 @@ function Player({ name, position, team }) {
 }
 
 
-//USE PLAYERS ARRAY PASSED IN TO MATCH IDS TO NAMES, THEN SORT
-const sortRoster = async (roster, players, db) => {
+
+//commented out bc I hate this code but can't delete it yet
+// USE PLAYERS ARRAY PASSED IN TO MATCH IDS TO NAMES, THEN SORT
+// const sortRoster = async (roster, players, db) => {
 
 
-  const { starters, reserve, taxi} = roster;
+//   const { starters, reserve, taxi} = roster;
 
-  const startersSet = new Set(starters);
-  const reserveSet = new Set(reserve);
-  const taxiSet = new Set(taxi);
+//   const startersSet = new Set(starters);
+//   const reserveSet = new Set(reserve);
+//   const taxiSet = new Set(taxi);
 
-  console.log("Starters set: ", startersSet);
-  console.log("IR set: ", reserveSet);
-  console.log("taxi set: ", taxi);
+//   console.log("Starters set: ", startersSet);
+//   console.log("IR set: ", reserveSet);
+//   console.log("taxi set: ", taxi);
 
-  const startersPlayers = players.filter(player => startersSet.has(player.player_id));
-  const injuredReservePlayers = players.filter(player => reserveSet.has(player.player_id));
-  const taxiPlayers = players.filter(player => taxiSet.has(player.player_id));
-
-
-  const benchPlayers = players.filter(player => 
-    !startersSet.has(player.player_id) && !reserveSet.has(player.player_id) && !taxiSet.has(player.player_id)
-  );
-
-  // console.log('Starters:' , startersPlayers)
-  // console.log("IR:", injuredReservePlayers);
-  // console.log("taxi:" , taxiPlayers);
-  // console.log("bench:" , benchPlayers);
+//   const startersPlayers = players.filter(player => startersSet.has(player.player_id));
+//   const injuredReservePlayers = players.filter(player => reserveSet.has(player.player_id));
+//   const taxiPlayers = players.filter(player => taxiSet.has(player.player_id));
 
 
+//   const benchPlayers = players.filter(player => 
+//     !startersSet.has(player.player_id) && !reserveSet.has(player.player_id) && !taxiSet.has(player.player_id)
+//   );
 
-  return {
-    starters: startersPlayers,
-    bench: benchPlayers,
-    injuredReserve: injuredReservePlayers,
-    taxi: taxiPlayers
-  };
-};
+
+//   return {
+//     starters: startersPlayers,
+//     bench: benchPlayers,
+//     injuredReserve: injuredReservePlayers,
+//     taxi: taxiPlayers
+//   };
+// };
