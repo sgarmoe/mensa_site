@@ -45,14 +45,14 @@ export default async function HomePage() {
       const user = users.find(user => user.user_id === roster.owner_id);
       const teamName = user?.metadata?.team_name || 'Unknown Team';
       const starters = await displayStarters(roster.starters, db);
-      console.log(starters);
+      const taxi = await displayStarters(roster.taxi, db);
+      const reserve = await displayStarters(roster.reserve, db);
+
       
-
-
       return {
         starters: starters,
-        taxi: roster.taxi,
-        reserve: roster.reserve,
+        taxi: taxi,
+        reserve: reserve,
         //bench: sortedRoster.bench, fix later because bench is not separated out
         owner_id: roster.owner_id,
         team_name: teamName,
@@ -99,7 +99,7 @@ export default async function HomePage() {
 }
 
 
-function Team({ name, starters }) {
+function Team({ name, starters, taxi, reserve }) {
 
   return (
     <div className="team-item">
@@ -107,11 +107,27 @@ function Team({ name, starters }) {
       <hr className="team-divider" />
 
       
-       <ul>
+        <ul>
         {starters.map((starter, index ) => (
           <Player key={index} name={starter.full_name} position={starter.position} team={starter.team}/>
         ))}
       </ul> 
+
+      <hr className="team-divider" />
+        <ul>
+        {taxi.map((taxi, index) =>  (
+          <Player key={index} name={taxi.full_name} position={taxi.position} team={taxi.team} />
+        ))}
+        </ul>
+
+      <hr className="team-divider" />
+        <ul>
+        {reserve.map((reserve, index) => (
+          <Player key={index} name={reserve.full_name} position={reserve.position} team={reserve.team} />
+        )
+      )}
+
+        </ul>
 
        
 
