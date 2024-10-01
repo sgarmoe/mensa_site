@@ -128,6 +128,59 @@ export async function displayPlayerNames (playerIds, db) {
       }
     }
 
+
+
+    export function createBench(rosters) {
+      try {
+        const bench = [];
+
+        const isStarter = starters.includes(playerId);
+        const isReserve = reserve.includes(playerId);
+        const isTaxi = taxi.includes(playerId);
+
+        
+
+
+      } catch (error) {
+        console.log("Could not sort bench", error);
+      }
+    }
+
+    
+
+
+    //LOL THIS SHIT DONT WORK 
+  // export function displayBench(starters, reserve, taxi, rosters, playerIds) {
+  //   try {
+  //     const bench = [];
+
+  //     for (const playerId of playerIds) {
+  //       const player = rosters.findOne({ player_id: playerId });
+      
+
+  //     const isStarter = starters.includes(playerId);
+  //     const isReserve = reserve.includes(playerId);
+  //     const isTaxi = taxi.includes(playerId);
+
+
+
+  //     if (!isStarter && !isReserve && !isTaxi) {
+  //       bench.push({
+  //         full_name: player.full_name,
+  //         position: player.position,
+  //         team: player.team
+  //       });
+  //     }
+  //   }
+  //     return bench;
+
+  //   } catch (error) {
+  //     console.error("Could not determine bench:", error);
+  //   }
+  // }
+
+
+
   export function sortRosters(roster) {
     try {
       return {
@@ -151,13 +204,6 @@ export async function displayPlayerNames (playerIds, db) {
     }
   } 
 
-//   export async function sortRosters(rosters, db) {
-//     try {
-//       console.log(rosters);
-//   } catch (error) {
-//     console.error('Error fetching rosters: ', error);
-//   }
-// }
 
 
 async function retrievePlayerData() {

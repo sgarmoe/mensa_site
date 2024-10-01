@@ -2,9 +2,8 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 import "./globals.css";
 import axios from 'axios';
-import  { displayStarters, fetchCurrentRosters } from "./api.js";
+import  { displayBench, displayStarters, fetchCurrentRosters } from "./api.js";
 import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
-import { sortRosters } from "./api.js";
 
 const leagueID = '1045634813593706496'
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -47,13 +46,15 @@ export default async function HomePage() {
       const starters = await displayStarters(roster.starters, db);
       const taxi = await displayStarters(roster.taxi, db);
       const reserve = await displayStarters(roster.reserve, db);
+      //const bench = displayBench(starters, reserve, taxi, rosters, playerIds);
+      //console.log(bench);
 
       
       return {
         starters: starters,
         taxi: taxi,
         reserve: reserve,
-        //bench: sortedRoster.bench, fix later because bench is not separated out
+        bench: bench, //fix later because bench is not separated out
         owner_id: roster.owner_id,
         team_name: teamName,
         players: players,
