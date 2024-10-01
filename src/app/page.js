@@ -2,7 +2,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 import "./globals.css";
 import axios from 'axios';
-import  { displayBench, displayStarters, fetchCurrentRosters } from "./api.js";
+import  { createBench, displayStarters, fetchCurrentRosters } from "./api.js";
 import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 
 const leagueID = '1045634813593706496'
@@ -34,9 +34,7 @@ export default async function HomePage() {
     const db = client.db('nfl_data');
 
     const rosters = await fetchCurrentRosters();
-    console.log(rosters);
-    //const sortedRosters = sortRosters(rosters);
-    //console.log(sortedRosters);
+    //console.log(rosters);
     const users = await fetchUserTeamNames();
 
     const rosterData = await Promise.all(rosters.map(async (roster) => {
@@ -46,15 +44,17 @@ export default async function HomePage() {
       const starters = await displayStarters(roster.starters, db);
       const taxi = await displayStarters(roster.taxi, db);
       const reserve = await displayStarters(roster.reserve, db);
-      //const bench = displayBench(starters, reserve, taxi, rosters, playerIds);
-      //console.log(bench);
+      const bench = createBench(roster);
+      //console.log("Bench: ", bench);
+      const benchNames = await displayStarters(bench, db);
+      //console.log(benchNames);
 
-      
+
       return {
         starters: starters,
         taxi: taxi,
         reserve: reserve,
-        bench: bench, //fix later because bench is not separated out
+        bench: benchNames, //fix later because bench is not separated out
         owner_id: roster.owner_id,
         team_name: teamName,
         players: players,
@@ -79,7 +79,7 @@ export default async function HomePage() {
                 key={index} 
                 name={team.team_name} 
                 starters={team.starters}
-                //bench={team.bench}
+                bench={team.bench}
                 reserve={team.reserve}
                 taxi={team.taxi}
                 roster={team.players} 
@@ -100,7 +100,7 @@ export default async function HomePage() {
 }
 
 
-function Team({ name, starters, taxi, reserve }) {
+function Team({ name, starters, taxi, reserve, bench }) {
 
   return (
     <div className="team-item">
@@ -127,7 +127,14 @@ function Team({ name, starters, taxi, reserve }) {
           <Player key={index} name={reserve.full_name} position={reserve.position} team={reserve.team} />
         )
       )}
+        </ul>
 
+        <hr className="team-divider" />
+        <ul>
+          {bench.map((bench, index) => (
+            <Player key={index} name={bench.full_name} position={bench.position} team={bench.team} />
+          )
+        )}
         </ul>
 
        

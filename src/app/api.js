@@ -130,15 +130,31 @@ export async function displayPlayerNames (playerIds, db) {
 
 
 
-    export function createBench(rosters) {
+    export function createBench(roster) {
       try {
-        const bench = [];
+        const { starters, taxi, reserve, players } = roster;
 
-        const isStarter = starters.includes(playerId);
-        const isReserve = reserve.includes(playerId);
-        const isTaxi = taxi.includes(playerId);
+         const nonBench = [
+          ...starters,
+          ...reserve,
+          ...(taxi || [])
+         ];
 
-        
+        // const isStarter = starters.includes(roster.playerId);
+        // const isReserve = reserve.includes(roster.playerId);
+        // const isTaxi = taxi.includes(roster.playerId);
+
+        // if (!isStarter && !isReserve && !isTaxi) {
+        //   bench.push({
+        //     full_name: player.full_name,
+        //     position: player.position,
+        //     team: player.team
+        //   });
+        // }
+      
+        const bench = players.filter(player => !nonBench.includes(player));
+
+        return bench;
 
 
       } catch (error) {
