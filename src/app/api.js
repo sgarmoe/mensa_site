@@ -98,22 +98,56 @@ export async function displayPlayerNames (playerIds, db) {
   }
 
 
-  export function sortRosters(rosters) {
+  export async function displayStarters (playerIds, db) {
     try {
-      const sortedRoster = [];
-
-
-      for (const roster of rosters) {
-        sortedRoster.push({
-          starters : roster.starters,
-          taxi : roster.taxi,
-          reserve : roster.reserve
-        });
+      const collection = db.collection('nfl_players');
+      const starters = [];
+  
+      for (const playerId of playerIds) {
+        const player = await collection.findOne({ player_id: playerId });
+  
+        if (player) {
+          starters.push({
+            full_name: player.full_name,
+            position: player.position, 
+            team: player.team
+            });
+  
+  
+          //console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
+        } else {
+          //console.log(`Player ID: ${playerId} not found`);
         }
+      }
+  
+      return starters;
+  
+      } catch (error) {
+        console.error('Error fetching player names: ', error);
+        return [];
+      }
+    }
 
-        return sortedRoster;
+  export function sortRosters(roster) {
+    try {
+      return {
+            starters : roster.starters || [],
+            taxi : roster.taxi || [],
+            reserve : roster.reserve || [],
+            bench: roster.players.filter(player =>
+              !roster.starters.includes(player) &&
+              !roster.taxi.includes(player) &&
+              !roster.reserve.includes(player)
+            )
+      };
     } catch (error) {
       console.log("Error sorting roster: ", error);
+      return {
+        starters: [],
+        taxi: [],
+        reserve: [], 
+        bench: []
+      };
     }
   } 
 

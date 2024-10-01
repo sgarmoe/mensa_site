@@ -2,7 +2,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 import "./globals.css";
 import axios from 'axios';
-import  { fetchCurrentRosters } from "./api.js";
+import  { displayStarters, fetchCurrentRosters } from "./api.js";
 import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 import { sortRosters } from "./api.js";
 
@@ -35,27 +35,34 @@ export default async function HomePage() {
     const db = client.db('nfl_data');
 
     const rosters = await fetchCurrentRosters();
-    //console.log(rosters);
-    const sortedRoster = sortRosters(rosters);
-    console.log(sortedRoster);
+    console.log(rosters);
+    //const sortedRosters = sortRosters(rosters);
+    //console.log(sortedRosters);
     const users = await fetchUserTeamNames();
 
     const rosterData = await Promise.all(rosters.map(async (roster) => {
       const players = await displayPlayerNames(roster.players, db);
       const user = users.find(user => user.user_id === roster.owner_id);
       const teamName = user?.metadata?.team_name || 'Unknown Team';
-
+      const starters = await displayStarters(roster.starters, db);
+      console.log(starters);
       
+
+
       return {
-        starters: roster.starters,
+        starters: starters,
+        taxi: roster.taxi,
+        reserve: roster.reserve,
+        //bench: sortedRoster.bench, fix later because bench is not separated out
         owner_id: roster.owner_id,
         team_name: teamName,
         players: players,
       };
+
+
     }));
 
-
-    //console.log('Roster data: ', JSON.stringify(rosterData, null, 2));
+    
 
 
   return (
@@ -67,12 +74,16 @@ export default async function HomePage() {
           {rosterData.length > 0 ? (
             rosterData.map((team, index) => (
               <Team 
-                className="team-name" 
+                //className="team-name" 
                 key={index} 
                 name={team.team_name} 
-                roster={team.players} />
+                starters={team.starters}
+                //bench={team.bench}
+                reserve={team.reserve}
+                taxi={team.taxi}
+                roster={team.players} 
+                />
             ))
-            
           ) : ( 
             <p>Loading teams</p>
           )}
@@ -88,23 +99,27 @@ export default async function HomePage() {
 }
 
 
-
-
-function Team({ name, roster }) {
+function Team({ name, starters }) {
 
   return (
     <div className="team-item">
       <h1>{name}</h1>
       <hr className="team-divider" />
-      <ul>
-        {roster.map((player, index) => (
-          <Player key={index} name={player.full_name} position={player.position} team={player.team}/>
 
+      
+       <ul>
+        {starters.map((starter, index ) => (
+          <Player key={index} name={starter.full_name} position={starter.position} team={starter.team}/>
         ))}
-      </ul>
+      </ul> 
+
+       
+
+
     </div>
   );
 }
+
 
 function Player({ name, position, team }) {
   return (
@@ -113,38 +128,3 @@ function Player({ name, position, team }) {
     </li>
   );
 }
-
-
-
-//commented out bc I hate this code but can't delete it yet
-// USE PLAYERS ARRAY PASSED IN TO MATCH IDS TO NAMES, THEN SORT
-// const sortRoster = async (roster, players, db) => {
-
-
-//   const { starters, reserve, taxi} = roster;
-
-//   const startersSet = new Set(starters);
-//   const reserveSet = new Set(reserve);
-//   const taxiSet = new Set(taxi);
-
-//   console.log("Starters set: ", startersSet);
-//   console.log("IR set: ", reserveSet);
-//   console.log("taxi set: ", taxi);
-
-//   const startersPlayers = players.filter(player => startersSet.has(player.player_id));
-//   const injuredReservePlayers = players.filter(player => reserveSet.has(player.player_id));
-//   const taxiPlayers = players.filter(player => taxiSet.has(player.player_id));
-
-
-//   const benchPlayers = players.filter(player => 
-//     !startersSet.has(player.player_id) && !reserveSet.has(player.player_id) && !taxiSet.has(player.player_id)
-//   );
-
-
-//   return {
-//     starters: startersPlayers,
-//     bench: benchPlayers,
-//     injuredReserve: injuredReservePlayers,
-//     taxi: taxiPlayers
-//   };
-// };
