@@ -32,6 +32,7 @@ export default async function HomePage() {
     await client.connect();
     console.log("Connected to MongoDB");
     const db = client.db('nfl_data');
+    const collection = db.collection('nfl_players');
 
     const rosters = await fetchCurrentRosters();
     //console.log(rosters);
@@ -54,7 +55,7 @@ export default async function HomePage() {
         starters: starters,
         taxi: taxi,
         reserve: reserve,
-        bench: benchNames, //fix later because bench is not separated out
+        bench: benchNames, 
         owner_id: roster.owner_id,
         team_name: teamName,
         players: players,

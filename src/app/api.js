@@ -70,6 +70,8 @@ export async function fetchCurrentRosters() {
 export async function displayPlayerNames (playerIds, db) {
   try {
     const collection = db.collection('nfl_players');
+    //console.log("Player IDs in the display player names function: ");
+    //console.log(playerIds);
     const players = [];
 
     for (const playerId of playerIds) {
@@ -101,8 +103,15 @@ export async function displayPlayerNames (playerIds, db) {
   export async function displayStarters (playerIds, db) {
     try {
       const collection = db.collection('nfl_players');
+      //console.log("Player IDs in the display starters function: ");
+      //console.log(playerIds);
       const starters = [];
-  
+
+      if (!Array.isArray(playerIds) || playerIds.length === 0) {
+        console.warn('No player IDs in given array, returning empty array');
+        return [];
+      }
+
       for (const playerId of playerIds) {
         const player = await collection.findOne({ player_id: playerId });
   
@@ -136,64 +145,23 @@ export async function displayPlayerNames (playerIds, db) {
 
          const nonBench = [
           ...starters,
-          ...reserve,
+          ...(reserve || []),
           ...(taxi || [])
          ];
 
-        // const isStarter = starters.includes(roster.playerId);
-        // const isReserve = reserve.includes(roster.playerId);
-        // const isTaxi = taxi.includes(roster.playerId);
+        //  if (!Array.isArray(reserve)) {
+        //   console.error('playerIds is not an array', reserve);
+        //   return [];
+        //}
 
-        // if (!isStarter && !isReserve && !isTaxi) {
-        //   bench.push({
-        //     full_name: player.full_name,
-        //     position: player.position,
-        //     team: player.team
-        //   });
-        // }
-      
+
         const bench = players.filter(player => !nonBench.includes(player));
-
         return bench;
-
 
       } catch (error) {
         console.log("Could not sort bench", error);
       }
     }
-
-    
-
-
-    //LOL THIS SHIT DONT WORK 
-  // export function displayBench(starters, reserve, taxi, rosters, playerIds) {
-  //   try {
-  //     const bench = [];
-
-  //     for (const playerId of playerIds) {
-  //       const player = rosters.findOne({ player_id: playerId });
-      
-
-  //     const isStarter = starters.includes(playerId);
-  //     const isReserve = reserve.includes(playerId);
-  //     const isTaxi = taxi.includes(playerId);
-
-
-
-  //     if (!isStarter && !isReserve && !isTaxi) {
-  //       bench.push({
-  //         full_name: player.full_name,
-  //         position: player.position,
-  //         team: player.team
-  //       });
-  //     }
-  //   }
-  //     return bench;
-
-  //   } catch (error) {
-  //     console.error("Could not determine bench:", error);
-  //   }
-  // }
 
 
 
