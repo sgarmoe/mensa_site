@@ -46,9 +46,7 @@ export default async function HomePage() {
       const taxi = await displayStarters(roster.taxi, db);
       const reserve = await displayStarters(roster.reserve, db);
       const bench = createBench(roster);
-      //console.log("Bench: ", bench);
       const benchNames = await displayStarters(bench, db);
-      //console.log(benchNames);
 
 
       return {
@@ -108,34 +106,62 @@ function Team({ name, starters, taxi, reserve, bench }) {
       <h1>{name}</h1>
       <hr className="team-divider" />
 
-      
+      <h2>STARTERS</h2>
         <ul>
         {starters.map((starter, index ) => (
-          <Player key={index} name={starter.full_name} position={starter.position} team={starter.team}/>
+          <Player 
+            key={index} 
+            name={starter.full_name} 
+            position={starter.position} 
+            team={starter.team}
+            className={`position-${starter.position.toLowerCase()}`} 
+            />
         ))}
       </ul> 
 
       <hr className="team-divider" />
+      <h2>Bench</h2>
         <ul>
-        {taxi.map((taxi, index) =>  (
-          <Player key={index} name={taxi.full_name} position={taxi.position} team={taxi.team} />
-        ))}
+          {bench.map((bench, index) => (
+            <Player 
+              key={index} 
+              name={bench.full_name} 
+              position={bench.position} 
+              team={bench.team} 
+              className={`position-${bench.position.toLowerCase()}`}
+            />
+          )
+        )}
         </ul>
 
+     
       <hr className="team-divider" />
+      <h2>Injured Reserve</h2>
         <ul>
         {reserve.map((reserve, index) => (
-          <Player key={index} name={reserve.full_name} position={reserve.position} team={reserve.team} />
+          <Player 
+            key={index} 
+            name={reserve.full_name} 
+            position={reserve.position} 
+            team={reserve.team} 
+            className={`position-${reserve.position.toLowerCase()}`}
+          />
         )
       )}
         </ul>
 
         <hr className="team-divider" />
+        <h2>Taxi Squad</h2>
         <ul>
-          {bench.map((bench, index) => (
-            <Player key={index} name={bench.full_name} position={bench.position} team={bench.team} />
-          )
-        )}
+        {taxi.map((taxi, index) =>  (
+          <Player 
+            key={index} 
+            name={taxi.full_name} 
+            position={taxi.position} 
+            team={taxi.team} 
+            className={`position-${taxi.position.toLowerCase()}`}
+          />
+        ))}
         </ul>
 
        
@@ -146,10 +172,10 @@ function Team({ name, starters, taxi, reserve, bench }) {
 }
 
 
-function Player({ name, position, team }) {
+function Player({ name, position, team, className }) {
   return (
     <li>
-      {name} - <strong>{position}</strong> - {team}
+      {name} - <span className={className}>{position}</span> - {team}
     </li>
   );
 }

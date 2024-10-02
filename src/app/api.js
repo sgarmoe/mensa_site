@@ -24,19 +24,6 @@ async function run() {
     await client.connect();
    // console.log("Connected to MongoDB");
 
-
-    //const players = await retrievePlayerData();
-    //console.log("100 players: "); 
-    //players.forEach(player => console.log(player));
-
-
-    //const rosters = await fetchCurrentRosters();
-   
-    // for (const roster of rosters) {
-    //   console.log(`Processing roster for owner ${roster.owner_id}`);
-    //   await displayPlayerNames(roster.players); 
-    // }
-
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -163,33 +150,7 @@ export async function displayPlayerNames (playerIds, db) {
       }
     }
 
-
-
-  export function sortRosters(roster) {
-    try {
-      return {
-            starters : roster.starters || [],
-            taxi : roster.taxi || [],
-            reserve : roster.reserve || [],
-            bench: roster.players.filter(player =>
-              !roster.starters.includes(player) &&
-              !roster.taxi.includes(player) &&
-              !roster.reserve.includes(player)
-            )
-      };
-    } catch (error) {
-      console.log("Error sorting roster: ", error);
-      return {
-        starters: [],
-        taxi: [],
-        reserve: [], 
-        bench: []
-      };
-    }
-  } 
-
-
-
+  
 async function retrievePlayerData() {
   try {
     const db = client.db('nfl_data');
@@ -202,8 +163,6 @@ async function retrievePlayerData() {
     console.error('Error fetching data: ', error);
   }
 }
-
-
 
 
 //function to call Sleeper API and overwrite MongoDB dataset

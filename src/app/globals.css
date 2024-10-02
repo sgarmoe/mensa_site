@@ -39,3 +39,27 @@ ul {
     border: none;
     border-radius: 2px;
 }
+
+h1 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+.position-qb {
+    color: red;
+}
+
+.position-rb {
+    color: green;
+}
+
+.position-wr {
+    color: blue;
+}
+
+.position-te {
+    color: orange;
+}
