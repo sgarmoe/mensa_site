@@ -63,3 +63,10 @@ h2 {
 .position-te {
     color: orange;
 }
+
+.position-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    display: inline-block;
+}

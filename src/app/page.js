@@ -8,6 +8,9 @@ import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 const leagueID = '1045634813593706496'
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
+
+
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -120,7 +123,7 @@ function Team({ name, starters, taxi, reserve, bench }) {
       </ul> 
 
       <hr className="team-divider" />
-      <h2>Bench</h2>
+      <h2>BENCH</h2>
         <ul>
           {bench.map((bench, index) => (
             <Player 
@@ -136,7 +139,7 @@ function Team({ name, starters, taxi, reserve, bench }) {
 
      
       <hr className="team-divider" />
-      <h2>Injured Reserve</h2>
+      <h2>INJURED RESERVE</h2>
         <ul>
         {reserve.map((reserve, index) => (
           <Player 
@@ -151,7 +154,7 @@ function Team({ name, starters, taxi, reserve, bench }) {
         </ul>
 
         <hr className="team-divider" />
-        <h2>Taxi Squad</h2>
+        <h2>TAXI SQUAD</h2>
         <ul>
         {taxi.map((taxi, index) =>  (
           <Player 
@@ -172,7 +175,7 @@ function Team({ name, starters, taxi, reserve, bench }) {
 }
 
 
-function Player({ name, position, team, className }) {
+function Player({ name, position, team, className}) {
   return (
     <li>
       {name} - <span className={className}>{position}</span> - {team}
