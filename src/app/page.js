@@ -5,10 +5,8 @@ import axios from 'axios';
 import  { createBench, displayStarters, fetchCurrentRosters } from "./api.js";
 import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 
-const leagueID = '1045634813593706496'
+const leagueID = '1045634813593706496' //sleeper league ID
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-
 
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -30,28 +28,29 @@ function Header({ title }) {
 }
 
 
-export default async function HomePage() {
+export default async function HomePage() { //default page when opening site
   try{ 
     await client.connect();
-    console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB"); //verify connection to mongo before proceeding
     const db = client.db('nfl_data');
-    const collection = db.collection('nfl_players');
+    const collection = db.collection('nfl_players'); //collection of all NFL players over last ~10 years 
 
-    const rosters = await fetchCurrentRosters();
+    const rosters = await fetchCurrentRosters(); //fetches live rosters from Sleeper API
     //console.log(rosters);
-    const users = await fetchUserTeamNames();
+    const users = await fetchUserTeamNames(); //fetches fantasy team names from Sleeper
 
     const rosterData = await Promise.all(rosters.map(async (roster) => {
-      const players = await displayPlayerNames(roster.players, db);
-      const user = users.find(user => user.user_id === roster.owner_id);
-      const teamName = user?.metadata?.team_name || 'Unknown Team';
-      const starters = await displayStarters(roster.starters, db);
-      const taxi = await displayStarters(roster.taxi, db);
-      const reserve = await displayStarters(roster.reserve, db);
-      const bench = createBench(roster);
-      const benchNames = await displayStarters(bench, db);
+      const players = await displayPlayerNames(roster.players, db); //matches players from Sleeper rosters to those stored in Mongo; verifies rosters have current nfl players
+      const user = users.find(user => user.user_id === roster.owner_id); //matches Sleeper ID of the user to the owner of the roster
+      const teamName = user?.metadata?.team_name || 'Unknown Team'; //associates User ID to the team name fetched above
+      const starters = await displayStarters(roster.starters, db); //returns array of STARTERS for each fantasy team
+      const taxi = await displayStarters(roster.taxi, db); //returns array of TAXI SQUAD for each fantasy team
+      const reserve = await displayStarters(roster.reserve, db); //returns array of INJURED RESERVE for each fantasy team
+      const bench = createBench(roster);  //returns Player IDs of the BENCH for each fantasy team; populated by remaining players not in previous 3 arrays
+      const benchNames = await displayStarters(bench, db);  //matches bench IDs to player names
 
 
+      //return all for display in roster format 
       return {
         starters: starters,
         taxi: taxi,
@@ -61,21 +60,18 @@ export default async function HomePage() {
         team_name: teamName,
         players: players,
       };
-
-
     }));
 
-    
-
-
+  
+//BEGIN REACT DISPLAY
   return (
     <div>
       <Header title="Rosters Page" />
       <hr />   
 
         <div className="container">
-          {rosterData.length > 0 ? (
-            rosterData.map((team, index) => (
+          {rosterData.length > 0 ? (  //verify roster is not empty
+            rosterData.map((team, index) => ( //pass in all roster info and the index of each team, ordered by Sleeper 
               <Team 
                 //className="team-name" 
                 key={index} 
@@ -101,23 +97,23 @@ export default async function HomePage() {
 }
 }
 
-
+//organization of how team is rendered
 function Team({ name, starters, taxi, reserve, bench }) {
 
   return (
     <div className="team-item">
       <h1>{name}</h1>
-      <hr className="team-divider" />
 
+      <hr className="team-divider" />
       <h2>STARTERS</h2>
         <ul>
-        {starters.map((starter, index ) => (
+        {starters.map((starter, index ) => ( //mapping players passed in from the starter array
           <Player 
             key={index} 
             name={starter.full_name} 
             position={starter.position} 
             team={starter.team}
-            className={`position-${starter.position.toLowerCase()}`} 
+            className={`position-${starter.position.toLowerCase()}`} //made lower to help color the positions as shown in page
             />
         ))}
       </ul> 
@@ -125,7 +121,7 @@ function Team({ name, starters, taxi, reserve, bench }) {
       <hr className="team-divider" />
       <h2>BENCH</h2>
         <ul>
-          {bench.map((bench, index) => (
+          {bench.map((bench, index) => ( //mapping players passed in from the bench array
             <Player 
               key={index} 
               name={bench.full_name} 
@@ -137,11 +133,10 @@ function Team({ name, starters, taxi, reserve, bench }) {
         )}
         </ul>
 
-     
       <hr className="team-divider" />
       <h2>INJURED RESERVE</h2>
         <ul>
-        {reserve.map((reserve, index) => (
+        {reserve.map((reserve, index) => (    //mapping IR players
           <Player 
             key={index} 
             name={reserve.full_name} 
@@ -156,7 +151,7 @@ function Team({ name, starters, taxi, reserve, bench }) {
         <hr className="team-divider" />
         <h2>TAXI SQUAD</h2>
         <ul>
-        {taxi.map((taxi, index) =>  (
+        {taxi.map((taxi, index) =>  (   //mapping taxi players
           <Player 
             key={index} 
             name={taxi.full_name} 
@@ -166,15 +161,11 @@ function Team({ name, starters, taxi, reserve, bench }) {
           />
         ))}
         </ul>
-
-       
-
-
     </div>
   );
 }
 
-
+//player as individuals will be rendered 
 function Player({ name, position, team, className}) {
   return (
     <li>
