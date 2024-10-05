@@ -5,6 +5,8 @@ import axios from 'axios';
 import  { createBench, displayStarters, fetchCurrentRosters } from "./api.js";
 import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 
+import Link from 'next/link';
+
 const leagueID = '1045634813593706496' //sleeper league ID
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -31,10 +33,9 @@ function Header({ title }) {
 
 export default function HomePage() {
   return (
-    <div>
-        <h1>Home Page for MENSA FFL</h1>
-    </div>
-)
+
+    <h1>Home Page for MENSA FFL</h1>
+  )
 }
 
 
