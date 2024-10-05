@@ -9,7 +9,7 @@ export default function HomePage() {
     return (
         <div>
             <h1>Home Page for MENSA FFL</h1>
-            <Link href="/page">Go to Rosters</Link>
+            <Link href="/rosters">Go to Rosters</Link>
         </div>
     )
 }
