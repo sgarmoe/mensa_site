@@ -28,7 +28,19 @@ function Header({ title }) {
 }
 
 
-export default async function HomePage() { //default page when opening site
+
+export default function HomePage() {
+  return (
+    <div>
+        <h1>Home Page for MENSA FFL</h1>
+    </div>
+)
+}
+
+
+
+
+export async function RostersPage() { //default page when opening site
   try{ 
     await client.connect();
     console.log("Connected to MongoDB"); //verify connection to mongo before proceeding
