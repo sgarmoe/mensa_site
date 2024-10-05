@@ -11,7 +11,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>{children}
+        <header>
+          <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
+        </header>
+        <main>{children}</main>
+
+        <footer>Created by Samuel Garmoe</footer>
+      </body>
     </html>
   );
 }
