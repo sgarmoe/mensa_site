@@ -33,9 +33,12 @@ function Header({ title }) {
 
 export default function HomePage() {
   return (
-
-    <h1>Home Page for MENSA FFL</h1>
-  )
+    <div>
+      <h1>Home Page for MENSA FFL</h1>
+      <Link href="/Rosters"> Rosters
+      </Link>
+    </div>
+  );
 }
 
 
