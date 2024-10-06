@@ -11,13 +11,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <header>
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
-          <hr></hr>
         </header>
+        <hr></hr>
         <main>{children}</main>
-
         <hr></hr>
         <footer>Created by Samuel Garmoe - 2024</footer>
       </body>

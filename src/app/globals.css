@@ -9,7 +9,7 @@
     flex-direction: column;
     flex: 1 1 calc(33.33% - 20px);
     border: 1px solid #ccc;
-    background-color: lightgray;
+    background-color: white;
     padding: 10px; 
     margin: 10px;
     align-items: center; 
@@ -18,20 +18,38 @@
 }
 
 hr {
-    height: 2px;
-    background-color: black;
+    height: 1px;
+    background-color: darkcyan;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin: 0;
 }
 
 header {
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
+    background-color: white;
+    margin: 0;
+    padding: 5px 0;
+    box-sizing: border-box;
+    
 }
 
 footer {
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     font-weight: bold;
+}
+
+body {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    margin: 0;
+    padding: 0;
 }
 
 ul {
