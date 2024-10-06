@@ -14,10 +14,12 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <header>
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
+          <hr></hr>
         </header>
         <main>{children}</main>
 
-        <footer>Created by Samuel Garmoe</footer>
+        <hr></hr>
+        <footer>Created by Samuel Garmoe - 2024</footer>
       </body>
     </html>
   );

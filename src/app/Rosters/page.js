@@ -79,8 +79,7 @@ export default async function RostersPage() { //default page when opening site
   //BEGIN REACT DISPLAY
     return (
       <div>
-        <Header title="Rosters Page" />
-        <hr />   
+        <Header title="Rosters Page" />  
   
           <div className="container">
             {rosterData.length > 0 ? (  //verify roster is not empty
