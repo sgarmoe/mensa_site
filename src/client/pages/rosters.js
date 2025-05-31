@@ -2,10 +2,10 @@
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 import "../globals.css";
-import "../layout.js"
+import "./layout.js"
 import axios from 'axios';
-import  { createBench, displayStarters, fetchCurrentRosters } from "../api.js";
-import { displayPlayerNames, fetchUserTeamNames } from "../api.js";
+import  { createBench, displayStarters, fetchCurrentRosters } from "../../api/api.js";
+import { displayPlayerNames, fetchUserTeamNames } from "../../api/api.js";
 
 import Link from 'next/link';
 
