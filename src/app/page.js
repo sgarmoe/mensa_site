@@ -1,3 +1,6 @@
+//HOME PAGE FOR MENSA WEBSITE
+
+
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 import "./globals.css";
