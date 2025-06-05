@@ -3,6 +3,7 @@ USE THE LEAGUE LEGENDS PAGE AS A MODEL
 
 misc. thoughts to keep in mind for design
 
+- use YT, next docs, react docs to get project moving
 - helper functions need meticulate design
 - many help fns (ex: leagueDrafts) use data produced by other functions (ex: drafts use current rosters)
 
@@ -26,7 +27,10 @@ TO DO BEFORE STARTING PROGRAM
 3. Design full-stacked implementation of ONE page, giving model for rest of pages
 
 STRUCTURE OF FULL STACK
-- node js for backend (not express this time)
+
+node vs next: 
+https://medium.com/@sophiasmith791/nextjs-vs-nodejs-which-backend-framework-to-choose-in-2025-f1fa4f2df6cb
+- next.js for backend (preferred over node due to site being a simple project from backend perspective) 
 - react and next.js for front end
 
 
