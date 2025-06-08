@@ -4,12 +4,12 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 import "../globals.css";
 import "./layout.js"
 import axios from 'axios';
-import  { createBench, displayStarters, fetchCurrentRosters } from "../../api/api.js";
-import { displayPlayerNames, fetchUserTeamNames } from "../../api/api.js";
+import  { createBench, displayStarters, fetchCurrentRosters } from "../../backend/api.js";
+import { displayPlayerNames, fetchUserTeamNames, fetchAndStoreNFLData } from "../../backend/api.js";
 
 import Link from 'next/link';
 
-const leagueID = '1045634813593706496' //sleeper league ID
+const leagueID = '1180198267141128192' //sleeper league ID
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 
@@ -45,6 +45,9 @@ export default async function RostersPage() { //default page when opening site
     try{ 
       await client.connect();
       console.log("Connected to MongoDB"); //verify connection to mongo before proceeding
+
+      //refresh database with updates
+      fetchAndStoreNFLData();
       const db = client.db('nfl_data');
       const collection = db.collection('nfl_players'); //collection of all NFL players over last ~10 years 
   

@@ -1,6 +1,8 @@
 
 USE THE LEAGUE LEGENDS PAGE AS A MODEL 
 
+set up code to automatically update the MongoDB once per day to have current sleeper info
+
 misc. thoughts to keep in mind for design
 
 - use YT, next docs, react docs to get project moving

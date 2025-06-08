@@ -2,8 +2,8 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const axios = require('axios');
 
 const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const roster_url = 'https://api.sleeper.app/v1/league/1045634813593706496/rosters'
-const users_url = 'https://api.sleeper.app/v1/league/1045634813593706496/users'
+const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
+const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -18,6 +18,8 @@ async function run() {
   try {
   //connect to mongoDB 
     await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged deployment, successfully connected to mongoDB");
 
   } finally {
     // Ensures that the client will close when you finish/error
