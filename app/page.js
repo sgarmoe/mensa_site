@@ -3,9 +3,10 @@
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-import "./globals.css";
+import "./frontend/globals.css";
 import "./layout.js"
 import Link from 'next/link';
+import "./rosters.js";
 
 
 
