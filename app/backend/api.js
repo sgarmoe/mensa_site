@@ -160,7 +160,7 @@ async function retrievePlayerData() {
 
 
 //function to call Sleeper API and overwrite MongoDB dataset
-async function fetchAndStoreNFLData() {
+export async function fetchAndStoreNFLData(client) {
     try {
         const response = await axios.get('https://api.sleeper.app/v1/players/nfl');
         const playerData = response.data;

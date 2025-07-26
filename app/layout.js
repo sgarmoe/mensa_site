@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./frontend/globals.css";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         <hr></hr>
         <main>{children}</main>
         <hr></hr>
-        <footer>Created by Samuel Garmoe - 2024</footer>
+        <footer>Created by Samuel Garmoe - 2025</footer>
       </body>
     </html>
   );
