@@ -1,6 +1,6 @@
 // scripts/updateNFLData.js
-const { MongoClient, ServerApiVersion } = ('mongodb');
-const { fetchAndStoreNFLData } = ('../backend/api.js');
+import { MongoClient, ServerApiVersion } from ('mongodb');
+import { fetchAndStoreNFLData } from ('../backend/api.js');
 
 const uri = process.env.MONGODB_URI;
 
