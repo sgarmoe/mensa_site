@@ -16,7 +16,7 @@ import "./rosters/page.js";
 //import  { createBench, displayStarters, fetchCurrentRosters } from "./api.js";
 //import { displayPlayerNames, fetchUserTeamNames } from "./api.js";
 const leagueID = '1045634813593706496' //sleeper league ID
-const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = process.env.MONGODB_URI;
 
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
