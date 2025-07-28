@@ -1,6 +1,10 @@
 // scripts/updateNFLData.js
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import { fetchAndStoreNFLData } from '../backend/api.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 
 const uri = process.env.MONGODB_URI;
 

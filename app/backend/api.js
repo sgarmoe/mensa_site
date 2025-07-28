@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import axios from 'axios';
 
-const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://samgarmoe:RMNh3YV1GOiHouua@cluster0.lu9fe.mongodb.net/?retryWrites=true&w=majority&tls=true&appName=Cluster0";
 const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
 const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
 
