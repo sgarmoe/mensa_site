@@ -10,7 +10,7 @@ export async function fetchTransactions (){
     try {
         const response = await axios.get(transactions_url);
         console.log("received response");
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching transactions", error);
@@ -18,9 +18,3 @@ export async function fetchTransactions (){
 }
 
 fetchTransactions();
-
-
-// if (import.meta.url === `file://${process.argv[1]}`) {
-//   const data = await fetchTransactions();
-//   console.dir(data, { depth: null });
-// }
