@@ -28,8 +28,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-
 //fetch users and their team names 
 export async function fetchUserTeamNames() {
   try {
@@ -50,7 +48,6 @@ export async function fetchCurrentRosters() {
     console.error('Error fetching rosters: ', error);
   }
 }
-
 
 //verify rosters fetched from Sleeper match with valid players in DB
 export async function displayPlayerNames (playerIds, db) {
@@ -96,7 +93,7 @@ export async function displayPlayerNames (playerIds, db) {
       const starters = [];
 
       if (!Array.isArray(playerIds) || playerIds.length === 0) {
-        console.warn('No player IDs in given array, returning empty array');
+        //console.warn('No player IDs in given array, returning empty array');
         return [];
       }
 
@@ -144,20 +141,6 @@ export async function displayPlayerNames (playerIds, db) {
       }
     }
 
-//used to test out connection to mongo   
-async function retrievePlayerData() {
-  try {
-    const db = client.db('nfl_data');
-    const collection = db.collection('nfl_players');
-
-    const players = await collection.find().limit(100).toArray();
-    return players;
-
-  } catch (error) {
-    console.error('Error fetching data: ', error);
-  }
-}
-
 
 //function to call Sleeper API and overwrite MongoDB dataset
 export async function fetchAndStoreNFLData(client) {
@@ -188,13 +171,4 @@ export async function fetchAndStoreNFLData(client) {
     } catch(error) {
         console.error('Did not fetch or store data: ', error);
     }
-}
-
-
-//use to verify that all mongo databases are accounted for
-async function listDatabases(client) {
-    
-  const databasesList = await client.db().admin().listDatabases();
-  console.log("Databases: ");
-  databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 }
