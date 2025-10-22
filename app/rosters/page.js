@@ -1,6 +1,7 @@
 //USE THIS TO PUT THE ROSTERS IN 
 
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import { connectToDatabase } from '../backend/utils/mongoClient';
 import "../globals.css";
 import "../layout.js"
 import axios from 'axios';
@@ -43,12 +44,11 @@ export function displaySomething() {
 
 export default async function RostersPage() { //default page when opening site
     try{ 
-      await client.connect();
+      const db = await connectToDatabase();
       console.log("Connected to MongoDB"); //verify connection to mongo before proceeding
 
       //refresh database with updates
-      fetchAndStoreNFLData();
-      const db = client.db('nfl_data');
+      await fetchAndStoreNFLData(db);
       const collection = db.collection('nfl_players'); //collection of all NFL players over last ~10 years 
   
       const rosters = await fetchCurrentRosters(); //fetches live rosters from Sleeper API

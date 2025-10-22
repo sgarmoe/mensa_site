@@ -1,32 +1,35 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import { connectToDatabase } from './utils/mongoClient';
 import axios from 'axios';
+import { connect } from 'mongoose';
 
 const uri = process.env.MONGODB_URI;
 const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
 const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
+const players_url = 'https://api.sleeper.app/v1/players/nfl';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+// const client = new MongoClient(uri, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
 
-async function run() {
-  try {
-  //connect to mongoDB 
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged deployment, successfully connected to mongoDB");
+// async function run() {
+//   try {
+//   //connect to mongoDB 
+//     await client.connect();
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged deployment, successfully connected to mongoDB");
 
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
 
 //fetch users and their team names 
 export async function fetchUserTeamNames() {
@@ -143,8 +146,11 @@ export async function displayPlayerNames (playerIds, db) {
 
 
 //function to call Sleeper API and overwrite MongoDB dataset
-export async function fetchAndStoreNFLData(client) {
+export async function fetchAndStoreNFLData() {
     try {
+        const db = await connectToDatabase();
+        const collection = db.collection('nfl_players');
+      
         const response = await axios.get('https://api.sleeper.app/v1/players/nfl');
         const playerData = response.data;
 
@@ -154,10 +160,7 @@ export async function fetchAndStoreNFLData(client) {
           ...playerData[playerId]
         }));
         
-        
-        const db = client.db('nfl_data');
-        const collection = db.collection('nfl_players');
-      
+  
         //clear prior data
         await collection.deleteMany({});
         console.log("Initial player data cleared");
