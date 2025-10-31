@@ -3,7 +3,7 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import { connectToDatabase } from '../backend/utils/mongoClient';
 import "../globals.css";
-import "../header.js"
+import "../layout.js"
 import axios from 'axios';
 import  { createBench, displayStarters, fetchCurrentRosters } from "../backend/api.js";
 import { displayPlayerNames, fetchUserTeamNames, fetchAndStoreNFLData } from "../backend/api.js";
