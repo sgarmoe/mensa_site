@@ -119,9 +119,8 @@ export async function displayPlayerNames (playerIds, db) {
 
 
 //function to call Sleeper API and overwrite MongoDB dataset
-export async function fetchAndStoreNFLData() {
+export async function fetchAndStoreNFLData(db) {
     try {
-        const db = await connectToDatabase();
         const collection = db.collection('nfl_players');
       
         const response = await axios.get('https://api.sleeper.app/v1/players/nfl');

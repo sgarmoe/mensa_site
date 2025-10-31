@@ -1,6 +1,7 @@
 // scripts/updateNFLData.js
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import { fetchAndStoreNFLData } from '../backend/api.js';
+import { connectToDatabase } from '../backend/utils/mongoClient.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -18,9 +19,10 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect();
+    const db = await connectToDatabase();
     console.log("Connected to MongoDB");
-    await fetchAndStoreNFLData(client);
+    await fetchAndStoreNFLData(db);
+    console.log("NFL Data update complete");
   } catch (err) {
     console.error("Error during update:", err);
     process.exit(1);
