@@ -1,4 +1,3 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
 import { connectToDatabase } from './utils/mongoClient.js';
 import axios from 'axios';
 import { connect } from 'mongoose';
@@ -7,29 +6,6 @@ const uri = process.env.MONGODB_URI;
 const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
 const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
 const players_url = 'https://api.sleeper.app/v1/players/nfl';
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
-
-// async function run() {
-//   try {
-//   //connect to mongoDB 
-//     await client.connect();
-//     await client.db("admin").command({ ping: 1 });
-//     console.log("Pinged deployment, successfully connected to mongoDB");
-
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
 
 //fetch users and their team names 
 export async function fetchUserTeamNames() {
@@ -40,7 +16,6 @@ export async function fetchUserTeamNames() {
     console.error("Error fetching league's users", error);
   }
 }
-
 
 //fetch current league's rosters from Sleeper
 export async function fetchCurrentRosters() {
@@ -69,8 +44,6 @@ export async function displayPlayerNames (playerIds, db) {
           position: player.position, 
           team: player.team
           });
-
-
         //console.log(`Player ID: ${playerId}, Name: ${player.full_name}`);
       } else {
         //console.log(`Player ID: ${playerId} not found`);
