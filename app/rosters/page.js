@@ -1,27 +1,15 @@
-//USE THIS TO PUT THE ROSTERS IN 
-
-import { MongoClient, ServerApiVersion } from 'mongodb';
 import { connectToDatabase } from '../backend/utils/mongoClient';
 import "../globals.css";
 import "../layout.js"
+
 import axios from 'axios';
+
 import  { createBench, displayStarters, fetchCurrentRosters } from "../backend/api.js";
 import { displayPlayerNames, fetchUserTeamNames, fetchAndStoreNFLData } from "../backend/api.js";
 
-import Link from 'next/link';
 
 const leagueID = '1180198267141128192' //sleeper league ID
 const uri = process.env.MONGODB_URI;
-
-
-// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
 
 function Header({ title }) {
     return( 
@@ -48,12 +36,11 @@ export default async function RostersPage() { //default page when opening site
       console.log("Connected to MongoDB"); //verify connection to mongo before proceeding
 
       //refresh database with updates
-      await fetchAndStoreNFLData(db);
-      const collection = db.collection('nfl_players'); //collection of all NFL players over last ~10 years 
+      //await fetchAndStoreNFLData(db);
+      //const collection = db.collection('nfl_players'); //collection of all NFL players over last ~10 years 
   
-      const rosters = await fetchCurrentRosters(); //fetches live rosters from Sleeper API
-      //console.log(rosters);
-      const users = await fetchUserTeamNames(); //fetches fantasy team names from Sleeper
+      const rosters = await fetchCurrentRosters(); 
+      const users = await fetchUserTeamNames(); 
   
       const rosterData = await Promise.all(rosters.map(async (roster) => {
         const players = await displayPlayerNames(roster.players, db); //matches players from Sleeper rosters to those stored in Mongo; verifies rosters have current nfl players
@@ -107,9 +94,7 @@ export default async function RostersPage() { //default page when opening site
   } catch (error) {
     console.error('Error fetching data: ', error);
     return <p>Error loading data</p>;
-  } finally {
-    await client.close();
-  }
+  } 
   }
   
   //organization of how team is rendered
