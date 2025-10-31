@@ -1,5 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { connectToDatabase } from './utils/mongoClient';
+import { connectToDatabase } from './utils/mongoClient.js';
 import axios from 'axios';
 import { connect } from 'mongoose';
 
