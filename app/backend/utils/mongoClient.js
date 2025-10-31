@@ -6,7 +6,7 @@ if (!uri) {
     throw new Error("Cannot access Mongo DB URI");
 }
 
-const client = new MongoClient(uri, {
+export const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
