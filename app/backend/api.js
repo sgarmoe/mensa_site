@@ -27,6 +27,8 @@ export async function fetchCurrentRosters() {
   }
 }
 
+
+//MOVE TO UTILS
 //verify rosters fetched from Sleeper match with valid players in DB
 export async function displayPlayerNames (playerIds, db) {
   try {
@@ -59,6 +61,8 @@ export async function displayPlayerNames (playerIds, db) {
   }
 
 
+
+  //MOVE TO UTILS
   //used for starters, taxi, and reserve
   //pass in playerIds of each group, match to IDs from mongo
   export async function displayStarters (playerIds, db) {
@@ -99,6 +103,7 @@ export async function displayPlayerNames (playerIds, db) {
     }
 
 
+    //MOVE TO UTILS
 //create bench from remaining players that did not populate into the other 3 categories
     export function createBench(roster) {
       try {
