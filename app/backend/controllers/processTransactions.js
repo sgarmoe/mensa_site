@@ -1,6 +1,6 @@
 //for processing transactions that are fetched in fetchTrans
 
-import { fetchTransactions } from './fetchTransactions.js';
+import { fetchTransactions } from '../lib/fetchTransactions.js';
 
 export async function processTransactions() {
     const transactions = await fetchTransactions();

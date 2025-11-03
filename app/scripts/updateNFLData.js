@@ -1,6 +1,6 @@
 // scripts/updateNFLData.js
 import { fetchAndStoreNFLData } from '../backend/api.js';
-import { connectToDatabase, client } from '../backend/utils/mongoClient.js';
+import { connectToDatabase, client } from '../backend/config/mongoClient.js';
 import dotenv from 'dotenv';
 dotenv.config();
 

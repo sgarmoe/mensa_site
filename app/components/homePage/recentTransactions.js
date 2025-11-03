@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import { displayPlayerNames, fetchUserTeamNames, fetchCurrentRosters } from "../../backend/api.js";
 import { fetchTransactions } from "../../backend/lib/fetchTransactions.js";
-import { connectToDatabase } from '../../backend/utils/mongoClient.js';
+import { connectToDatabase } from '../../backend/config/mongoClient.js';
 
 
 

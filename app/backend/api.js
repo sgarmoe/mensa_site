@@ -1,4 +1,4 @@
-import { connectToDatabase } from './utils/mongoClient.js';
+import { connectToDatabase } from './config/mongoClient.js';
 import axios from 'axios';
 import { connect } from 'mongoose';
 

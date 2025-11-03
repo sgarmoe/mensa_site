@@ -1,4 +1,4 @@
-import { connectToDatabase } from '../backend/utils/mongoClient';
+import { connectToDatabase } from '../backend/config/mongoClient';
 import "../globals.css";
 import "../layout.js"
 
