@@ -1,5 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import '../loadEnv.js';
+import '../config/loadEnv.js';
 
 const uri = process.env.MONGODB_URI;
 if (!uri) {

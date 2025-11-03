@@ -4,7 +4,7 @@
 //SHOULD BE FOR DISPLAY ONLY - LOGIC GOES IN LIB BACKEND
 //processed transactions are PASSED here for rendering in home page
 
-import '../../backend/loadEnv.js';
+import '../../backend/config/loadEnv.js';
 import axios from 'axios';
 
 import { displayPlayerNames, fetchUserTeamNames, fetchCurrentRosters } from "../../backend/api.js";

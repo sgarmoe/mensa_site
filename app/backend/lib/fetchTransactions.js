@@ -1,5 +1,5 @@
 import axios from 'axios';
-import '../loadEnv.js';
+import '../config/loadEnv.js';
 
 const leagueId = process.env.LEAGUE_ID;
 console.log("league ID: ", leagueId);
