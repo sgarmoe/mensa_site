@@ -10,10 +10,12 @@ export async function fetchTransactions (){
     try {
         const response = await axios.get(transactions_url);
         console.log("received response");
-        //console.log(response.data);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching transactions", error);
     }
 }
+
+fetchTransactions();
 
