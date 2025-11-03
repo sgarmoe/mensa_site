@@ -103,6 +103,7 @@ export async function displayPlayerNames (playerIds, db) {
     }
 
 
+
     //MOVE TO UTILS
 //create bench from remaining players that did not populate into the other 3 categories
     export function createBench(roster) {
@@ -122,7 +123,7 @@ export async function displayPlayerNames (playerIds, db) {
       }
     }
 
-
+//move to LIB in OWN FILE
 //function to call Sleeper API and overwrite MongoDB dataset
 export async function fetchAndStoreNFLData(db) {
     try {
