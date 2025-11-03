@@ -1,4 +1,4 @@
-//for processing transactions that are fetched in fetchTrans
+
 
 import { fetchTransactions } from '../lib/fetchTransactions.js';
 
