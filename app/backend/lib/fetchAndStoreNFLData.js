@@ -1,4 +1,4 @@
-import { connectToDatabase } from './config/mongoClient.js';
+//import { connectToDatabase } from './config/mongoClient.js';
 import axios from 'axios';
 
 const uri = process.env.MONGODB_URI;
