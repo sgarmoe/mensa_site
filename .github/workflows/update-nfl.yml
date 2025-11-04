@@ -26,6 +26,6 @@ jobs:
         run: npm install
 
       - name: Run update script
-        run: node app/scripts/updateNFLData.js
+        run: node app/backend/lib/updateNFLData.js
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
