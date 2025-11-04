@@ -1,4 +1,4 @@
-import { fetchAndStoreNFLData } from '../api.js';
+import { fetchAndStoreNFLData } from './fetchAndStoreNFLData.js';
 import { connectToDatabase, client } from '../config/mongoClient.js';
 import dotenv from 'dotenv';
 dotenv.config();

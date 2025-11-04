@@ -4,7 +4,8 @@ import "../layout.js"
 
 import axios from 'axios';
 
-import  { createBench, displayStarters, fetchCurrentRosters } from "../backend/api.js";
+import  { createBench, displayStarters } from "../backend/api.js";
+import { fetchCurrentRosters } from '../backend/lib/fetchTransactions';
 import { displayPlayerNames, fetchUserTeamNames, fetchAndStoreNFLData } from "../backend/api.js";
 
 
