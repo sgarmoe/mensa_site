@@ -5,8 +5,8 @@ import "../layout.js"
 import axios from 'axios';
 
 import  { createBench, displayStarters } from "../backend/api.js";
-import { fetchCurrentRosters } from '../backend/lib/fetchTransactions';
-import { displayPlayerNames, fetchUserTeamNames, fetchAndStoreNFLData } from "../backend/api.js";
+import { fetchCurrentRosters, fetchUserTeamNames } from '../backend/lib/fetchSleeperData';
+import { displayPlayerNames, fetchAndStoreNFLData } from "../backend/api.js";
 
 
 const leagueID = '1180198267141128192' //sleeper league ID

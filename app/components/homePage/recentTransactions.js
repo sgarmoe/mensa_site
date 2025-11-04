@@ -8,7 +8,7 @@ import '../../backend/config/loadEnv.js';
 import axios from 'axios';
 
 import { displayPlayerNames} from "../../backend/api.js";
-import { fetchUserTeamNames, fetchCurrentRosters } from '../../backend/lib/fetchTransactions.js';
+import { fetchUserTeamNames, fetchCurrentRosters } from '../../backend/lib/fetchSleeperData.js';
 import { fetchTransactions } from "../../backend/lib/fetchTransactions.js";
 import { connectToDatabase } from '../../backend/config/mongoClient.js';
 

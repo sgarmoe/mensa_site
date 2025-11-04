@@ -7,26 +7,6 @@ const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/roster
 const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
 const players_url = 'https://api.sleeper.app/v1/players/nfl';
 
-// //fetch users and their team names 
-// export async function fetchUserTeamNames() {
-//   try {
-//     const response = await axios.get(users_url) //call to Sleeper API for all users in the league
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching league's users", error);
-//   }
-// }
-
-// //fetch current league's rosters from Sleeper
-// export async function fetchCurrentRosters() {
-//   try {
-//     const response = await axios.get(roster_url);  //call to Sleeper for all rosters for each team in the league
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching rosters: ', error);
-//   }
-// }
-
 
 //MOVE TO UTILS
 //verify rosters fetched from Sleeper match with valid players in DB
@@ -122,34 +102,3 @@ export async function displayPlayerNames (playerIds, db) {
         console.log("Could not sort bench", error);
       }
     }
-
-//move to LIB in OWN FILE
-//function to call Sleeper API and overwrite MongoDB dataset
-// export async function fetchAndStoreNFLData(db) {
-//     try {
-//         const collection = db.collection('nfl_players');
-      
-//         const response = await axios.get('https://api.sleeper.app/v1/players/nfl');
-//         const playerData = response.data;
-
-//       if (typeof playerData === 'object' && playerData !== null) {
-//         const playersArray = Object.keys(playerData).map(playerId => ({
-//           _id: playerId,
-//           ...playerData[playerId]
-//         }));
-        
-  
-//         //clear prior data
-//         await collection.deleteMany({});
-//         console.log("Initial player data cleared");
-
-//         //insert new data into mongo
-//         await collection.insertMany(Object.values(playerData));
-//         console.log("Player data inserted");
-//       } else {
-//         console.log("No player data found/not in expected format");
-//       }
-//     } catch(error) {
-//         console.error('Did not fetch or store data: ', error);
-//     }
-// }
