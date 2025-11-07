@@ -1,4 +1,4 @@
-import { getPlayersByArray } from "../lib/playerData.js";
+import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
 
 export async function populateStarters(starterIds) {
     const starters = await getPlayersByArray(starterIds);
@@ -30,7 +30,7 @@ export async function populateTaxi(taxiIds) {
 
 export async function populateBench(roster){
     try {
-        const { starters, taxi, injuredReserve, reserve } = roster;
+        const { starters, taxi, injuredReserve, reserve, players } = roster;
 
         const nonBenchIds = [
             ...(starters || []),
@@ -39,7 +39,7 @@ export async function populateBench(roster){
         ];
         
 
-        const benchIds = players.filter(id => !nonBenchIds.includes(id)); 
+        const benchIds = (players || []).filter(id => !nonBenchIds.includes(id));
 
         const bench = await getPlayersByArray(benchIds);
 

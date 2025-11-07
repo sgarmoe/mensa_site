@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../config/mongoClient";
+import { connectToDatabase } from "../config/mongoClient.js";
 
 const uri = process.env.MONGODB_URI;
 const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
@@ -23,7 +23,7 @@ export async function getPlayerById(playerId) {
 //fetch many players by array 
 export async function getPlayersByArray(playerIds) {
     try {
-        if (!Array.isArray(playerIds) || playersIds.length() == 0) return [];
+        if (!Array.isArray(playerIds) || playerIds.length === 0) return [];
 
             const normalizedIds = playerIds.map(String);
             const db = await connectToDatabase();
