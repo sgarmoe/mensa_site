@@ -24,6 +24,7 @@ async function testPopulateRosters() {
 
         const firstRoster = rosters[0];
         console.log(firstRoster.players);
+  
 
 
         

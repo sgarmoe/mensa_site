@@ -11,6 +11,7 @@ export async function populateStarters(starterIds) {
 
 
 export async function populateIR(reserveIds) {
+    console.log("Entered IR population");
     const injuredReserve = await getPlayersByArray(reserveIds);
     return injuredReserve.map(player => ({
         full_name : player.full_name,
