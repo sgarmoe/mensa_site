@@ -39,7 +39,6 @@ export async function populateBench(roster){
             ...(injuredReserve || [])
         ];
         
-
         const benchIds = (players || []).filter(id => !nonBenchIds.includes(id));
 
         const bench = await getPlayersByArray(benchIds);

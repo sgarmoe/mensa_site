@@ -22,21 +22,24 @@ async function testPopulateRosters() {
             return [];
         }
 
-        const firstRoster = rosters[0];
-        console.log(firstRoster.players);
-  
+        for (const [index, roster] of rosters.entries()) {
+
+        
+        //const firstRoster = rosters[0];
+        //console.log(firstRoster.players);
+        
+        const injuredReserve = await populateIR(roster.reserve);
+        const starters = await populateStarters(roster.starters);
+        const taxi = await populateTaxi(roster.taxi);
+        const bench = await populateBench(roster);
 
 
         
-        const injuredReserve = await populateIR(firstRoster.players);
-        const starters = await populateStarters(firstRoster);
-        const taxi = await populateTaxi(firstRoster);
-        const bench = await populateBench(firstRoster);
-
-        console.log("IR: ", injuredReserve);
-        console.log("Starters: ", starters);
-        console.log("Bench: ", bench);
-        console.log("Taxi: ", taxi);
+        // console.log("IR: ", injuredReserve);
+        // console.log("Starters: ", starters);
+        // console.log("Bench: ", bench);
+        // console.log("Taxi: ", taxi);
+        }
 
 
     } catch (error) {
