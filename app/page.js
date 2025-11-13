@@ -32,6 +32,10 @@ export default function HomePage() {
       <h1>Home Page for MENSA FFL</h1>
       <Link href="/rosters"> Rosters
       </Link>
+
+      <Link href="/newRosters">Updated Rosters
+      </Link>
+      
       <p1>Recent Transactions</p1>
       <p1></p1>
     </div>
