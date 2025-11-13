@@ -9,7 +9,8 @@ export default function RostersPage() {
     useEffect(() => {
         async function fetchRosters() {
             try {
-                const res = await fetch ("/api/populateRostersRoute");
+                const res = await fetch ("../backend/api/populateRostersRoute.js");
+                console.log(res);
                 if (!res.ok) throw new Error("Failed to fetch rosters");
                 const data = await res.json();
                 setRosters(data);
@@ -23,7 +24,7 @@ export default function RostersPage() {
     }, []);
 
     if (loading) return <p className="text-center mt-8">Loading Rosters...</p>;
-    if (error) return <p className="text-center mt-8">Error: {error} </p>;
+    if (error) return <p className="text-center mt-8">Error: {error} </p>; //first point of issue
 
     return (
         <div className="p-4 max-w-5xl mx-auto">
