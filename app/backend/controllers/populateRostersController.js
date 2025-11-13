@@ -1,10 +1,10 @@
-import { populateBench, populateIR, populateStarters, populateTaxi } from "../utils/populateRosters";
-import { fetchCurrentRosters } from "../lib/fetchSleeperData";
+import { populateBench, populateIR, populateStarters, populateTaxi } from "../utils/populateRosters.js";
+import { fetchCurrentRosters } from "../lib/fetchSleeperData.js";
 
 //controller that populates all rosters by calling Sleeper API &
 //matches IDs w/ player names from mongo
 
-export async function populateRosters() {
+export async function populateAllRosters() {
     try {
         console.log("Fetching rosters from sleeper");
         const rosters = await fetchCurrentRosters();

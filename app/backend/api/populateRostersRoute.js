@@ -1,4 +1,4 @@
-import { populateRosters } from "../controllers/populateRostersController";
+import { populateRosters } from "../controllers/populateRostersController.js";
 
 export async function GET(){
     try {
