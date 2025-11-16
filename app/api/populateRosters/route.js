@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { populateRosters } from "@/app/backend/controllers/populateRostersController.js";
+import { populateAllRosters } from "../../backend/controllers/populateRostersController.js";
 
 export async function GET() {
   try {
     console.log("GET /api/rosters called");
-    const populatedRosters = await populateRosters();
+    const populatedRosters = await populateAllRosters();
 
     return NextResponse.json({ success: true, data: populatedRosters });
   } catch (error) {

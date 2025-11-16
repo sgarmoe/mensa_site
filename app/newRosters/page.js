@@ -9,7 +9,7 @@ export default function RostersPage() {
     useEffect(() => {
         async function fetchRosters() {
             try {
-                const res = await fetch ("/api/rosters");
+                const res = await fetch ("/api/populateRosters");
                 console.log(res);
                 if (!res.ok) throw new Error("Failed to fetch rosters");
                 const data = await res.json();
