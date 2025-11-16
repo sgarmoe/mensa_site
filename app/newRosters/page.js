@@ -10,9 +10,11 @@ export default function RostersPage() {
         async function fetchRosters() {
             try {
                 const res = await fetch ("/api/populateRosters");
-                console.log(res);
                 if (!res.ok) throw new Error("Failed to fetch rosters");
-                const data = await res.json();
+
+                const data = await res.json()
+                console.log("API Data: ", data);
+
                 setRosters(data);
             } catch (err) {
                 setError(err.message);

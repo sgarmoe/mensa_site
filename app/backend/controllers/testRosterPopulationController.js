@@ -11,6 +11,7 @@ async function testPopulate() {
     result.forEach((r, i) => {
         console.log(`\n--- Roster #${i + 1} ---`);
         console.log("Owner: ", r.owner_id);
+        console.log("Team name" , r.team_name);
         console.log("Starters: ", r.starters);
         console.log("Bench: ", r.bench);
         console.log("Taxi: ", r.taxi);

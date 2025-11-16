@@ -1,5 +1,5 @@
 import { populateBench, populateIR, populateStarters, populateTaxi } from "../utils/populateRosters.js";
-import { fetchCurrentRosters } from "../lib/fetchSleeperData.js";
+import { fetchCurrentRosters, fetchUserTeamNames } from "../lib/fetchSleeperData.js";
 
 //controller that populates all rosters by calling Sleeper API &
 //matches IDs w/ player names from mongo
@@ -8,6 +8,7 @@ export async function populateAllRosters() {
     try {
         console.log("Fetching rosters from sleeper");
         const rosters = await fetchCurrentRosters();
+        const users = await fetchUserTeamNames();
 
         if (!Array.isArray(rosters) || rosters.length === 0) {
             console.log("No rosters found");
@@ -21,6 +22,9 @@ export async function populateAllRosters() {
         for (const [index, roster] of rosters.entries()) {
             console.log(`\n Populating # ${index + 1} `);
 
+            const user = users.find(user => user.user_id === roster.owner_id); //matches Sleeper ID of the user to the owner of the roster
+            const teamName = user?.metadata?.team_name || 'Unknown Team'; //associates User ID to the team name fetched above
+
             const starters = await populateStarters(roster.starters);
             const injuredReserve = await populateIR(roster.reserve);
             const taxi = await populateTaxi(roster.taxi);
@@ -28,6 +32,7 @@ export async function populateAllRosters() {
 
             populatedRosters.push({
                 owner_id : roster.owner_id,
+                team_name: teamName,
                 starters, 
                 injuredReserve, 
                 taxi,
