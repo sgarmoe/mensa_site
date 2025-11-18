@@ -1,5 +1,14 @@
 "use client"
 import { useEffect, useState } from "react";
+import "../globals.css";
+
+function Header({ title }) {
+    return( 
+      <h1 style={{ textAlign: 'center'}}>
+      {title ? title : 'Default title'}
+      </h1>
+      );
+  }
 
 export default function RostersPage() {
     const [rosters, setRosters] = useState([]);
@@ -26,28 +35,37 @@ export default function RostersPage() {
     }, []);
 
     if (loading) return <p className="text-center mt-8">Loading Rosters...</p>;
-    if (error) return <p className="text-center mt-8">Error: {error} </p>; //first point of issue
+    if (error) return <p className="text-center mt-8">Error: {error} </p>;
 
     return (
         <div className="p-4 max-w-5xl mx-auto">
-            <h1 className="text-3xl font-bold text-center mb-6"> League Rosters</h1>
 
-            {rosters.map((team, i) => (
-                <Team key={i} team={team} />
-            ))}
+            <Header title='Rosters Page' />
+              <div className="container">
+                {rosters.map((team, i) => (
+                  <Team key={i} team={team} />
+                ))}
+              </div>
         </div>
     );
 }
 
 
+
+
+
+
 function Team({ team }) {
   return (
-    <div className="bg-gray-900 text-white p-4 mb-6 rounded-2xl shadow-md">
-      <h2 className="text-2xl font-semibold mb-2">{team.team_name}</h2>
+    <div className='team-item'>
+      <h1>{team.team_name}</h1>
 
       <Section title="Starters" players={team.starters} />
+      <hr className='team-divider'/>
       <Section title="Bench" players={team.bench} />
+      <hr className='team-divider'/>
       <Section title="Injured Reserve" players={team.injuredReserve} />
+      <hr className='team-divider'/>
       <Section title="Taxi Squad" players={team.taxi} />
     </div>
   );
@@ -71,11 +89,11 @@ function Section({ title, players }) {
 }
 
 function Player({ full_name, position, team }) {
+  const positionClass = `position-${position.toUpperCase()}`;
+
   return (
-    <li className="bg-gray-800 px-3 py-2 rounded-lg text-sm flex justify-between">
-      <span>{full_name}</span>
-      <span className="text-gray-400">{position}</span>
-      <span className="text-gray-500">{team}</span>
+    <li>
+      {full_name} - <span className={positionClass}>{position}</span> - {team} 
     </li>
   );
 }

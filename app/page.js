@@ -30,8 +30,8 @@ export default function HomePage() {
   return (
     <div>
       <h1>Home Page for MENSA FFL</h1>
-      <Link href="/rosters"> Rosters
-      </Link>
+      {/* <Link href="/rosters"> Rosters
+      </Link> */}
 
       <Link href="/newRosters">Updated Rosters
       </Link>

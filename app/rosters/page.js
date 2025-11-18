@@ -1,16 +1,8 @@
-import { connectToDatabase } from '../backend/config/mongoClient';
+"use client"
+import { useEffect, useState } from "react";
 import "../globals.css";
-import "../layout.js"
-
-import axios from 'axios';
-
-import  { createBench, displayStarters } from "../backend/api.js";
-import { fetchCurrentRosters, fetchUserTeamNames } from '../backend/lib/fetchSleeperData';
-import { displayPlayerNames, fetchAndStoreNFLData } from "../backend/api.js";
 
 
-const leagueID = '1180198267141128192' //sleeper league ID
-const uri = process.env.MONGODB_URI;
 
 function Header({ title }) {
     return( 
@@ -19,16 +11,6 @@ function Header({ title }) {
       </h1>
       );
   }
-
-
-export function displaySomething() {
-    return (
-        <div>
-            <h1>Show text</h1>
-        </div>
-    )
-}
-
 
 
 export default async function RostersPage() { //default page when opening site
