@@ -44,7 +44,6 @@ function Team({ team }) {
   return (
     <div className="bg-gray-900 text-white p-4 mb-6 rounded-2xl shadow-md">
       <h2 className="text-2xl font-semibold mb-2">{team.team_name}</h2>
-      <p className="text-sm text-gray-400 mb-4">Owner ID: {team.owner_id}</p>
 
       <Section title="Starters" players={team.starters} />
       <Section title="Bench" players={team.bench} />
