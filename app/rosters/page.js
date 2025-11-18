@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
-
-
 function Header({ title }) {
     return( 
       <h1 style={{ textAlign: 'center'}}>
@@ -12,148 +10,90 @@ function Header({ title }) {
       );
   }
 
+export default function RostersPage() {
+    const [rosters, setRosters] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-export default async function RostersPage() { //default page when opening site
-    try{ 
-      const db = await connectToDatabase();
-      console.log("Connected to MongoDB"); //verify connection to mongo before proceeding
+    useEffect(() => {
+        async function fetchRosters() {
+            try {
+                const res = await fetch ("/api/populateRosters");
+                if (!res.ok) throw new Error("Failed to fetch rosters");
 
-      //refresh database with updates
-      //await fetchAndStoreNFLData(db);
-      //const collection = db.collection('nfl_players'); //collection of all NFL players over last ~10 years 
-  
-      const rosters = await fetchCurrentRosters(); 
-      const users = await fetchUserTeamNames(); 
-  
-      const rosterData = await Promise.all(rosters.map(async (roster) => {
-        const players = await displayPlayerNames(roster.players, db); //matches players from Sleeper rosters to those stored in Mongo; verifies rosters have current nfl players
-        const user = users.find(user => user.user_id === roster.owner_id); //matches Sleeper ID of the user to the owner of the roster
-        const teamName = user?.metadata?.team_name || 'Unknown Team'; //associates User ID to the team name fetched above
-        const starters = await displayStarters(roster.starters, db); //returns array of STARTERS for each fantasy team
-        const taxi = await displayStarters(roster.taxi, db); //returns array of TAXI SQUAD for each fantasy team
-        const reserve = await displayStarters(roster.reserve, db); //returns array of INJURED RESERVE for each fantasy team
-        const bench = createBench(roster);  //returns Player IDs of the BENCH for each fantasy team; populated by remaining players not in previous 3 arrays
-        const benchNames = await displayStarters(bench, db);  //matches bench IDs to player names
-  
-  
-        //return all for display in roster format 
-        return {
-          starters: starters,
-          taxi: taxi,
-          reserve: reserve,
-          bench: benchNames, 
-          owner_id: roster.owner_id,
-          team_name: teamName,
-          players: players,
-        };
-      }));
-  
-    
-  //BEGIN REACT DISPLAY
+                const data = await res.json()
+                console.log("API Data: ", data);
+
+                setRosters(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchRosters();
+    }, []);
+
+    if (loading) return <p className="text-center mt-8">Loading Rosters...</p>;
+    if (error) return <p className="text-center mt-8">Error: {error} </p>;
+
     return (
-      <div>
-        <Header title="Rosters Page" />  
-  
-          <div className="container">
-            {rosterData.length > 0 ? (  //verify roster is not empty
-              rosterData.map((team, index) => ( //pass in all roster info and the index of each team, ordered by Sleeper 
-                <Team 
-                  //className="team-name" 
-                  key={index} 
-                  name={team.team_name} 
-                  starters={team.starters}
-                  bench={team.bench}
-                  reserve={team.reserve}
-                  taxi={team.taxi}
-                  roster={team.players} 
-                  />
-              ))
-            ) : ( 
-              <p>Loading teams</p>
-            )}
-            </div>
-          </div>
+        <div className="p-4 max-w-5xl mx-auto">
+
+            <Header title='Rosters Page' />
+              <div className="container">
+                {rosters.map((team, i) => (
+                  <Team key={i} team={team} />
+                ))}
+              </div>
+        </div>
     );
-  } catch (error) {
-    console.error('Error fetching data: ', error);
-    return <p>Error loading data</p>;
-  } 
-  }
-  
-  //organization of how team is rendered
-  function Team({ name, starters, taxi, reserve, bench }) {
-  
-    return (
-      <div className="team-item">
-        <h1>{name}</h1>
-  
-        <hr className="team-divider" />
-        <h2>STARTERS</h2>
-          <ul>
-          {starters.map((starter, index ) => ( //mapping players passed in from the starter array
-            <Player 
-              key={index} 
-              name={starter.full_name} 
-              position={starter.position} 
-              team={starter.team}
-              className={`position-${starter.position.toLowerCase()}`} //made lower to help color the positions as shown in page
-              />
+}
+
+
+
+
+
+
+function Team({ team }) {
+  return (
+    <div className='team-item'>
+      <h1>{team.team_name}</h1>
+
+      <Section title="Starters" players={team.starters} />
+      <hr className='team-divider'/>
+      <Section title="Bench" players={team.bench} />
+      <hr className='team-divider'/>
+      <Section title="Injured Reserve" players={team.injuredReserve} />
+      <hr className='team-divider'/>
+      <Section title="Taxi Squad" players={team.taxi} />
+    </div>
+  );
+}
+
+function Section({ title, players }) {
+  return (
+    <div className="mb-3">
+      <h3 className="text-lg text-center font-semibold mt-2">{title}</h3>
+      {players.length === 0 ? (
+        <p className="text-gray-400 text-sm">No players listed.</p>
+      ) : (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-1">
+          {players.map((p, i) => (
+            <Player key={i} {...p} />
           ))}
-        </ul> 
-  
-        <hr className="team-divider" />
-        <h2>BENCH</h2>
-          <ul>
-            {bench.map((bench, index) => ( //mapping players passed in from the bench array
-              <Player 
-                key={index} 
-                name={bench.full_name} 
-                position={bench.position} 
-                team={bench.team} 
-                className={`position-${bench.position.toLowerCase()}`}
-              />
-            )
-          )}
-          </ul>
-  
-        <hr className="team-divider" />
-        <h2>INJURED RESERVE</h2>
-          <ul>
-          {reserve.map((reserve, index) => (    //mapping IR players
-            <Player 
-              key={index} 
-              name={reserve.full_name} 
-              position={reserve.position} 
-              team={reserve.team} 
-              className={`position-${reserve.position.toLowerCase()}`}
-            />
-          )
-        )}
-          </ul>
-  
-          <hr className="team-divider" />
-          <h2>TAXI SQUAD</h2>
-          <ul>
-          {taxi.map((taxi, index) =>  (   //mapping taxi players
-            <Player 
-              key={index} 
-              name={taxi.full_name} 
-              position={taxi.position} 
-              team={taxi.team} 
-              className={`position-${taxi.position.toLowerCase()}`}
-            />
-          ))}
-          </ul>
-      </div>
-    );
-  }
-  
-  //player as individuals will be rendered 
-  function Player({ name, position, team, className}) {
-    return (
-      <li>
-        {name} - <span className={className}>{position}</span> - {team}
-      </li>
-    );
-  }
-  
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function Player({ full_name, position, team }) {
+  const positionClass = `position-${position.toUpperCase()}`;
+
+  return (
+    <li>
+      {full_name} - <span className={positionClass}>{position}</span> - {team} 
+    </li>
+  );
+}

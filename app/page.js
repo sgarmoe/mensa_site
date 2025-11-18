@@ -33,7 +33,7 @@ export default function HomePage() {
       {/* <Link href="/rosters"> Rosters
       </Link> */}
 
-      <Link href="/newRosters">Updated Rosters
+      <Link href="/rosters">Rosters Page 
       </Link>
       
       <p1>Recent Transactions</p1>
