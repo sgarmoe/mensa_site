@@ -30,3 +30,13 @@ export async function fetchCurrentRosters() {
   }
 }
 
+//fetch all FA and trades transactions 
+export async function fetchTransactions (){ 
+    try {
+        const response = await axios.get(transactions_url);
+        console.log("received response");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching transactions", error);
+    }
+}
