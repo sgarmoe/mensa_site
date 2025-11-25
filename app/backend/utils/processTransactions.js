@@ -30,7 +30,7 @@ export async function processTransactions() {
         return null;
     });
 
-    console.log("Transaction data: ", processedData);
+    console.dir(processedData, { depth: null });
     return processedData.filter(Boolean);
 }
 
@@ -53,7 +53,7 @@ function formatTrade(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
-        adds,
+        adds, 
         drops
     };
 }
@@ -76,7 +76,7 @@ function formatFreeAgent(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
-        adds,
+        adds, 
         drops
     };
 
