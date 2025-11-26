@@ -1,6 +1,8 @@
 import { fetchTransactions } from "../lib/fetchSleeperData.js";
 import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
 
+const limit = 100;
+
 export async function processTransactions() {
     const rawData = await fetchTransactions();
     
@@ -49,7 +51,11 @@ export async function processTransactions() {
         };
     });
 
-    console.dir(processedData, { depth: null });
+    
+    processedData.sort((a, b) => b.timestamp - a.timestamp);
+
+
+    console.dir(processedData.slice(0, 100), { depth: null });
     return processedData;
 }
 
