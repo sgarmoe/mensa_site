@@ -3,35 +3,54 @@ import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
 
 export async function processTransactions() {
     const rawData = await fetchTransactions();
-    const playerIds = new Set();
+    
+    const playerIds = [];
+
 
     rawData.forEach(tx => {
         if (tx.adds) {
-            Object.keys(tx.adds).forEach(id => playerIds.add(id));
+            playerIds.push(...Object.keys(tx.adds));
         }
         if (tx.drops) {
-            Object.keys(tx.drops).forEach(id => playerIds.add(id));
+            playerIds.push(...Object.keys(tx.drops));
         }
     });
 
-    const idArray = [...playerIds];
+    const uniqueIds = [...new Set(playerIds)];
 
-    const players = await getPlayersByArray(idArray);
+    const players = await getPlayersByArray(uniqueIds);
+
+    const playerLookup = {};
+    players.forEach(p => {
+        playerLookup[p.player_id] = p;
+    });
+
 
     const processedData = rawData.map(tx => {
         if (tx.type == "trade") {
-            return formatTrade(tx, players);
+            return formatTrade(tx, playerLookup);
         }
 
         if (tx.type == "waiver") {
-            return formatFreeAgent(tx, players);
+            return formatWaiver(tx, playerLookup);
         }
 
-        return null;
+        if (tx.type == "free_agent") {
+            return formatFreeAgent(tx, playerLookup);
+        }
+
+        return {
+            type: tx.type,
+            transactionId: tx.transaction_id,
+            timestamp: tx.created,
+            team: tx.roster_ids?.[0] || null,
+            adds: [],
+            drops: []
+        };
     });
 
     console.dir(processedData, { depth: null });
-    return processedData.filter(Boolean);
+    return processedData;
 }
 
 function formatTrade(tx, players) {
@@ -58,7 +77,7 @@ function formatTrade(tx, players) {
     };
 }
 
-function formatFreeAgent(tx, players) {
+function formatWaiver(tx, players) {
     
     const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
         player: players[playerId]?.full_name || "Unknown player", 
@@ -82,5 +101,31 @@ function formatFreeAgent(tx, players) {
 
 
 }
+
+function formatFreeAgent(tx, players) {
+    
+    const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
+        player: players[playerId]?.full_name || "Unknown player", 
+        toTeam: teamId
+    }));
+
+    const drops = Object.entries(tx.drops || {}).map(([playerId, teamId]) => ({
+        player: players[playerId]?.full_name || "Unknown Player",
+        fromTeam: teamId
+    }));
+    
+
+    return {
+        type: "Free Agent",
+        transactionId: tx.transaction_id, 
+        timestamp: tx.created,
+        team: tx.roster_ids?.[0]|| null,
+        adds, 
+        drops
+    };
+
+
+}
+
 
 processTransactions();
