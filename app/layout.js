@@ -18,11 +18,13 @@ export default function RootLayout({ children }) {
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
             <Link href="/rosters">Rosters Page 
             </Link>
-            <h1>Testing text</h1>
+            
         </header>
+
         <hr></hr>
         <main>{children}</main>
         <hr></hr>
+
         <footer>Created by Samuel Garmoe - 2025</footer>
       </body>
     </html>
