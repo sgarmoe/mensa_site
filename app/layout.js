@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./rosters/page.js";
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +16,9 @@ export default function RootLayout({ children }) {
       <body>
         <header>
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
+            <Link href="/rosters">Rosters Page 
+            </Link>
+            <h1>Testing text</h1>
         </header>
         <hr></hr>
         <main>{children}</main>
