@@ -96,21 +96,21 @@ function Transaction ({ tx }) {
 }
 
 
-function Drop({ drops }) {
+function Drop({ drop }) {
 
     return (
         <li className="text-green-600">
-            {drops.player}  Team {drops.fromTeam}
+            {drop.player}  Team {drop.fromTeam}
         </li>
 
     );
 }
 
-function Add({ adds }) {
+function Add({ add }) {
 
     return (
         <li className="text-red-600">
-            {adds.player}  Team {adds.fromTeam}
+            {add.player}  Team {add.fromTeam}
         </li>
     )
 }

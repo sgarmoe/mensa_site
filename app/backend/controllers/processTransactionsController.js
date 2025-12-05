@@ -8,6 +8,7 @@ export async function processTransactionsController() {
         return;
     }
     //console.log("Processed Transactions: ", processedTransactions);
+    return processedTransactions;
 }
 
 //processTransactionsController();
