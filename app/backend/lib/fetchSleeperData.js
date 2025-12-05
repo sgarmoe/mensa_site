@@ -8,7 +8,7 @@ const uri = process.env.MONGODB_URI;
 const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
 const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
 const players_url = 'https://api.sleeper.app/v1/players/nfl';
-const transactions_url = 'https://api.sleeper.app/v1/league/1180198267141128192/transactions/1'
+const transactions_url = 'https://api.sleeper.app/v1/league/1180198267141128192/transactions/11'
 
 
 //fetch users and their team names 
@@ -36,7 +36,6 @@ export async function fetchTransactions (){
     try {
         const response = await axios.get(transactions_url);
         console.log("received response");
-        //console.log(response);
         return response.data;
     } catch (error) {
         console.error("Error fetching transactions", error);

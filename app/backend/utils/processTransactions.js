@@ -133,5 +133,3 @@ function formatFreeAgent(tx, players) {
 
 }
 
-
-processTransactions();
