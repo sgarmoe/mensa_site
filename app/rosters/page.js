@@ -10,6 +10,8 @@ function Header({ title }) {
       );
   }
 
+
+
 export default function RostersPage() {
     const [rosters, setRosters] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -49,10 +51,6 @@ export default function RostersPage() {
         </div>
     );
 }
-
-
-
-
 
 
 function Team({ team }) {
