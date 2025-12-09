@@ -55,12 +55,12 @@ export async function processTransactions() {
     processedData.sort((a, b) => b.timestamp - a.timestamp);
 
 
-    console.dir(processedData.slice(0, 100), { depth: null });
+    //console.dir(processedData.slice(0, 100), { depth: null });
     return processedData;
 }
 
 function formatTrade(tx, players) {
-    console.log("Entered trade format ");
+    //console.log("Entered trade format ");
     
     const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
         player: players[playerId]?.full_name || "Unknown player", 

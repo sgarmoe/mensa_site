@@ -9,6 +9,7 @@ const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/roster
 const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
 const players_url = 'https://api.sleeper.app/v1/players/nfl';
 const transactions_url = 'https://api.sleeper.app/v1/league/1180198267141128192/transactions/11'
+//const matchups_url = `https://api.sleeper.app/v1/league/${leagueId}/matchups/${week}`
 
 
 //fetch users and their team names 
@@ -41,3 +42,18 @@ export async function fetchTransactions (){
         console.error("Error fetching transactions", error);
     }
 }
+
+
+export async function fetchAllMatchups(leagueId, totalWeeks = 14) {
+  const requests = Array.from({ length : totalWeeks }, (_, i) => {
+    const week = i + 1;
+    const url = `https://api.sleeper.app/v1/league/1180198267141128192/matchups/${week}`;
+    return axios.get(url).then(res => ({ week, matchups: res.data }));
+  });
+  const results = await Promise.all(requests);
+  console.log(results);
+  return results;
+}
+
+
+fetchAllMatchups();
