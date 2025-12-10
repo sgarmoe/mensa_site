@@ -16,7 +16,7 @@ const transactions_url = 'https://api.sleeper.app/v1/league/1180198267141128192/
 export async function fetchUserTeamNames() {
   try {
     const response = await axios.get(users_url) //call to Sleeper API for all users in the league
-    console.log(response);
+    //console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching league's users", error);
@@ -27,7 +27,7 @@ export async function fetchUserTeamNames() {
 export async function fetchCurrentRosters() {
   try {
     const response = await axios.get(roster_url);  //call to Sleeper for all rosters for each team in the league
-    console.log(response);
+    //console.log(response);
     return response.data;
   } catch (error) {
     console.error('Error fetching rosters: ', error);

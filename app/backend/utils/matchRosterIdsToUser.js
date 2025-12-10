@@ -28,24 +28,8 @@ export async function matchRosterIdsToUser() {
         }
     });
 
-    // users.forEach(({ display_name, metadata }) => {
-    //     //console.log(`Processing data for ${username} `);
-    //     const teamName = metadata.team_name; 
-    //     console.log(`Username: ${display_name}, Team name: ${teamName}`);
-    //     profiles.push(teamName);
-    // }) 
-
-    // rosters.forEach(roster => {
-    //     const rosterId = roster.roster_id;
-    //     profiles.push(rosterId);
-    // })
-
-
-    profiles.forEach(profile => {
-        console.log(`Team name: ${profile.teamName}, Roster ID: ${profile.rosterId}`);
-    });
-
+    // profiles.forEach(profile => {
+    //     //console.log(`Team name: ${profile.teamName}, Roster ID: ${profile.rosterId}`);
+    // });
     return profiles;
 }
-
-matchRosterIdsToUser();
