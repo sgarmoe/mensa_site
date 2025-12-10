@@ -51,9 +51,6 @@ export async function fetchAllMatchups(leagueId, totalWeeks = 14) {
     return axios.get(url).then(res => ({ week, matchups: res.data }));
   });
   const results = await Promise.all(requests);
-  console.log(results);
+  //console.log(results);
   return results;
 }
-
-
-fetchAllMatchups();
