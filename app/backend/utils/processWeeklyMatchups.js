@@ -42,6 +42,13 @@ export async function processWeeklyMatchupData() {
         //console.log(teamAprofile);
         //console.log(teamBprofile);
 
+        // console.log("---- MATCHUP ----");
+        // console.log("teamA roster:", teamA.roster_id, "points:", teamA.points);
+        // console.log("teamB roster:", teamB.roster_id, "points:", teamB.points);
+
+        // console.log("teamA profile:", teamAprofile);
+        // console.log("teamB profile:", teamBprofile);
+
 
         const game = {
             week, 
@@ -64,18 +71,18 @@ export async function processWeeklyMatchupData() {
             
             winner: 
                 teamA.points > teamB.points
-                    ? teamAprofile.teamName ?? "Unknown"
-                    : teamBprofile.teamName ?? "Unknown",
+                    ? (teamAprofile?.teamName ?? "Unknown")
+                    : (teamBprofile?.teamName ?? "Unknown"),
             loser:
-                teamB.points > teamA.points
-                    ? teamBprofile.teamName ?? "Unknown"
-                    : teamAprofile.teamName ?? "Unknown"
+                teamB.points < teamA.points
+                    ? (teamBprofile?.teamName ?? "Unknown")
+                    : (teamAprofile?.teamName ?? "Unknown"),
         };
 
         weeklyMatchups.push(game);
         }
     }
-    console.log(weeklyMatchups[50]);
+    console.log(weeklyMatchups[20]);
     return weeklyMatchups;
 }
 
