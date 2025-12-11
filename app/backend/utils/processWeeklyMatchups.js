@@ -4,15 +4,8 @@ import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 export async function processWeeklyMatchupData() {
     const matchupsArray = await fetchAllMatchups();
     const profiles = await matchRosterIdsToUser();
-    
 
-    const weeklyMatchups = [];
-
-    //end w array objects w following:
-    //both team names, both rosters IDs, matchup ID, week
-    //points for both teams, victor, loser
-
-    //NESTED LOOPS TO DESTRUCTURE MATCHUPS  
+    const weeklyMatchups = []; 
 
     for (const { week, matchups } of matchupsArray) {
            const matchupMap = new Map();
@@ -27,28 +20,13 @@ export async function processWeeklyMatchupData() {
             matchupMap.get(id).push(entry);
            }
     
-
-
     for (const [matchup_id, teams] of matchupMap.entries()) {
         if (teams.length !== 2) continue; 
 
         const [teamA, teamB] = teams;
 
-        //console.log(profiles);
-
         const teamAprofile = profiles.find(p => p.rosterId === teamA.roster_id);
         const teamBprofile = profiles.find(p => p.rosterId === teamB.roster_id);
-
-        //console.log(teamAprofile);
-        //console.log(teamBprofile);
-
-        // console.log("---- MATCHUP ----");
-        // console.log("teamA roster:", teamA.roster_id, "points:", teamA.points);
-        // console.log("teamB roster:", teamB.roster_id, "points:", teamB.points);
-
-        // console.log("teamA profile:", teamAprofile);
-        // console.log("teamB profile:", teamBprofile);
-
 
         const game = {
             week, 
@@ -64,11 +42,7 @@ export async function processWeeklyMatchupData() {
                     team_name: teamBprofile?.teamName ?? "No team name found",
                     points: teamB.points
                 }
-
-                
-
             },
-            
             winner: 
                 teamA.points > teamB.points
                     ? (teamAprofile?.teamName ?? "Unknown")
@@ -82,9 +56,7 @@ export async function processWeeklyMatchupData() {
         weeklyMatchups.push(game);
         }
     }
-    console.log(weeklyMatchups[20]);
+    // console.log(weeklyMatchups[]);
     return weeklyMatchups;
 }
-
-
 processWeeklyMatchupData();
