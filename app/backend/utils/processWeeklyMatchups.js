@@ -56,7 +56,7 @@ export async function processWeeklyMatchupData() {
         weeklyMatchups.push(game);
         }
     }
-    // console.log(weeklyMatchups[]);
+    //console.log(weeklyMatchups[45]);
     return weeklyMatchups;
 }
 processWeeklyMatchupData();

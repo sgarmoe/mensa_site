@@ -4,7 +4,7 @@ export async function processTransactionsController() {
     const processedTransactions = await processTransactions();
 
     if (!processedTransactions) {
-        console.log("Error processing transactions in Controller");
+        console.log("Error processing transactions in Controller", error);
         return;
     }
     //console.log("Processed Transactions: ", processedTransactions);
