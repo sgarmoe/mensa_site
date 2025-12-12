@@ -16,15 +16,15 @@ export default function RootLayout({ children }) {
       <body>
         <header>
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
-            <Link href="/"> Home Page   </Link>
+            <Link href="/" className="nav-link"> Home Page   </Link>
 
-            <Link href="/rosters">Rosters Page    
+            <Link href="/rosters" className="nav-link">Rosters Page    
             </Link>
 
-            <Link href="/recentTransactions">Recent Transactions   
+            <Link href="/recentTransactions" className="nav-link">Recent Transactions   
             </Link>
 
-            <Link href="/matchups">Weekly Matchups
+            <Link href="/matchups" className="nav-link">Weekly Matchups
             </Link>
             <h2> League History </h2>
             

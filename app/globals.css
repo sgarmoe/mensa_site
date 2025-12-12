@@ -95,3 +95,7 @@ h2 {
     border-radius: 20px;
     display: inline-block;
 }
+
+.nav-link {
+    margin-right: 20px;
+}
