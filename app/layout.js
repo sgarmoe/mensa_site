@@ -24,7 +24,8 @@ export default function RootLayout({ children }) {
             <Link href="/recentTransactions">Recent Transactions   
             </Link>
 
-            <h2> Weekly Matchups </h2> 
+            <Link href="/matchups">Weekly Matchups
+            </Link>
             <h2> League History </h2>
             
         </header>
