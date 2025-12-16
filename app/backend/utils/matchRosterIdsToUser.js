@@ -6,30 +6,42 @@ export async function matchRosterIdsToUser() {
     const usersArray = await fetchUserTeamNames();
     const rostersArray = await fetchCurrentRosters();
 
-    const profiles = [];
+
+    if (!Array.isArray(usersArray) || !Array.isArray(rostersArray)) {
+        throw new Error("Invalid Sleeper data format");
+    }
 
     const userMap = new Map();
     usersArray.forEach(({ user_id, metadata }) => {
-        const teamName = metadata?.team_name || 'Unnamed Team';
-        userMap.set(user_id, teamName);
+        userMap.set(
+            user_id, 
+            metadata?.team_name || 'Unnamed Team'
+        );
     });
 
+    const rosterToTeamMap = new Map();
 
-    rostersArray.forEach(roster => {
-        const ownerId = roster.owner_id; 
-        const rosterId = roster.roster_id;
-        const teamNameFinal = userMap.get(ownerId);
 
-        if (teamNameFinal && rosterId) {
-            profiles.push({
-                teamName: teamNameFinal, 
-                rosterId, rosterId
-            });
+    rostersArray.forEach(({ owner_id, roster_id }) => {
+       
+        const teamName = userMap.get(owner_id);
+
+        if (teamName && roster_id != null) {
+            rosterToTeamMap.set(roster_id, teamName);
         }
     });
 
     // profiles.forEach(profile => {
     //     //console.log(`Team name: ${profile.teamName}, Roster ID: ${profile.rosterId}`);
     // });
-    return profiles;
+
+    return rosterToTeamMap;
 }
+
+// function mapUserProfiles(profiles) {
+//     const map = new Map();
+//     profiles.forEach(({ rosterId, teamName }) => {
+//         map.set(rosterId, teamName);
+//     });
+//     return map;
+// }
