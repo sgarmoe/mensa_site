@@ -12,42 +12,33 @@ const transactions_url = 'https://api.sleeper.app/v1/league/1180198267141128192/
 
 //fetch users and their team names 
 export async function fetchUserTeamNames(leagueId) {
-  try {
-    const response = await axios.get(`${BASE_URL}/leaguea/${leagueId}/users`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching league's users", error);
-  }
+  return axios 
+    .get(`${BASE_URL}/league/${leagueId}/users`)
+    .then(res => res.data);
 }
 
 //fetch current league's rosters from Sleeper
-export async function fetchCurrentRosters() {
-  try {
-    const response = await axios.get(roster_url); 
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching rosters: ', error);
-  }
+export async function fetchCurrentRosters(leagueId) {
+  return axios
+    .get(`${BASE_URL}/league/${leagueId}/rosters`)
+    .then(res => res.data);
 }
 
 //fetch all FA and trades transactions 
-export async function fetchTransactions (){ 
-    try {
-        const response = await axios.get(transactions_url);
-        console.log("received response");
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching transactions", error);
-    }
+export async function fetchTransactions (leagueId, week){ 
+    return axios
+      .get(`${BASE_URL}/league/${leagueId}/transactions/${week}`)
+      .then(res => res.data); 
 }
 
 
 export async function fetchAllMatchups(leagueId, totalWeeks = 14) {
-  const requests = Array.from({ length : totalWeeks }, (_, i) => {
-    const week = i + 1;
-    const url = `https://api.sleeper.app/v1/league/1180198267141128192/matchups/${week}`;
-    return axios.get(url).then(res => ({ week, matchups: res.data }));
-  });
-  const results = await Promise.all(requests);
-  return results;
+  return Promise.all(
+    Array.from({ length: totalWeeks }, (_, i) => {
+      const week = i + 1;
+      return axios
+        .get(`${BASE_URL}/league/${leagueId}/matchups/${week}`)
+        .then(res => res.data);
+    })
+  );
 }
