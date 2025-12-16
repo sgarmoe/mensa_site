@@ -1,4 +1,4 @@
-import { processTransactions } from '../utils/processTransactions.js';
+import { processTransactions } from '../helpers/processTransactions.js';
 
 export async function processTransactionsController() {
     const processedTransactions = await processTransactions();

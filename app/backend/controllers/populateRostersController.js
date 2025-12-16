@@ -1,4 +1,4 @@
-import { populateBench, populateIR, populateStarters, populateTaxi } from "../utils/populateRosters.js";
+import { populateBench, populateIR, populateStarters, populateTaxi } from "../helpers/populateRosters.js";
 import { fetchCurrentRosters, fetchUserTeamNames } from "../lib/fetchSleeperData.js";
 
 //controller that populates all rosters by calling Sleeper API &

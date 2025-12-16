@@ -4,7 +4,7 @@ import '../config/loadEnv.js';
 
 import axios from 'axios';
 import { connectToDatabase } from '../config/mongoClient.js';
-import { populateIR, populateBench, populateStarters, populateTaxi } from '../utils/populateRosters.js';
+import { populateIR, populateBench, populateStarters, populateTaxi } from '../helpers/populateRosters.js';
 
 const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters';
 

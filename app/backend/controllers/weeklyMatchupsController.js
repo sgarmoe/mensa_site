@@ -1,4 +1,4 @@
-import { processWeeklyMatchupData } from "../utils/processWeeklyMatchups.js";
+import { processWeeklyMatchupData } from "../helpers/processWeeklyMatchups.js";
 
 export async function matchupsController() {
     const allMatchups = await processWeeklyMatchupData();
