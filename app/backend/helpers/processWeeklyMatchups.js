@@ -59,4 +59,4 @@ export async function processWeeklyMatchupData() {
     //console.log(weeklyMatchups[45]);
     return weeklyMatchups;
 }
-processWeeklyMatchupData();
+//processWeeklyMatchupData();
