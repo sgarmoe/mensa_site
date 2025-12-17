@@ -2,7 +2,6 @@ import axios from 'axios';
 import '../config/loadEnv.js';
 
 const BASE_URL = "https://api.sleeper.app/v1";
-const leagueId = process.env.LEAGUE_ID;
 const uri = process.env.MONGODB_URI;
 //const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters'
 //const users_url = 'https://api.sleeper.app/v1/league/1180198267141128192/users'
@@ -42,3 +41,5 @@ export async function fetchAllMatchups(leagueId, totalWeeks = 14) {
     })
   );
 }
+
+
