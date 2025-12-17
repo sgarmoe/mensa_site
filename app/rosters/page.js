@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
+
+const YEAR = 2025;
+
 function Header({ title }) {
     return( 
       <h1 style={{ textAlign: 'center'}}>

@@ -1,12 +1,8 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
 import '../config/loadEnv.js';
 
 import axios from 'axios';
 import { connectToDatabase } from '../config/mongoClient.js';
 import { populateIR, populateBench, populateStarters, populateTaxi } from '../helpers/populateRosters.js';
-
-const roster_url = 'https://api.sleeper.app/v1/league/1180198267141128192/rosters';
 
 async function testPopulateRosters() {
     try {
@@ -24,10 +20,6 @@ async function testPopulateRosters() {
 
         for (const [index, roster] of rosters.entries()) {
 
-        
-        //const firstRoster = rosters[0];
-        //console.log(firstRoster.players);
-        
         const injuredReserve = await populateIR(roster.reserve);
         const starters = await populateStarters(roster.starters);
         const taxi = await populateTaxi(roster.taxi);
@@ -36,7 +28,7 @@ async function testPopulateRosters() {
 
         
         // console.log("IR: ", injuredReserve);
-        // console.log("Starters: ", starters);
+        console.log("Starters: ", starters);
         // console.log("Bench: ", bench);
         // console.log("Taxi: ", taxi);
         }
@@ -50,4 +42,4 @@ async function testPopulateRosters() {
 
 }
 
-testPopulateRosters();
+testPopulateRosters(2025);

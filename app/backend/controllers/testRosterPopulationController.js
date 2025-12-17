@@ -3,7 +3,7 @@ import '../config/loadEnv.js';
 
 async function testPopulate() { 
     console.log("starting test");
-    const result = await populateAllRosters();
+    const result = await populateAllRosters(2025);
 
     console.log("Test complete");
     console.log("Number of rosters: ", result.length);
