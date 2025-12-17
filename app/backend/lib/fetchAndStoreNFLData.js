@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const uri = process.env.MONGODB_URI;
-const players_url = 'https://api.sleeper.app/v1/players/nfl';
+// const uri = process.env.MONGODB_URI;
+// const players_url = 'https://api.sleeper.app/v1/players/nfl';
 
 export async function fetchAndStoreNFLData(db) {
     try {
