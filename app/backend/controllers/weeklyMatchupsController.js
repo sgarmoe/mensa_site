@@ -1,19 +1,13 @@
+import { all } from "axios";
 import { processWeeklyMatchupData } from "../helpers/processWeeklyMatchups.js";
 
-export async function matchupsController() {
-    const allMatchups = await processWeeklyMatchupData();
+export async function matchupsController(year, week) {
 
-    if (!allMatchups) {
-        console.log("Error returning all matchup data: ", error);
-        return;
+    if (!year) {
+        throw new Error("Year is required param");
     }
 
-    //console.log("Matchup sample: ", allMatchups[40]);
+    const allMatchups = await processWeeklyMatchupData(year, week);
+    console.log("Matchup data: ", allMatchups);
     return allMatchups;
-
-    //logic to call for matchups w null checks
-    //use test file to verify functionality after
 }
-
-
-matchupsController();

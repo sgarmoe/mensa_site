@@ -1,8 +1,14 @@
 import { fetchAllMatchups } from "../lib/fetchSleeperData.js";
 import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
+import { LEAGUES } from "../config/leagues.js";
 
-export async function processWeeklyMatchupData() {
-    const matchupsArray = await fetchAllMatchups();
+
+export async function processWeeklyMatchupData(year, week) {
+    const leagueId = LEAGUES[year];
+
+    const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
+
+    const matchupsArray = await fetchAllMatchups(leagueId, allWeeks);
     const profiles = await matchRosterIdsToUser();
 
     const weeklyMatchups = []; 
@@ -56,7 +62,6 @@ export async function processWeeklyMatchupData() {
         weeklyMatchups.push(game);
         }
     }
-    //console.log(weeklyMatchups[45]);
     return weeklyMatchups;
 }
 //processWeeklyMatchupData();

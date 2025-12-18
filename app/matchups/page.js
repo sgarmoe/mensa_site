@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
+const YEAR = 2025;
+
 function Header({ title }) {
     return(
         <h1 style={{ textAlign: 'center'}}>
@@ -19,7 +21,7 @@ export default function MatchupsPage() {
     useEffect(() => {
         async function fetchMatchups() {
             try {
-                const res = await fetch ("api/weeklyMatchups");
+                const res = await fetch (`api/weeklyMatchups?year=${YEAR}`);
                 if (!res.ok) throw new Error("Failed to populate matchups");
                 
                 const data = await res.json();

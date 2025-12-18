@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
 import { matchupsController } from "../../backend/controllers/weeklyMatchupsController.js";
 
-export async function GET() {
+export const dynamic = "force-dynamic"
+
+export async function GET(request) {
     try {
         console.log("GET /api/matchupsController called");
-        const weeklyMatchups = await matchupsController();
+
+        const { searchParams } = new URL (request.url);
+        const year = Number(searchParams.get("year"));
+        const weekParam = searchParams.get("week");
+        const week = weekParam ? Number(weekParam) : undefined;
+
+        const weeklyMatchups = await matchupsController(year, week);
         console.log("Weekly Matchups route reached");
 
         return NextResponse.json(weeklyMatchups);
