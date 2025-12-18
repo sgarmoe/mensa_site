@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { matchupsController } from "../../backend/controllers/weeklyMatchupsController.js";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 export async function GET(request) {
     try {

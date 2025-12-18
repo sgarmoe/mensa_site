@@ -1,4 +1,3 @@
-import { all } from "axios";
 import { processWeeklyMatchupData } from "../helpers/processWeeklyMatchups.js";
 
 export async function matchupsController(year, week) {
