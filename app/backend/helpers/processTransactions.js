@@ -1,13 +1,16 @@
 import { fetchTransactions } from "../lib/fetchSleeperData.js";
 import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
+import { LEAGUES } from "../config/leagues.js";
 
 const limit = 100;
 
-export async function processTransactions() {
-    const rawData = await fetchTransactions();
+export async function processTransactions(year) {
+    const leagueId = LEAGUES[year];
+    const week = 0;
+
+    const rawData = await fetchTransactions(leagueId, week);
     
     const playerIds = [];
-
 
     rawData.forEach(tx => {
         if (tx.adds) {
@@ -26,7 +29,6 @@ export async function processTransactions() {
     players.forEach(p => {
         playerLookup[p.player_id] = p;
     });
-
 
     const processedData = rawData.map(tx => {
         if (tx.type == "trade") {
@@ -50,11 +52,7 @@ export async function processTransactions() {
             drops: []
         };
     });
-
-    
     processedData.sort((a, b) => b.timestamp - a.timestamp);
-
-
     //console.dir(processedData.slice(0, 100), { depth: null });
     return processedData;
 }
@@ -71,7 +69,6 @@ function formatTrade(tx, players) {
         player: players[playerId]?.full_name || "Unknown Player",
         fromTeam: teamId
     }));
-    
 
     return {
         type: "trade",
@@ -95,7 +92,6 @@ function formatWaiver(tx, players) {
         fromTeam: teamId
     }));
     
-
     return {
         type: "waiver",
         transactionId: tx.transaction_id, 
@@ -104,8 +100,6 @@ function formatWaiver(tx, players) {
         adds, 
         drops
     };
-
-
 }
 
 function formatFreeAgent(tx, players) {
@@ -120,7 +114,6 @@ function formatFreeAgent(tx, players) {
         fromTeam: teamId
     }));
     
-
     return {
         type: "Free Agent",
         transactionId: tx.transaction_id, 
@@ -129,7 +122,4 @@ function formatFreeAgent(tx, players) {
         adds, 
         drops
     };
-
-
 }
-

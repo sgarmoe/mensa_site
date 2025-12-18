@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
-
+const YEAR = 2025;
+const WEEK = 0;
 
 function Header({ title }) {
     return( 
@@ -23,7 +24,7 @@ export default function TransactionsPage() {
     useEffect(() => {
         async function fetchTransactions() {
             try {
-                const res = await fetch ("/api/populateRecentTransactions");
+                const res = await fetch (`/api/populateRecentTransactions?year=${YEAR}week=${WEEK}`);
                 if (!res.ok) throw new Error("Failed to populate transactions");
 
                 const data = await res.json();

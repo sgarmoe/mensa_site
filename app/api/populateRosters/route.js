@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { populateAllRosters } from "../../backend/controllers/populateRostersController.js";
 
+export const dynamic = "force-dynamic";
+
+
 export async function GET(request) {
   try {
     console.log("GET /api/rosters called");
