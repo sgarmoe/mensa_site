@@ -1,14 +1,25 @@
 import { fetchTransactions } from "../lib/fetchSleeperData.js";
 import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
 import { LEAGUES } from "../config/leagues.js";
+import { Wellfleet } from "next/font/google/index.js";
 
-const limit = 100;
-
-export async function processTransactions(year) {
+export async function processTransactions(year, week) {
     const leagueId = LEAGUES[year];
-    const week = 0;
 
-    const rawData = await fetchTransactions(leagueId, week);
+    if (LEAGUES[year]) {
+        throw new Error(`No year detected for ${year}`);
+    }
+
+    const allWeeks = week ? [week] : Array.from({ length : 18 }, (_, i) => i + 1); 
+
+    let rawData = [];
+
+    for (const w of allWeeks) {
+        const weekData = await fetchTransactions(leagueId, w);
+        if (Array.isArray(weekData)) {
+            rawData.push(...weekData);
+        }
+    }
     
     const playerIds = [];
 
@@ -115,7 +126,7 @@ function formatFreeAgent(tx, players) {
     }));
     
     return {
-        type: "Free Agent",
+        type: "free agent",
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,

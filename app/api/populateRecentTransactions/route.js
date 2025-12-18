@@ -1,19 +1,21 @@
 import { NextResponse } from "next/server";
 import { processTransactionsController } from "../../backend/controllers/processTransactionsController.js";
+import { Wellfleet } from "next/font/google/index.js";
 
 export const dynamic = "force-dynamic";
-
 
 export async function GET(request) {
   try {
     console.log("GET /api/populateRecentTransactions called");
 
     const { searchParams } = new URL(request.url);
-    const year = searchParams.get("year", "week");
+    const year = Number(searchParams.get("year"));
+    const weekParam = searchParams.get("week");
+    const week = weekParam ? Number(weekParam) : undefined;
 
-    if (!year || !week) {
+    if (!year) {
       return NextResponse.json( 
-        { error : "Year and Week required" },
+        { error : "Year required" },
         { status: 400} 
       );
     } 
