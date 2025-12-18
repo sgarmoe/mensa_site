@@ -1,12 +1,11 @@
 import { fetchTransactions } from "../lib/fetchSleeperData.js";
 import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
 import { LEAGUES } from "../config/leagues.js";
-import { Wellfleet } from "next/font/google/index.js";
 
 export async function processTransactions(year, week) {
     const leagueId = LEAGUES[year];
 
-    if (LEAGUES[year]) {
+    if (!LEAGUES[year]) {
         throw new Error(`No year detected for ${year}`);
     }
 

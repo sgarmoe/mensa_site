@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { processTransactionsController } from "../../backend/controllers/processTransactionsController.js";
-import { Wellfleet } from "next/font/google/index.js";
 
 export const dynamic = "force-dynamic";
 
