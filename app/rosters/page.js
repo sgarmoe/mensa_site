@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
-
 const YEAR = 2025;
 
 function Header({ title }) {
@@ -23,7 +22,7 @@ export default function RostersPage() {
     useEffect(() => {
         async function fetchRosters() {
             try {
-                const res = await fetch ("/api/populateRosters");
+                const res = await fetch (`/api/populateRosters?year=${YEAR}`);
                 if (!res.ok) throw new Error("Failed to fetch rosters");
 
                 const data = await res.json()
