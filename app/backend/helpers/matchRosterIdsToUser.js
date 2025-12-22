@@ -7,7 +7,7 @@ const leagueId = LEAGUES[year];
 export async function matchRosterIdsToUser() {
 
     const usersArray = await fetchUserTeamNames(leagueId);
-    const rostersArray = await fetchCurrentRosters();
+    const rostersArray = await fetchCurrentRosters(leagueId);
 
 
     if (!Array.isArray(usersArray) || !Array.isArray(rostersArray)) {
