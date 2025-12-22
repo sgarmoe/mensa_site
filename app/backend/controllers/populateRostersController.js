@@ -7,7 +7,10 @@ import { LEAGUES } from "../config/leagues.js";
 
 export async function populateAllRosters(year) {
     try {
+        console.log("Logging year/n");
+        console.log(year);
         const leagueId = LEAGUES[year];
+        console.log("League ID: ", leagueId);
 
         const rosters = await fetchCurrentRosters(leagueId);
         const users = await fetchUserTeamNames(leagueId);
