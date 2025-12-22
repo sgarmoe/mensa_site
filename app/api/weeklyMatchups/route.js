@@ -7,7 +7,7 @@ export async function GET(request) {
     try {
         console.log("GET /api/matchupsController called");
 
-        const { searchParams } = new URL (request.url);
+        const { searchParams } = new URL(request.url);
         const year = Number(searchParams.get("year"));
         const weekParam = searchParams.get("week");
         const week = weekParam ? Number(weekParam) : undefined;

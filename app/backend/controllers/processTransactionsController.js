@@ -6,6 +6,6 @@ export async function processTransactionsController(year, week) {
     }
 
     const processedTransactions = await processTransactions(year, week);
-    console.log("Processed Transactions: ", processedTransactions);
+    //console.log("Processed Transactions: ", processedTransactions);
     return processedTransactions;
 }

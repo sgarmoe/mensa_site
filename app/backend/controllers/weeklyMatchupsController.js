@@ -7,6 +7,6 @@ export async function matchupsController(year, week) {
     }
 
     const allMatchups = await processWeeklyMatchupData(year, week);
-    console.log("Matchup data: ", allMatchups);
+    //console.log("Matchup data: ", allMatchups);
     return allMatchups;
 }

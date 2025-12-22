@@ -4,16 +4,20 @@ import { LEAGUES } from "../config/leagues.js";
 
 
 export async function processWeeklyMatchupData(year, week) {
+    console.log("Year: ", year)
+    console.log("Week: ", week);
     const leagueId = LEAGUES[year];
+    console.log(leagueId);
 
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
+    console.log("All weeks: ", allWeeks);
 
     const matchupsArray = await fetchAllMatchups(leagueId, allWeeks);
     const profiles = await matchRosterIdsToUser();
 
-    const weeklyMatchups = []; 
+    let weeklyMatchups = []; 
 
-    for (const { week, matchups } of matchupsArray) {
+    for (const { week: currentWeek, matchups } of matchupsArray) {
            const matchupMap = new Map();
 
            for (const entry of matchups) {
@@ -35,7 +39,7 @@ export async function processWeeklyMatchupData(year, week) {
         const teamBprofile = profiles.find(p => p.rosterId === teamB.roster_id);
 
         const game = {
-            week, 
+            week: currentWeek, 
             matchup_id, 
             teams: {
                 teamA: {
