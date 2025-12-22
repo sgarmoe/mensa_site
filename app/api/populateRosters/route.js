@@ -18,6 +18,7 @@ export async function GET(request) {
       );
     }
     
+    console.log("Value of year: ");
     const populatedRosters = await populateAllRosters(year);
     console.log("Route reached");
 
