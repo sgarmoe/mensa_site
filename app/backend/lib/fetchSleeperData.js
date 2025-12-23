@@ -24,15 +24,10 @@ export async function fetchTransactions (leagueId, week){
 }
 
 
-export async function fetchAllMatchups(leagueId, totalWeeks) {
-  return Promise.all(
-    Array.from({ length: totalWeeks }, (_, i) => {
-      const week = i + 1;
+export async function fetchAllMatchups(leagueId, week) {
       return axios
         .get(`${BASE_URL}/league/${leagueId}/matchups/${week}`)
         .then(res => res.data);
-    })
-  );
 }
 
 

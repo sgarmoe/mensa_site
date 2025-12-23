@@ -12,15 +12,13 @@ export async function processWeeklyMatchupData(year, week) {
 
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
     console.log("All weeks: ", allWeeks);
-
-//START HERE 
-//MATCHUPS NOT POPULATED INTO ARRAY
-    const matchupsArray = await fetchAllMatchups(leagueId, allWeeks);
-    const profiles = await matchRosterIdsToUser();
-
+    
     let weeklyMatchups = []; 
 
-    for (const { week: currentWeek, matchups } of matchupsArray) {
+    for (const { week: currentWeek, matchups } of allWeeks) {
+        const weeklyMatchups = await fetchAllMatchups(leagueId, currentWeek);
+        const profiles = await matchRosterIdsToUser();
+
            const matchupMap = new Map();
 
            for (const entry of matchups) {
@@ -69,6 +67,6 @@ export async function processWeeklyMatchupData(year, week) {
         weeklyMatchups.push(game);
         }
     }
-    
+
     return weeklyMatchups;
 }
