@@ -25,7 +25,6 @@ export async function populateAllRosters(year) {
         const populatedRosters = [];
 
         for (const [index, roster] of rosters.entries()) {
-            console.log(`\n Populating # ${index + 1} `);
 
             const user = users.find(user => user.user_id === roster.owner_id); //matches Sleeper ID of the user to the owner of the roster
             const teamName = user?.metadata?.team_name || 'Unknown Team'; //associates User ID to the team name fetched above

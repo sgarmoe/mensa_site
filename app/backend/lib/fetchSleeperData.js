@@ -23,6 +23,7 @@ export async function fetchTransactions (leagueId, week){
       .then(res => res.data); 
 }
 
+//can use to fetch prior years
 export async function fetchAllMatchups(leagueId, week) {
       return axios
         .get(`${BASE_URL}/league/${leagueId}/matchups/${week}`)
