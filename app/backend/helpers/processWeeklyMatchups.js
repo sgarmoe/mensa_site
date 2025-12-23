@@ -11,6 +11,7 @@ export async function processWeeklyMatchupData(year, week) {
 
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
     console.log("All weeks: ", allWeeks);
+    
 //START HERE 
 //MATCHUPS NOT POPULATED INTO ARRAY
     const matchupsArray = await fetchAllMatchups(leagueId, allWeeks);
