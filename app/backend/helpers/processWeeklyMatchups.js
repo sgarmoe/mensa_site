@@ -13,23 +13,23 @@ export async function processWeeklyMatchupData(year, week) {
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
     console.log("All weeks: ", allWeeks);
     
-    let weeklyMatchups = []; 
-
-    for (const { week: currentWeek, matchups } of allWeeks) {
+    const weeklyMatchups = []; 
+    const profiles = await matchRosterIdsToUser();  
+    
+    for (const currentWeek of allWeeks) {
         const weeklyMatchups = await fetchAllMatchups(leagueId, currentWeek);
-        const profiles = await matchRosterIdsToUser();
+        
+        const matchupMap = new Map();
 
-           const matchupMap = new Map();
+        for (const entry of matchups) {
+        const matchupId = entry.matchup_id;
 
-           for (const entry of matchups) {
-            const id = entry.matchup_id;
-
-            if (!matchupMap.has(id)) {
-                matchupMap.set(id, []);
+            if (!matchupMap.has(matchupId)) {
+                matchupMap.set(matchupId, []);
             }
 
-            matchupMap.get(id).push(entry);
-           }
+            matchupMap.get(matchupId).push(entry);
+        }
     
     for (const [matchup_id, teams] of matchupMap.entries()) {
         if (teams.length !== 2) continue; 
@@ -39,7 +39,7 @@ export async function processWeeklyMatchupData(year, week) {
         const teamAprofile = profiles.find(p => p.rosterId === teamA.roster_id);
         const teamBprofile = profiles.find(p => p.rosterId === teamB.roster_id);
 
-        const game = {
+        weeklyMatchups.push ({
             week: currentWeek, 
             matchup_id, 
             teams: {
@@ -62,9 +62,7 @@ export async function processWeeklyMatchupData(year, week) {
                 teamB.points < teamA.points
                     ? (teamBprofile?.teamName ?? "Unknown")
                     : (teamAprofile?.teamName ?? "Unknown"),
-        };
-
-        weeklyMatchups.push(game);
+        });
         }
     }
 
