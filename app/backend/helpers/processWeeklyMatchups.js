@@ -36,8 +36,8 @@ export async function processWeeklyMatchupData(year, week) {
 
         const [teamA, teamB] = teams;
 
-        const teamAprofile = profiles.find(p => p.rosterId === teamA.roster_id);
-        const teamBprofile = profiles.find(p => p.rosterId === teamB.roster_id);
+        const teamAName = profiles.get(teamA.roster_id);
+        const teamBName = profiles.get(teamB.roster_id);
 
         weeklyMatchups.push ({
             week: currentWeek, 
@@ -45,23 +45,23 @@ export async function processWeeklyMatchupData(year, week) {
             teams: {
                 teamA: {
                     roster_id: teamA.roster_id, 
-                    team_name: teamAprofile?.teamName ?? "No team name found",
+                    team_name: teamAName ?? "No team name found",
                     points: teamA.points
                 }, 
                 teamB: {
                     roster_id: teamB.roster_id,
-                    team_name: teamBprofile?.teamName ?? "No team name found",
+                    team_name: teamBName ?? "No team name found",
                     points: teamB.points
                 }
             },
             winner: 
                 teamA.points > teamB.points
-                    ? (teamAprofile?.teamName ?? "Unknown")
-                    : (teamBprofile?.teamName ?? "Unknown"),
+                    ? teamAName ?? "Unknown"
+                    : teamBName ?? "Unknown",
             loser:
                 teamB.points < teamA.points
-                    ? (teamBprofile?.teamName ?? "Unknown")
-                    : (teamAprofile?.teamName ?? "Unknown"),
+                    ? teamBName ?? "Unknown"
+                    : teamAName ?? "Unknown",
         });
         }
     }
