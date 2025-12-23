@@ -24,7 +24,7 @@ export async function fetchTransactions (leagueId, week){
 }
 
 
-export async function fetchAllMatchups(leagueId, totalWeeks = 14) {
+export async function fetchAllMatchups(leagueId, totalWeeks) {
   return Promise.all(
     Array.from({ length: totalWeeks }, (_, i) => {
       const week = i + 1;
