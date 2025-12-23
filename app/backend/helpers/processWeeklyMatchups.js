@@ -17,7 +17,7 @@ export async function processWeeklyMatchupData(year, week) {
     const profiles = await matchRosterIdsToUser();  
     
     for (const currentWeek of allWeeks) {
-        const weeklyMatchups = await fetchAllMatchups(leagueId, currentWeek);
+        const matchups = await fetchAllMatchups(leagueId, currentWeek);
         
         const matchupMap = new Map();
 
