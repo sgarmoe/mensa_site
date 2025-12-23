@@ -4,14 +4,9 @@ import { LEAGUES } from "../config/leagues.js";
 
 
 export async function processWeeklyMatchupData(year, week) {
-    console.log("Data from Weekly matchup processor file");
-    console.log("Year: ", year)
-    console.log("Week: ", week);
-    const leagueId = LEAGUES[year];
-    console.log(leagueId);
 
+    const leagueId = LEAGUES[year];
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
-    console.log("All weeks: ", allWeeks);
     
     const weeklyMatchups = []; 
     const profiles = await matchRosterIdsToUser();  
@@ -65,6 +60,5 @@ export async function processWeeklyMatchupData(year, week) {
         });
         }
     }
-
     return weeklyMatchups;
 }

@@ -23,11 +23,8 @@ export async function fetchTransactions (leagueId, week){
       .then(res => res.data); 
 }
 
-
 export async function fetchAllMatchups(leagueId, week) {
       return axios
         .get(`${BASE_URL}/league/${leagueId}/matchups/${week}`)
         .then(res => res.data);
 }
-
-
