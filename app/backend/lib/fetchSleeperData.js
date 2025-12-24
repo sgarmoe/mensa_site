@@ -29,3 +29,10 @@ export async function fetchAllMatchups(leagueId, week) {
         .get(`${BASE_URL}/league/${leagueId}/matchups/${week}`)
         .then(res => res.data);
 }
+
+//fetch league details per season
+export async function fetchSpecificLeagueSettings(leagueId) {
+    return axios
+      .get(`${BASE_URL}/league/${leagueId}`)
+      .then(res => res.data);
+}

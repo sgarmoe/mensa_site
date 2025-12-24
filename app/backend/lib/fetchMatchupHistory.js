@@ -10,11 +10,11 @@
 //call for matchups w each league Id
 import '../config/loadEnv.js';
 import { LEAGUES } from "../config/leagues.js";
-import { fetchAllMatchups } from "./fetchSleeperData.js";
+import { fetchAllMatchups, fetchSpecificLeagueSettings } from "./fetchSleeperData.js";
 
 export async function fetchPastSeasonData() {
+    
 
-    const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
 
     const seasons = Object.entries(LEAGUES)
         .filter(([, leagueId]) => Boolean(leagueId))
@@ -24,16 +24,19 @@ export async function fetchPastSeasonData() {
         }))
         .sort((a, b) => a.year - b.year);
 
-    //console.log(LEAGUES);
-    //console.log(seasons);
+    console.log(LEAGUES);
+    console.log(seasons);
     const results = [];
 
     for (const season of seasons) {
-        //console.log(season.leagueId, week);
-        const seasonData = await fetchAllMatchups(season.leagueId, allWeeks); 
+        const settings = await fetchSpecificLeagueSettings(season.leagueId);
+        console.log(season.leagueId);
+        console.log(settings.settings.playoff_week_start);
+        const week = settings.settings.playoff_week_start;
+        const seasonData = await fetchAllMatchups(season.leagueId, week); 
         results.push(seasonData);
+        console.log("Results: ", results[1]);
     }
-    console.log(results[10]);
     return results;
 }
 
