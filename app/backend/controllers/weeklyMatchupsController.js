@@ -1,4 +1,4 @@
-import { processWeeklyMatchupData } from "../helpers/processWeeklyMatchups.js";
+import { processWeeklyMatchupData } from "../helpers/processWeeklyMatchupData.js";
 
 export async function matchupsController(year) {
 
