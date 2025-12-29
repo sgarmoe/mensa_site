@@ -31,10 +31,9 @@ export async function fetchPastSeasonData() {
         console.log(season);
         console.log(season.leagueId);
         console.log(settings.settings.playoff_week_start);
-        const week = settings.settings.playoff_week_start; 
-        const processedData = await processWeeklyMatchupData(season.year, week);
+        const processedData = await processWeeklyMatchupData(season.year);
         console.log("DATA FOR SEASON: ", season);
-        console.log(processedData);
+        //console.log(processedData);
         results.push(processedData);
     }
     return results;

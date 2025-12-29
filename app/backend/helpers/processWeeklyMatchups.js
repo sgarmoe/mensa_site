@@ -3,8 +3,9 @@ import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { LEAGUES } from "../config/leagues.js";
 
 
-export async function processWeeklyMatchupData(year, week) {
+export async function processWeeklyMatchupData(year) {
 
+    const week = 0;
     const leagueId = LEAGUES[year];
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
     

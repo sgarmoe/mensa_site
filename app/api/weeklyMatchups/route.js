@@ -12,7 +12,7 @@ export async function GET(request) {
         const weekParam = searchParams.get("week");
         const week = weekParam ? Number(weekParam) : undefined;
 
-        const weeklyMatchups = await matchupsController(year, week);
+        const weeklyMatchups = await matchupsController(year);
         console.log("Weekly Matchups route reached");
 
         return NextResponse.json(weeklyMatchups);
