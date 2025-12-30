@@ -17,16 +17,18 @@ export async function calculateAllTimeStatistics() {
 //calculate winningest teams in league history
 export function calculateAllTimeWins(matchupHistoryData) {
 
-
-
     let allTimeWins = 0;
     let allTimeLosses = 0;
     let winPercentage;
+
     console.log("Entered matchup history");
     
-    // matchupHistoryData.forEach(function (item) {
-        
-    // });
+    matchupHistoryData.forEach(function (item) {
+        //console.log(item.winner);
+        if (item.winner === item.teams.teamA.team_name) {
+            
+        }
+    });
 
 }
 

@@ -28,4 +28,3 @@ export async function fetchPastSeasonData() {
     
     return results;
 }
-fetchPastSeasonData();
