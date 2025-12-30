@@ -13,24 +13,18 @@ export async function fetchPastSeasonData() {
         }))
         .sort((a, b) => a.year - b.year);
 
-    //console.log(LEAGUES);
     const results = [];
 
-
-    //generates array of 
+    //generates array of objects for each season
     for (const season of seasons) {
         const settings = await fetchSpecificLeagueSettings(season.leagueId);
-        //console.log(season);
-        //console.log(season.leagueId);
-        //console.log(settings.settings.playoff_week_start);
         const processedData = await processWeeklyMatchupData(season.year);
       
-
         console.log("DATA FOR SEASON: ", season);
-        //console.log(processedData[0]);
+        console.log(processedData[0].winner);
+        console.log(processedData[0].teams.teamA.points);
         results.push(processedData);
     }
     return results;
 }
-
 fetchPastSeasonData();

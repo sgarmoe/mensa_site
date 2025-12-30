@@ -21,19 +21,6 @@ export function calculateAllTimeWins(matchupHistory) {
     let winPercentage;
     console.log("Entered matchup history");
 
-
-    // for (let i = 0; i < matchupHistory.length; i++) {
-    //     console.log("Week of matchup: ", matchupHistory.week);
-
-    // }
-
-    // for (const matchup of matchupHistory) {
-    //     console.log("Week: ", matchup.week);
-    //     console.log("Winner name: ", matchup.winner);
-    //     //need to tie winner name and roster ID - ID is the correct
-    //     //data to track all time scores
-        
-    // }
 }
 
 calculateAllTimeStatistics();
