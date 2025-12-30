@@ -13,6 +13,8 @@ export async function processWeeklyMatchupData(year) {
     const profiles = await matchRosterIdsToUser();  
     
     for (const currentWeek of allWeeks) {
+
+
         const matchups = await fetchAllMatchups(leagueId, currentWeek);
         
         const matchupMap = new Map();
@@ -61,5 +63,6 @@ export async function processWeeklyMatchupData(year) {
         });
         }
     }
+    
     return weeklyMatchups;
 }

@@ -9,7 +9,7 @@ export async function calculateAllTimeStatistics() {
     console.log("Entered all time stats fn");
     
     const matchupHistoryData = await fetchPastSeasonData();
-    console.log(matchupHistoryData[0]);
+    console.log("Matchup data after processing: ", matchupHistoryData[0]);
     calculateAllTimeWins(matchupHistoryData);
 
 }
@@ -23,12 +23,12 @@ export function calculateAllTimeWins(matchupHistoryData) {
 
     console.log("Entered matchup history");
     
-    matchupHistoryData.forEach(function (item) {
-        //console.log(item.winner);
-        if (item.winner === item.teams.teamA.team_name) {
-            
-        }
-    });
+    // matchupHistoryData.forEach(function (item) {
+    //     //console.log(item.winner);
+    //     if (item.winner === item.teams.teamA.team_name) {
+
+    //     }
+    // });
 
 }
 
