@@ -21,10 +21,11 @@ export async function fetchPastSeasonData() {
         const processedData = await processWeeklyMatchupData(season.year);
       
         console.log("DATA FOR SEASON: ", season);
-        console.log(processedData[0].winner);
-        console.log(processedData[0].teams.teamA.points);
-        results.push(processedData);
+        //console.log(processedData[0].winner);
+        //console.log(processedData[0].teams.teamA.points);
+        results.push(...processedData);
     }
+    
     return results;
 }
 fetchPastSeasonData();
