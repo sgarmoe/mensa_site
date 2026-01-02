@@ -55,20 +55,24 @@ export async function calculateAllTimeStatistics() {
 //calculate all time records for each team
 export function calculateAllTimeWins(teams) {
 
-    let allTimeWins = 0;
-    let allTimeLosses = 0;
-    let winPercentage;
-
-    console.log("Entered matchup history");
-    console.log("data check:", teams[0]);
+    console.log("Entered win tracker fn");
+    console.log("Sample team: ", teams[0]);
 
     for (const team of teams) {
-        //console.log("data check: ", team);
+        const gamesPlayed = 
+            team.totals.wins + team.totals.losses;
+
+        const winPercentage = 
+            gamesPlayed > 0 
+            ? (team.totals.wins / gamesPlayed).toFixed(3)
+            : "0.0";
+
+        console.log({
+            team: team.team_name,
+            wins: team.totals.wins,
+            winPercentage
+        });
     }
-
-
-
-
 }
 
 calculateAllTimeStatistics();
