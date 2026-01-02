@@ -19,13 +19,9 @@ export async function fetchPastSeasonData() {
     for (const season of seasons) {
         const settings = await fetchSpecificLeagueSettings(season.leagueId);
         const processedData = await processWeeklyMatchupData(season.year);
-      
-        console.log("DATA FOR SEASON: ", season);
-        console.log(Object.values(processedData)[0]);
 
         results.push({
             year: season.year, 
-            settings,
             teams: processedData
         });
     }

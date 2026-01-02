@@ -1,30 +1,73 @@
-import { fetchPastSeasonData } from "../lib/fetchMatchupHistory.js";
+import '../config/loadEnv.js';
+import { LEAGUES } from "../config/leagues.js";
+import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
 
-    console.log("Entered all time stats fn");
+
+    const seasons = Object.entries(LEAGUES)
+        .filter(([, leagueId]) => Boolean(leagueId))
+        .map(([year, leagueId]) => ({
+            year: Number(year),
+            leagueId}))
+        .sort((a, b) => a.year - b.year);
     
-    const matchupHistoryData = await fetchPastSeasonData();
-    console.log("Matchup data after processing: ", matchupHistoryData[0]);
-    calculateAllTimeWins(matchupHistoryData);
+    const allTimeTeams = new Map();
+
+
+    for (const { year } of seasons) {
+        const seasonData = await processWeeklyMatchupData(year);
+        const teams = Object.values(seasonData);
+
+        for (const team of teams) {
+            const { roster_id, team_name, totals} = team; 
+
+            if (!allTimeTeams.has(roster_id)) {
+                allTimeTeams.set(roster_id, {
+                    roster_id, 
+                    team_name,
+                    totals: {
+                        wins: 0, 
+                        losses: 0, 
+                        pf: 0,
+                        pa: 0
+                    }
+                });
+            }
+        
+    
+
+        const record = allTimeTeams.get(roster_id);
+
+        record.totals.wins += totals.wins;
+        record.totals.losses += totals.losses;
+        record.totals.pf += totals.pf;
+        record.totals.pa += totals.pa;
+        }
+    }
+    const teamsArray = Array.from(allTimeTeams.values());
+
+    calculateAllTimeWins(teamsArray);
+    return teamsArray;
 
 }
 
-//calculate winningest teams in league history
-export function calculateAllTimeWins(matchupHistoryData) {
+//calculate all time records for each team
+export function calculateAllTimeWins(teams) {
 
     let allTimeWins = 0;
     let allTimeLosses = 0;
     let winPercentage;
 
     console.log("Entered matchup history");
-    
-    // matchupHistoryData.forEach(function (item) {
-    //     //console.log(item.winner);
-    //     if (item.winner === item.teams.teamA.team_name) {
+    console.log("data check:", teams[0]);
 
-    //     }
-    // });
+    for (const team of teams) {
+        //console.log("data check: ", team);
+    }
+
+
+
 
 }
 
