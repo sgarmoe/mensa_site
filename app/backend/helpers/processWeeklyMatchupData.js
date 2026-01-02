@@ -14,11 +14,13 @@ export async function processWeeklyMatchupData(year) {
     const weeklyMatchups = []; 
     const profiles = await matchRosterIdsToUser();  
 
-    function storeTeamResults(roster_id, teamName) {
+    // console.log(profiles[0].teamName);
+
+    function storeTeamResults(roster_id, team_name, profiles) {
         if (!teamHistory.has(roster_id)) {
             teamHistory.set(roster_id, {
                 roster_id, 
-                team_name: profiles.teamName,
+                team_name : profiles.get(teamA.roster_id),
                 games: [], 
                 totals: {
                     wins: 0,

@@ -21,7 +21,7 @@ export async function fetchPastSeasonData() {
         const processedData = await processWeeklyMatchupData(season.year);
       
         console.log("DATA FOR SEASON: ", season);
-        console.log(Object.values(processedData)[0]);
+        //console.log(Object.values(processedData)[0]);
 
         results.push({
             year: season.year, 
