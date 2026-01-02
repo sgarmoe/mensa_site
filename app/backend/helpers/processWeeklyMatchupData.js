@@ -14,11 +14,11 @@ export async function processWeeklyMatchupData(year) {
     const weeklyMatchups = []; 
     const profiles = await matchRosterIdsToUser();  
 
-    function storeTeamResults(roster_id, team_name) {
+    function storeTeamResults(roster_id, teamName) {
         if (!teamHistory.has(roster_id)) {
             teamHistory.set(roster_id, {
                 roster_id, 
-                team_name,
+                team_name: profiles.teamName,
                 games: [], 
                 totals: {
                     wins: 0,
@@ -29,9 +29,6 @@ export async function processWeeklyMatchupData(year) {
             });
         }
     }
-
-
-
     
     for (const currentWeek of allWeeks) {
         const matchups = await fetchAllMatchups(leagueId, currentWeek);
@@ -69,7 +66,7 @@ export async function processWeeklyMatchupData(year) {
             week: currentWeek, 
             matchup_id, 
             opponent_roster_id: teamB.roster_id, 
-            opponent_name: teamB.team_name,
+            opponent_name: teamBName,
             pf: teamA.points,
             pa: teamB.points,
             result: teamAWin ? "win" : "loss"
@@ -81,7 +78,7 @@ export async function processWeeklyMatchupData(year) {
             week: currentWeek, 
             matchup_id, 
             opponent_roster_id: teamA.roster_id, 
-            opponent_name: teamA.team_name,
+            opponent_name: teamAName,
             pf: teamB.points,
             pa: teamA.points,
             result: teamBWin ? "win" : "loss"
