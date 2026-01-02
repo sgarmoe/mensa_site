@@ -16,11 +16,11 @@ export async function processWeeklyMatchupData(year) {
 
     // console.log(profiles[0].teamName);
 
-    function storeTeamResults(roster_id, team_name, profiles) {
+    function storeTeamResults(roster_id) {
         if (!teamHistory.has(roster_id)) {
             teamHistory.set(roster_id, {
                 roster_id, 
-                team_name : profiles.get(teamA.roster_id),
+                team_name: profiles.get(roster_id) ?? "Unknown Team",
                 games: [], 
                 totals: {
                     wins: 0,
@@ -54,8 +54,8 @@ export async function processWeeklyMatchupData(year) {
         const teamAName = profiles.get(teamA.roster_id);
         const teamBName = profiles.get(teamB.roster_id);
 
-        storeTeamResults(teamA.roster_id, teamA.team_name);
-        storeTeamResults(teamB.roster_id, teamB.team_name);
+        storeTeamResults(teamA.roster_id);
+        storeTeamResults(teamB.roster_id);
 
         const teamAWin = teamA.points > teamB.points;
         const teamBWin = teamB.points > teamA.points;
