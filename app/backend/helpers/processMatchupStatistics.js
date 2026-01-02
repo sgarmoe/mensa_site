@@ -70,6 +70,7 @@ export function calculateAllTimeWins(teams) {
         console.log({
             team: team.team_name,
             wins: team.totals.wins,
+            losses: team.totals.losses,
             winPercentage
         });
     }
