@@ -1,8 +1,4 @@
-//use matchup data to calculate all time statistics 
-
-
 import { fetchPastSeasonData } from "../lib/fetchMatchupHistory.js";
-
 
 export async function calculateAllTimeStatistics() {
 

@@ -2,19 +2,13 @@ import { fetchAllMatchups } from "../lib/fetchSleeperData.js";
 import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { LEAGUES } from "../config/leagues.js";
 
-
 export async function processWeeklyMatchupData(year) {
 
     const week = 0;
     const leagueId = LEAGUES[year];
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
-    
     const teamHistory = new Map();
-
-    const weeklyMatchups = []; 
     const profiles = await matchRosterIdsToUser();  
-
-    // console.log(profiles[0].teamName);
 
     function storeTeamResults(roster_id) {
         if (!teamHistory.has(roster_id)) {
@@ -100,31 +94,6 @@ export async function processWeeklyMatchupData(year) {
             teamBRecord.totals.wins++;
         }
 
-
-        // weeklyMatchups.push ({
-        //     week: currentWeek, 
-        //     matchup_id, 
-        //     teams: {
-        //         teamA: {
-        //             roster_id: teamA.roster_id, 
-        //             team_name: teamAName ?? "No team name found",
-        //             points: teamA.points
-        //         }, 
-        //         teamB: {
-        //             roster_id: teamB.roster_id,
-        //             team_name: teamBName ?? "No team name found",
-        //             points: teamB.points
-        //         }
-        //     },
-        //     winner: 
-        //         teamA.points > teamB.points
-        //             ? teamAName ?? "Unknown"
-        //             : teamBName ?? "Unknown",
-        //     loser:
-        //         teamB.points < teamA.points
-        //             ? teamBName ?? "Unknown"
-        //             : teamAName ?? "Unknown",
-        //     });
         }
     }
     return Object.fromEntries(teamHistory);
