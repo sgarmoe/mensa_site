@@ -6,11 +6,11 @@ import { processWeeklyMatchupData } from '../helpers/processWeeklyMatchupData.js
 export async function fetchPastSeasonData() {
 
     const seasons = Object.entries(SEASONS)
-        .filter(([, leagueId]) => Boolean(leagueId))
-        .map(([year, leagueId]) => ({
+        .map(([year, season]) => ({
             year: Number(year),
-            leagueId
+            leagueId: season.leagueId
         }))
+        .filter(season => Boolean(season.leagueId))
         .sort((a, b) => a.year - b.year);
 
     const results = [];

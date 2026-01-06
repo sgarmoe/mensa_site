@@ -4,16 +4,15 @@ import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
 
-
     const seasons = Object.entries(SEASONS)
-        .filter(([, leagueId]) => Boolean(leagueId))
-        .map(([year, leagueId]) => ({
+        .map(([year, season]) => ({
             year: Number(year),
-            leagueId}))
+            leagueId: season.leagueId
+        }))
+        .filter(season => Boolean(season.leagueId))
         .sort((a, b) => a.year - b.year);
     
     const allTimeTeams = new Map();
-
 
     for (const { year } of seasons) {
         const seasonData = await processWeeklyMatchupData(year);
