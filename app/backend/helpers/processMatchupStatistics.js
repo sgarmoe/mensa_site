@@ -1,5 +1,5 @@
 import '../config/loadEnv.js';
-import { LEAGUES } from "../config/leagues.js";
+import { SEASONS } from "../config/seasons.js";
 import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
@@ -67,10 +67,15 @@ export function calculateAllTimeWins(teams) {
             ? (team.totals.wins / gamesPlayed).toFixed(3)
             : "0.0";
 
+
+
         console.log({
             team: team.team_name,
+            gamesPlayed,
             wins: team.totals.wins,
             losses: team.totals.losses,
+            PF: team.totals.pf,
+            PA: team.totals.pa,
             winPercentage
         });
     }

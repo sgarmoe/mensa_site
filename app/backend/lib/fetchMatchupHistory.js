@@ -1,5 +1,5 @@
 import '../config/loadEnv.js';
-import { LEAGUES } from "../config/leagues.js";
+import { SEASONS } from "../config/seasons.js";
 import { fetchSpecificLeagueSettings } from "./fetchSleeperData.js";
 import { processWeeklyMatchupData } from '../helpers/processWeeklyMatchupData.js';
 

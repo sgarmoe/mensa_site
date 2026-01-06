@@ -1,6 +1,6 @@
 import { fetchTransactions } from "../lib/fetchSleeperData.js";
 import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
-import { LEAGUES } from "../config/leagues.js";
+import { LEAGUES } from "../config/seasons.js";
 
 export async function processTransactions(year, week) {
     const leagueId = LEAGUES[year];

@@ -1,5 +1,5 @@
 import { fetchUserTeamNames, fetchCurrentRosters } from "../lib/fetchSleeperData.js";
-import { LEAGUES } from "../config/leagues.js";
+import { LEAGUES } from "../config/seasons.js";
 
 const year = 2025;
 const leagueId = LEAGUES[year];

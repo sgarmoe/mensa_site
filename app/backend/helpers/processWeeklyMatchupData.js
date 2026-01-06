@@ -1,11 +1,11 @@
 import { fetchAllMatchups } from "../lib/fetchSleeperData.js";
 import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
-import { LEAGUES } from "../config/leagues.js";
+import { SEASONS } from "../config/seasons.js";
 
 export async function processWeeklyMatchupData(year) {
 
     const week = 0;
-    const leagueId = LEAGUES[year];
+    const { leagueId, regularWeeks } = SEASONS[year];
     const allWeeks = week ? [week] : Array.from({ length : 14 }, (_, i) => i + 1); 
     const teamHistory = new Map();
     const profiles = await matchRosterIdsToUser();  
