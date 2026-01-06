@@ -4,6 +4,8 @@ import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
 
+    //START HERE - COMB FOR ROUNDING OR DATA MANIPULATION ERRORS
+    
     const seasons = Object.entries(SEASONS)
         .map(([year, season]) => ({
             year: Number(year),
@@ -68,15 +70,15 @@ export function calculateAllTimeWins(teams) {
 
 
 
-        console.log({
-            team: team.team_name,
-            gamesPlayed,
-            wins: team.totals.wins,
-            losses: team.totals.losses,
-            PF: team.totals.pf,
-            PA: team.totals.pa,
-            winPercentage
-        });
+        // console.log({
+        //     team: team.team_name,
+        //     gamesPlayed,
+        //     wins: team.totals.wins,
+        //     losses: team.totals.losses,
+        //     PF: team.totals.pf,
+        //     PA: team.totals.pa,
+        //     winPercentage
+        // });
     }
 }
 

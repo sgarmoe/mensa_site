@@ -28,6 +28,7 @@ export async function processWeeklyMatchupData(year) {
     
     for (const currentWeek of allWeeks) {
         const matchups = await fetchAllMatchups(leagueId, currentWeek);
+        //console.log(matchups[0]);
         
         const matchupMap = new Map();
 
@@ -51,37 +52,11 @@ export async function processWeeklyMatchupData(year) {
         storeTeamResults(teamA.roster_id);
         storeTeamResults(teamB.roster_id);
 
-        const teamAWin = teamA.points > teamB.points;
-        const teamBWin = teamB.points > teamA.points;
-
         const teamARecord = teamHistory.get(teamA.roster_id);
         const teamBRecord = teamHistory.get(teamB.roster_id);
 
-        teamARecord.games.push({
-            year, 
-            week: currentWeek, 
-            matchup_id, 
-            opponent_roster_id: teamB.roster_id, 
-            opponent_name: teamBName,
-            pf: teamAPoints,
-            pa: teamBPoints,
-            result: resultA
-        });
-
-
-        teamBRecord.games.push({
-            year, 
-            week: currentWeek, 
-            matchup_id, 
-            opponent_roster_id: teamA.roster_id, 
-            opponent_name: teamAName,
-            pf: teamBPoints,
-            pa: teamAPoints,
-            result: resultB
-        });
-
         const teamAPoints = Number(teamA.points) || 0;
-        const teamBPoints = Number(team.points) || 0;
+        const teamBPoints = Number(teamB.points) || 0;
 
         teamARecord.totals.pf+= teamAPoints;
         teamARecord.totals.pa+= teamBPoints;
@@ -106,7 +81,31 @@ export async function processWeeklyMatchupData(year) {
             resultB = 'tie';
         }
 
+         teamARecord.games.push({
+            year, 
+            week: currentWeek, 
+            matchup_id, 
+            opponent_roster_id: teamB.roster_id, 
+            opponent_name: teamBName,
+            pf: teamAPoints,
+            pa: teamBPoints,
+            result: resultA
+        });
+
+
+        teamBRecord.games.push({
+            year, 
+            week: currentWeek, 
+            matchup_id, 
+            opponent_roster_id: teamA.roster_id, 
+            opponent_name: teamAName,
+            pf: teamBPoints,
+            pa: teamAPoints,
+            result: resultB
+        });
+
         }
     }
+    console.log("Team histories: ", teamHistory);
     return Object.fromEntries(teamHistory);
 }
