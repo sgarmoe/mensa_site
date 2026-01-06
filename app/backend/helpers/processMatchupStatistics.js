@@ -5,7 +5,7 @@ import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 export async function calculateAllTimeStatistics() {
 
 
-    const seasons = Object.entries(LEAGUES)
+    const seasons = Object.entries(SEASONS)
         .filter(([, leagueId]) => Boolean(leagueId))
         .map(([year, leagueId]) => ({
             year: Number(year),
