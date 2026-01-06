@@ -1,10 +1,6 @@
 import { fetchUserTeamNames, fetchCurrentRosters } from "../lib/fetchSleeperData.js";
-import { SEASONS } from "../config/seasons.js";
 
-const year = 2025;
-const { leagueId } = SEASONS[year];
-
-export async function matchRosterIdsToUser() {
+export async function matchRosterIdsToUser(leagueId) {
 
     const usersArray = await fetchUserTeamNames(leagueId);
     const rostersArray = await fetchCurrentRosters(leagueId);

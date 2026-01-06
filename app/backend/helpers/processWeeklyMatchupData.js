@@ -8,7 +8,7 @@ export async function processWeeklyMatchupData(year) {
     const { leagueId, regularWeeks } = SEASONS[year];
     const allWeeks = week ? [week] : Array.from({ length : regularWeeks }, (_, i) => i + 1); 
     const teamHistory = new Map();
-    const profiles = await matchRosterIdsToUser();  
+    const profiles = await matchRosterIdsToUser(leagueId);  
 
     function storeTeamResults(roster_id) {
         if (!teamHistory.has(roster_id)) {
@@ -63,9 +63,9 @@ export async function processWeeklyMatchupData(year) {
             matchup_id, 
             opponent_roster_id: teamB.roster_id, 
             opponent_name: teamBName,
-            pf: teamA.points,
-            pa: teamB.points,
-            result: teamAWin ? "win" : "loss"
+            pf: teamAPoints,
+            pa: teamBPoints,
+            result: resultA
         });
 
 
@@ -75,23 +75,35 @@ export async function processWeeklyMatchupData(year) {
             matchup_id, 
             opponent_roster_id: teamA.roster_id, 
             opponent_name: teamAName,
-            pf: teamB.points,
-            pa: teamA.points,
-            result: teamBWin ? "win" : "loss"
+            pf: teamBPoints,
+            pa: teamAPoints,
+            result: resultB
         });
 
-        teamARecord.totals.pf+= teamA.points;
-        teamARecord.totals.pa+= teamB.points;
+        const teamAPoints = Number(teamA.points) || 0;
+        const teamBPoints = Number(team.points) || 0;
 
-        teamBRecord.totals.pf+= teamB.points;
-        teamBRecord.totals.pa+= teamA.points;
+        teamARecord.totals.pf+= teamAPoints;
+        teamARecord.totals.pa+= teamBPoints;
 
-        if (teamAWin) {
+        teamBRecord.totals.pf+= teamBPoints;
+        teamBRecord.totals.pa+= teamAPoints;
+
+        let resultA, resultB;
+
+        if (teamAPoints > teamBPoints) {
             teamARecord.totals.wins++;
             teamBRecord.totals.losses++;
-        } else {
+            resultA = 'win';
+            resultB = 'loss';
+        } else if (teamBPoints > teamAPoints) {
             teamARecord.totals.losses++;
             teamBRecord.totals.wins++;
+            resultA = 'loss';
+            resultB = 'win';
+        } else {
+            resultA = 'tie';
+            resultB = 'tie';
         }
 
         }
