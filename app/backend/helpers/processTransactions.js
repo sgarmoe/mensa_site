@@ -3,7 +3,7 @@ import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
 import { SEASONS } from "../config/seasons.js";
 
 export async function processTransactions(year, week) {
-    const leagueId = SEASONS[year];
+    const leagueId = SEASONS[year].leagueId;
 
     if (!SEASONS[year]) {
         throw new Error(`No year detected for ${year}`);
