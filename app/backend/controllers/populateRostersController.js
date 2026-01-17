@@ -1,6 +1,6 @@
 import { populateBench, populateIR, populateStarters, populateTaxi } from "../helpers/populateRosters.js";
 import { fetchCurrentRosters, fetchUserTeamNames } from "../lib/fetchSleeperData.js";
-import { LEAGUES } from "../config/seasons.js";
+import { SEASONS } from "../config/seasons.js";
 
 //controller that populates all rosters by calling Sleeper API &
 //matches IDs w/ player names from mongo
@@ -9,7 +9,7 @@ export async function populateAllRosters(year) {
     try {
         console.log("Logging year/n");
         console.log(year);
-        const leagueId = LEAGUES[year];
+        const leagueId = SEASONS[year];
         console.log("League ID: ", leagueId);
 
         const rosters = await fetchCurrentRosters(leagueId);

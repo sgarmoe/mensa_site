@@ -10,5 +10,9 @@ export const SEASONS = {
     2025: { 
         leagueId: process.env.LEAGUE_ID_2025,
         regularWeeks: 14
+    },
+    2026: {
+        leagueId: process.env.LEAGUE_ID_2026,
+        regularWeeks: 14
     }
 };
