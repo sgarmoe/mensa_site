@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
-const YEAR = 2025;
+const YEAR = 2026;
 
 function Header({ title }) {
     return(
