@@ -55,7 +55,7 @@ export async function calculateAllTimeStatistics() {
 export function calculateAllTimeWins(teams) {
 
     console.log("Entered win tracker fn");
-    console.log("Sample team: ", teams[0]);
+    //console.log("Sample team: ", teams[0]);
 
     for (const team of teams) {
         const gamesPlayed = 

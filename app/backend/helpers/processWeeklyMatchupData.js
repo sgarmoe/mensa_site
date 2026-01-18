@@ -39,10 +39,9 @@ export async function processWeeklyMatchupData(year) {
         if (!Array.isArray(matchups) || matchups.length === 0) {
             continue;
         }
-
-        console.log(matchups[0]);
         
         const matchupMap = new Map();
+    
 
         for (const entry of matchups) {
         const matchupId = entry.matchup_id;
@@ -51,6 +50,17 @@ export async function processWeeklyMatchupData(year) {
                 matchupMap.set(matchupId, []);
             }
             matchupMap.get(matchupId).push(entry);
+        }
+
+            const firstMatchup = matchupMap.entries().next().value;
+
+        if (firstMatchup) {
+            const [matchup_id, teams] = firstMatchup;
+
+            console.log(
+                `RAW Sleeper matchup — week ${currentWeek}, matchup ${matchup_id}`
+            );
+        console.log(teams);
         }
     
     for (const [matchup_id, teams] of matchupMap.entries()) {
@@ -118,9 +128,20 @@ export async function processWeeklyMatchupData(year) {
 
         }
     }
-    console.log("Team histories: ", teamHistory);
+
+    // for (const [roster_id, team] of teamHistory.entries()) {
+    //     console.log(`Team ${team.team_name}, year: ${year}`);
+
+    //     for (const game of team.games) {
+    //         console.log(
+    //             `Week ${game.week} vs. ${game.opponent_name}` +
+    //             `PF: ${game.pf} PA: ${game.pa} Result: ${game.result}`
+    //         );
+    //     }
+    // }
+
     if (teamHistory.size === 0) {
-        return {};
+        return [];
     }
-    return Object.fromEntries(teamHistory);
+    return Array.from(teamHistory.values());
 }
