@@ -3,8 +3,6 @@ import { SEASONS } from "../config/seasons.js";
 import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
-
-    //START HERE - COMB FOR ROUNDING OR DATA MANIPULATION ERRORS
     
     const seasons = Object.entries(SEASONS)
         .map(([year, season]) => ({

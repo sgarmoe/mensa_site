@@ -1,3 +1,4 @@
+import { all } from "axios";
 import { processWeeklyMatchupData } from "../helpers/processWeeklyMatchupData.js";
 
 export async function matchupsController(year) {
@@ -7,5 +8,6 @@ export async function matchupsController(year) {
     }
 
     const allMatchups = await processWeeklyMatchupData(year);
+    console.log(allMatchups);
     return allMatchups;
 }

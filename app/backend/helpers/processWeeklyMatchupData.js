@@ -28,7 +28,7 @@ export async function processWeeklyMatchupData(year) {
     
     for (const currentWeek of allWeeks) {
         const matchups = await fetchAllMatchups(leagueId, currentWeek);
-        //console.log(matchups[0]);
+        console.log(matchups[0]);
         
         const matchupMap = new Map();
 

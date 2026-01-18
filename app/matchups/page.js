@@ -25,8 +25,7 @@ export default function MatchupsPage() {
                 if (!res.ok) throw new Error("Failed to populate matchups");
                 
                 const data = await res.json();
-                //console.log("Matchup data: ", data);
-            
+
                 setMatchups(data);
             } catch (err) {
                 setError(err.message);
