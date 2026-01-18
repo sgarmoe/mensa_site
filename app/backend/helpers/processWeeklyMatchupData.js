@@ -27,7 +27,19 @@ export async function processWeeklyMatchupData(year) {
     }
     
     for (const currentWeek of allWeeks) {
-        const matchups = await fetchAllMatchups(leagueId, currentWeek);
+        let matchups;
+
+        try {
+            matchups = await fetchAllMatchups(leagueId, currentWeek);
+        } catch (err) {
+            console.warn(`No matchups available for ${year}`);
+            continue;
+        }
+        
+        if (!Array.isArray(matchups) || matchups.length === 0) {
+            continue;
+        }
+
         console.log(matchups[0]);
         
         const matchupMap = new Map();
@@ -107,5 +119,8 @@ export async function processWeeklyMatchupData(year) {
         }
     }
     console.log("Team histories: ", teamHistory);
+    if (teamHistory.size === 0) {
+        return {};
+    }
     return Object.fromEntries(teamHistory);
 }

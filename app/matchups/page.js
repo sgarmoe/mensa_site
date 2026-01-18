@@ -41,6 +41,17 @@ export default function MatchupsPage() {
 if (loading) return <p className="text-center mt-8">Loading Matchups</p>;
 if (error) return <p className="text-center mt-8">Error: {error}</p>;
 
+if (!matchups || matchups.length === 0) {
+    return (
+        <div className="p-4 max-w-5xl mx-auto">
+            <Header title="Weekly Matchups Page" />
+            <p className="text-center mt-8">
+                No matchups available at this time. Please check back during the season.
+            </p>
+        </div>
+    );
+}
+
     return (
         <div className="p-4 max-w-5xl mx-auto">
             <Header title='Weekly Matchups Page'/>
