@@ -58,9 +58,10 @@ export async function processWeeklyMatchupData(year) {
             const [matchup_id, teams] = firstMatchup;
 
             console.log(
-                `RAW Sleeper matchup — week ${currentWeek}, matchup ${matchup_id}`
+                `RAW Sleeper matchup — week ${currentWeek}, matchup ${matchup_id}, year ${year}}`
+
             );
-        console.log(teams);
+        console.log(teams[0].starters_points);
         }
     
     for (const [matchup_id, teams] of matchupMap.entries()) {
