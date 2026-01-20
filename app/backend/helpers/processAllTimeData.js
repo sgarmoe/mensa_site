@@ -65,14 +65,14 @@ export function calculateAllTimeWins(teams) {
             ? (team.totals.wins / gamesPlayed).toFixed(3)
             : "0.0";
 
-        console.log({
-            team: team.team_name,
-            gamesPlayed,
-            wins: team.totals.wins,
-            losses: team.totals.losses,
-            PF: team.totals.pf,
-            PA: team.totals.pa,
-            winPercentage
-        });
+        // console.log({
+        //     team: team.team_name,
+        //     gamesPlayed,
+        //     wins: team.totals.wins,
+        //     losses: team.totals.losses,
+        //     PF: team.totals.pf,
+        //     PA: team.totals.pa,
+        //     winPercentage
+        // });
     }
 }
