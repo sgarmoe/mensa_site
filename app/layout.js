@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
 
             <Link href="/matchups" className="nav-link">Weekly Matchups
             </Link>
-            <h2> League History </h2>
+
+            <Link href="/history" className="nav-link">League History
+            </Link>
             
         </header>
 

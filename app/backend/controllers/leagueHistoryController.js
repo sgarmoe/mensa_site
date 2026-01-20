@@ -6,4 +6,4 @@ export async function processAllTimeData() {
     return allTimeData;
 }
 
-processAllTimeData();
+//processAllTimeData();
