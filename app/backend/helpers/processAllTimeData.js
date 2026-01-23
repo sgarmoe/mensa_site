@@ -17,6 +17,7 @@ export async function calculateAllTimeStatistics() {
     
     const allTimeTeams = new Map();
 
+    //may need to change to week/other var to iterate over
     for (const { year } of seasons) {
         const seasonData = await processWeeklyMatchupData(year);
         const teams = Object.values(seasonData);
@@ -83,5 +84,3 @@ export function calculateAllTimeWins(teams) {
         // });
     }
 }
-
-processAllTimeData();

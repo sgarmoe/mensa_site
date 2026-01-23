@@ -3,11 +3,13 @@ import { processAllTimeData } from "../../backend/controllers/leagueHistoryContr
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request) {
+export async function GET() {
     try {
         console.log("GET /api/league history called");
 
         const allTimeData = await processAllTimeData();
+        console.log("Passed all time data fn");
+
         return NextResponse.json(allTimeData);
     } catch (error) {
         console.error("ATD Routing Error: ", error);

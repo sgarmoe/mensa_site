@@ -12,17 +12,19 @@ function Header({ title }) {
 
 
 export default function LeagueHistoryPage() {
-    const [history, setHistory] = useState();
+    const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         async function fetchHistory() {
             try {
+                //ISSUE W RES
                 const res = await fetch (`/api/leagueHistory`);
-                if (!res.ok) throw new Error("Failed to acquire league history");
+                if (!res.ok) throw new Error("Failed to acquire league history: ", Error);
 
                 const data = await res.json();
+
 
                 setHistory(data);
             } catch (err) {
@@ -46,7 +48,7 @@ if (loading) return <p className="text-center mt-8">Loading history...</p>;
                         <TeamHistory key={i} hx={hx} />
                     ))}
                 </div>
-            <p>{history}</p>
+            <pre>{JSON.stringify(history, null, 2)}</pre>
 
         </div>
     );
@@ -55,9 +57,11 @@ if (loading) return <p className="text-center mt-8">Loading history...</p>;
 
 
 function TeamHistory ({ hx }) {
+    return (
     <div className="bg-white shadow-md rounded-lg p-4 border">
         <div className="flex justify-between items-center mb-2">
             <p className="font-bold text-lg">{hx.team}</p>
         </div>
     </div>
+    );
 }
