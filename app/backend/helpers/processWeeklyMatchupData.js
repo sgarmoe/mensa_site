@@ -54,15 +54,6 @@ export async function processWeeklyMatchupData(year) {
         }
 
             const firstMatchup = matchupMap.entries().next().value;
-
-        // if (firstMatchup) {
-        //     const [matchup_id, teams] = firstMatchup;
-
-        //     console.log(
-        //         `RAW Sleeper matchup — week ${currentWeek}, matchup ${matchup_id}, year ${year}}`
-
-        //     );
-        // }
     
     for (const [matchup_id, teams] of matchupMap.entries()) {
         if (teams.length !== 2) continue; 
@@ -81,22 +72,22 @@ export async function processWeeklyMatchupData(year) {
         const teamAPoints = Number(teamA.points) || 0;
         const teamBPoints = Number(teamB.points) || 0;
 
-        teamARecord.totals.pf+= teamAPoints;
-        teamARecord.totals.pa+= teamBPoints;
+        teamARecord.pf+= teamAPoints;
+        teamARecord.pa+= teamBPoints;
 
-        teamBRecord.totals.pf+= teamBPoints;
-        teamBRecord.totals.pa+= teamAPoints;
+        teamBRecord.pf+= teamBPoints;
+        teamBRecord.pa+= teamAPoints;
 
         let resultA, resultB;
 
         if (teamAPoints > teamBPoints) {
-            teamARecord.totals.wins++;
-            teamBRecord.totals.losses++;
+            teamARecord.wins++;
+            teamBRecord.losses++;
             resultA = 'win';
             resultB = 'loss';
         } else if (teamBPoints > teamAPoints) {
-            teamARecord.totals.losses++;
-            teamBRecord.totals.wins++;
+            teamARecord.losses++;
+            teamBRecord.wins++;
             resultA = 'loss';
             resultB = 'win';
         } else {

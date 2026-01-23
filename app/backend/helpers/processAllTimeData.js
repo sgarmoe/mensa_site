@@ -23,35 +23,30 @@ export async function calculateAllTimeStatistics() {
         const teams = Object.values(seasonData);
 
         for (const team of teams) {
-            const { roster_id, team_name, totals} = team; 
+            const { roster_id, team_name, wins, losses, pf, pa } = team; 
 
             if (!allTimeTeams.has(roster_id)) {
                 allTimeTeams.set(roster_id, {
                     roster_id, 
                     team_name,
-                    totals: {
-                        wins: 0, 
-                        losses: 0, 
-                        pf: 0,
-                        pa: 0
-                    }
+                    wins: 0, 
+                    losses: 0, 
+                    pf: 0,
+                    pa: 0
                 });
             }
-        
-    
 
         const record = allTimeTeams.get(roster_id);
 
-        record.totals.wins += totals.wins;
-        record.totals.losses += totals.losses;
-        record.totals.pf += totals.pf;
-        record.totals.pa += totals.pa;
+        record.wins += (wins || 0);
+        record.losses += (losses || 0);
+        record.pf += (pf || 0);
+        record.pa += (pa || 0);
         }
     }
     const teamsArray = Array.from(allTimeTeams.values());
 
         //RETURNED AS IMPROPER DATA STRUCTURE
-
 
 
     calculateAllTimeWins(teamsArray);
@@ -66,21 +61,11 @@ export function calculateAllTimeWins(teams) {
 
     for (const team of teams) {
         const gamesPlayed = 
-            team.totals.wins + team.totals.losses;
+            team.wins + team.losses;
 
         const winPercentage = 
             gamesPlayed > 0 
-            ? (team.totals.wins / gamesPlayed).toFixed(3)
+            ? (team.wins / gamesPlayed).toFixed(3)
             : "0.0";
-
-        // console.log({
-        //     team: team.team_name,
-        //     gamesPlayed,
-        //     wins: team.totals.wins,
-        //     losses: team.totals.losses,
-        //     PF: team.totals.pf,
-        //     PA: team.totals.pa,
-        //     winPercentage
-        // });
     }
 }
