@@ -1,5 +1,6 @@
 import '../config/loadEnv.js';
 import { SEASONS } from "../config/seasons.js";
+import { processAllTimeData } from '../controllers/leagueHistoryController.js';
 import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
@@ -46,9 +47,13 @@ export async function calculateAllTimeStatistics() {
     }
     const teamsArray = Array.from(allTimeTeams.values());
 
-    calculateAllTimeWins(teamsArray);
-    return teamsArray;
+        //RETURNED AS IMPROPER DATA STRUCTURE
 
+
+
+    calculateAllTimeWins(teamsArray);
+    console.log(Array.from(teamsArray.values()));
+    return Array.from(teamsArray.values()); 
 }
 
 //calculate all time records for each team
@@ -76,3 +81,5 @@ export function calculateAllTimeWins(teams) {
         // });
     }
 }
+
+processAllTimeData();
