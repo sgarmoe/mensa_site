@@ -11,17 +11,18 @@ export async function processWeeklyMatchupData(year) {
     const profiles = await matchRosterIdsToUser(leagueId);  
 
     function storeTeamResults(roster_id) {
+
+        //TEAM HISTORY TURNED TO INCORRECT DS
+
         if (!teamHistory.has(roster_id)) {
             teamHistory.set(roster_id, {
                 roster_id, 
                 team_name: profiles.get(roster_id) ?? "Unknown Team",
                 games: [], 
-                totals: {
-                    wins: 0,
-                    losses: 0, 
-                    pf: 0, 
-                    pa: 0
-                }
+                wins: 0,
+                losses: 0, 
+                pf: 0, 
+                pa: 0
             });
         }
     }

@@ -5,6 +5,8 @@ import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
     
+    //SORTS DATA INTO SEASONS --->> POOR CHOICE FOR ITERATING
+    //NEED MORE DISCRETE STRUCTURE. FILTER BY GAME & YEAR INSTEAD (ex: )
     const seasons = Object.entries(SEASONS)
         .map(([year, season]) => ({
             year: Number(year),
