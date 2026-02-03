@@ -8,6 +8,6 @@ export async function matchupsController(year) {
     }
 
     const allMatchups = await processWeeklyMatchupData(year);
-    console.log(allMatchups);
+    //console.log(allMatchups);
     return allMatchups;
 }

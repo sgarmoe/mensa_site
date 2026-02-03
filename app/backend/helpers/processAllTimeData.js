@@ -49,7 +49,7 @@ export async function calculateAllTimeStatistics() {
 
 
     calculateAllTimeWins(teamsArray);
-    console.log(Array.from(teamsArray.values()));
+    //console.log(Array.from(teamsArray.values()));
     return Array.from(teamsArray.values()); 
 }
 

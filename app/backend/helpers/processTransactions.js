@@ -1,9 +1,12 @@
 import { fetchTransactions } from "../lib/fetchSleeperData.js";
 import { getPlayersByArray } from "../lib/fetchMongoNFLData.js";
+import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { SEASONS } from "../config/seasons.js";
+
 
 export async function processTransactions(year, week) {
     const leagueId = SEASONS[year].leagueId;
+    const profiles = await matchRosterIdsToUser(leagueId);
 
     if (!SEASONS[year]) {
         throw new Error(`No year detected for ${year}`);
@@ -58,6 +61,7 @@ export async function processTransactions(year, week) {
             transactionId: tx.transaction_id,
             timestamp: tx.created,
             team: tx.roster_ids?.[0] || null,
+            team_name: profiles.get(roster_id) ?? "No team found",
             adds: [],
             drops: []
         };
@@ -85,6 +89,7 @@ function formatTrade(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
+        team_name: profiles.get(roster_id) ?? "No team found",
         adds, 
         drops
     };
@@ -107,6 +112,7 @@ function formatWaiver(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
+        team_name: profiles.get(roster_id) ?? "No team found",
         adds, 
         drops
     };
@@ -129,6 +135,7 @@ function formatFreeAgent(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
+        team_name: profiles.get(roster_id) ?? "No team found",
         adds, 
         drops
     };
