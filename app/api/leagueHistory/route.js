@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { processAllTimeData } from "../../backend/controllers/leagueHistoryController.js";
+import { calculateAllTimeStatistics } from "../../backend/helpers/processAllTimeData.js";
 
 export const dynamic = "force-dynamic";
 
@@ -7,7 +7,7 @@ export async function GET() {
     try {
         console.log("GET /api/league history called");
 
-        const allTimeData = await processAllTimeData();
+        const allTimeData = await calculateAllTimeStatistics();
         console.log("Passed all time data fn");
 
         return NextResponse.json(allTimeData);
