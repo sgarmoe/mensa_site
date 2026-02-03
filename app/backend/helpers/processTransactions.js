@@ -45,15 +45,15 @@ export async function processTransactions(year, week) {
 
     const processedData = rawData.map(tx => {
         if (tx.type == "trade") {
-            return formatTrade(tx, playerLookup);
+            return formatTrade(tx, playerLookup, profiles);
         }
 
         if (tx.type == "waiver") {
-            return formatWaiver(tx, playerLookup);
+            return formatWaiver(tx, playerLookup, profiles);
         }
 
         if (tx.type == "free_agent") {
-            return formatFreeAgent(tx, playerLookup);
+            return formatFreeAgent(tx, playerLookup, profiles);
         }
 
         return {
@@ -61,7 +61,7 @@ export async function processTransactions(year, week) {
             transactionId: tx.transaction_id,
             timestamp: tx.created,
             team: tx.roster_ids?.[0] || null,
-            team_name: profiles.get(roster_id) ?? "No team found",
+            team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
             adds: [],
             drops: []
         };
@@ -89,13 +89,13 @@ function formatTrade(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
-        team_name: profiles.get(roster_id) ?? "No team found",
+        team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
         adds, 
         drops
     };
 }
 
-function formatWaiver(tx, players) {
+function formatWaiver(tx, players, profiles) {
     
     const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
         player: players[playerId]?.full_name || "Unknown player", 
@@ -112,13 +112,13 @@ function formatWaiver(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
-        team_name: profiles.get(roster_id) ?? "No team found",
+        team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
         adds, 
         drops
     };
 }
 
-function formatFreeAgent(tx, players) {
+function formatFreeAgent(tx, players, profiles ) {
     
     const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
         player: players[playerId]?.full_name || "Unknown player", 
@@ -135,7 +135,7 @@ function formatFreeAgent(tx, players) {
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
-        team_name: profiles.get(roster_id) ?? "No team found",
+        team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
         adds, 
         drops
     };

@@ -9,6 +9,6 @@ export async function processTransactionsController(year, week) {
     console.log("Year for TX fetch: ", year);
     console.log("Week for TX fetch: ", week);
     const processedTransactions = await processTransactions(year, week);
-    //console.log("Processed Transactions: ", processedTransactions);
+    console.log("Processed Transactions: ", processedTransactions);
     return processedTransactions;
 }

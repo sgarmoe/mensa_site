@@ -28,7 +28,7 @@ export default function TransactionsPage() {
                 if (!res.ok) throw new Error("Failed to populate transactions");
 
                 const data = await res.json();
-                //console.log("TX Data: ", data);
+                console.log("TX Data: ", data);
 
                 setTransactions(data);
             } catch (err) {
@@ -67,7 +67,7 @@ function Transaction ({ tx }) {
         </p>
       </div>
 
-      <p className="text-sm text-gray-600 mb-2">Team: {tx.team}</p>
+      <p className="text-sm text-gray-600 mb-2">Team: {tx.team_name}</p>
 
       {/* Adds */}
       {tx.adds.length > 0 && (
