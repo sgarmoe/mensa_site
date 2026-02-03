@@ -1,6 +1,5 @@
 import '../config/loadEnv.js';
 import { SEASONS } from "../config/seasons.js";
-import { processAllTimeData } from '../controllers/leagueHistoryController.js';
 import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {

@@ -12,8 +12,6 @@ export async function processWeeklyMatchupData(year) {
 
     function storeTeamResults(roster_id) {
 
-        //TEAM HISTORY TURNED TO INCORRECT DS
-
         if (!teamHistory.has(roster_id)) {
             teamHistory.set(roster_id, {
                 roster_id, 
