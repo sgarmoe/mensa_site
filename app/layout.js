@@ -36,7 +36,9 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <hr></hr>
 
-        <footer>Created by Samuel Garmoe - 2026</footer>
+        <footer>Created by Samuel Garmoe - 2024-2026
+
+        </footer>
       </body>
     </html>
   );
