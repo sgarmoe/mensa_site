@@ -10,6 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.7",
     "axios": "^1.7.7",
     "dotenv": "^17.2.1",
     "lucide": "^0.563.0",
@@ -17,8 +20,8 @@
     "mongodb": "^6.18.0",
     "mongoose": "^8.6.2",
     "next": "^16.1.6",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "eslint": "^9",
