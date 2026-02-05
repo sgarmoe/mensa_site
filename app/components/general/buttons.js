@@ -6,3 +6,6 @@
 
 //filter buttons: waiver, trade, both
 
+const button = {
+    
+}

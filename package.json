@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^1.7.7",
     "dotenv": "^17.2.1",
+    "lucide": "^0.563.0",
+    "lucide-react": "^0.563.0",
     "mongodb": "^6.18.0",
     "mongoose": "^8.6.2",
     "next": "^16.1.6",
