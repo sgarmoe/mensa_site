@@ -8,6 +8,5 @@ import Button from '@mui/material/Button';
 
 //filter buttons: waiver, trade, both
 
-const button = {
+const button =  <Button variant="text" >Text</Button>
 
-}
