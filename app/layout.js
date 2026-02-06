@@ -36,8 +36,23 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <hr></hr>
 
-        <footer>Created by Samuel Garmoe - 2024-2026
+        <footer >
+          
+            <Link href="/" className="nav-link"> Home Page   </Link>
 
+            <Link href="/rosters" className="nav-link">Rosters Page    
+            </Link>
+
+            <Link href="/recentTransactions" className="nav-link">Recent Transactions   
+            </Link>
+
+            <Link href="/matchups" className="nav-link">Weekly Matchups
+            </Link>
+
+            <Link href="/history" className="nav-link">League History
+            </Link>
+          
+          <p className="attribute-self"> Created by Samuel Garmoe: 2024-2026 </p>
         </footer>
       </body>
     </html>
