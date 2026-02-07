@@ -2,6 +2,16 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "./rosters/page.js";
 import Link from 'next/link';
+import "./components/general/headerAndFooterButtons.js";
+import Button from '@mui/material/Button';
+import { ButtonGroup } from '@mui/material';
+
+
+//TODO
+//clean up button experimenting
+//set actual button layouts for header and footer
+//properly plan color, MENSA text appearance, etc. 
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,19 +26,27 @@ export default function RootLayout({ children }) {
       <body>
         <header>
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
-            <Link href="/" className="nav-link"> Home Page   </Link>
 
-            <Link href="/rosters" className="nav-link">Rosters Page    
-            </Link>
 
-            <Link href="/recentTransactions" className="nav-link">Recent Transactions   
-            </Link>
 
-            <Link href="/matchups" className="nav-link">Weekly Matchups
-            </Link>
+           <ButtonGroup variant="text">
+              <Button href="/">Home</Button>
+              <Button href="/rosters">Rosters</Button>
+              <Button href="/recentTransactions">Recent Transactions</Button>
+              <Button href="/matchups">Matchups</Button>
+              <Button href="/history">League History</Button>
+            </ButtonGroup>
 
-            <Link href="/history" className="nav-link">League History
-            </Link>
+            <Button variant="contained" href="/">Home</Button>
+
+            <Button variant="contained" href="/rosters">Rosters</Button>
+
+            <Button variant="contained" href="/recentTransactions">Recent Transactions</Button>
+
+            <Button variant="contained" href="/matchups">Matchups</Button>
+
+            <Button variant="contained" href="/history">League History</Button>
+
             
         </header>
 
@@ -38,20 +56,16 @@ export default function RootLayout({ children }) {
 
         <footer >
           
-            <Link href="/" className="nav-link"> Home Page   </Link>
 
-            <Link href="/rosters" className="nav-link">Rosters Page    
-            </Link>
+            <Button variant="text" href="/">Home</Button>
 
-            <Link href="/recentTransactions" className="nav-link">Recent Transactions   
-            </Link>
+            <Button variant="text" href="/rosters">Rosters</Button>
 
-            <Link href="/matchups" className="nav-link">Weekly Matchups
-            </Link>
+            <Button variant="text" href="/recentTransactions">Recent Transactions</Button>
 
-            <Link href="/history" className="nav-link">League History
-            </Link>
-          
+            <Button variant="text" href="/matchups">Matchups</Button>
+
+            <Button variant="text" href="/history">League History</Button>
           <p className="attribute-self"> Created by Samuel Garmoe: 2024-2026 </p>
         </footer>
       </body>
