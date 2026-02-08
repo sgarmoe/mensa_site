@@ -27,15 +27,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header>
-          <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
+          <h1 >Minimally Entertaining NonChildbearing Sport Advocates</h1>
             <Stack 
             direction="row" 
-            
             spacing={5}
             divider={<Divider orientation="vertical" flexItem/> } 
             sx={{
               justifyContent: "center",
               alignItems: "center",
+              bgcolor: "orange",
+              color: "black",
             }}
 
             >

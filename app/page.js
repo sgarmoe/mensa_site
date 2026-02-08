@@ -5,7 +5,7 @@ import "./rosters/page.js";
 export default function HomePage() {
   return (
     <div>
-      <h1>Home Page for MENSA FFL</h1>
+      <h1 text="white">Home Page for MENSA FFL</h1>
     </div>
   );
 }
