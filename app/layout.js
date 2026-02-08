@@ -1,10 +1,12 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./rosters/page.js";
-import Link from 'next/link';
-import "./components/general/headerAndFooterButtons.js";
 import Button from '@mui/material/Button';
 import { ButtonGroup } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 
 //TODO
@@ -26,28 +28,23 @@ export default function RootLayout({ children }) {
       <body>
         <header>
           <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
-
-
-
-           <ButtonGroup variant="text">
-              <Button href="/">Home</Button>
-              <Button href="/rosters">Rosters</Button>
-              <Button href="/recentTransactions">Recent Transactions</Button>
-              <Button href="/matchups">Matchups</Button>
-              <Button href="/history">League History</Button>
-            </ButtonGroup>
-
-            <Button variant="contained" href="/">Home</Button>
-
-            <Button variant="contained" href="/rosters">Rosters</Button>
-
-            <Button variant="contained" href="/recentTransactions">Recent Transactions</Button>
-
-            <Button variant="contained" href="/matchups">Matchups</Button>
-
-            <Button variant="contained" href="/history">League History</Button>
-
+            <Stack 
+            direction="row" 
             
+            spacing={5}
+            divider={<Divider orientation="vertical" flexItem/> } 
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+
+            >
+              <Button href="/" variant="contained">Home</Button>
+              <Button href="/rosters" variant="contained">Rosters</Button>
+              <Button href="/recentTransactions" variant="contained">Recent Transactions</Button>
+              <Button href="/matchups" variant="contained">Matchups</Button>
+              <Button href="/history" variant="contained">League History</Button>
+            </Stack>
         </header>
 
         <hr></hr>
@@ -55,17 +52,21 @@ export default function RootLayout({ children }) {
         <hr></hr>
 
         <footer >
-          
-
-            <Button variant="text" href="/">Home</Button>
-
-            <Button variant="text" href="/rosters">Rosters</Button>
-
-            <Button variant="text" href="/recentTransactions">Recent Transactions</Button>
-
-            <Button variant="text" href="/matchups">Matchups</Button>
-
-            <Button variant="text" href="/history">League History</Button>
+            <Stack 
+            direction="row" 
+            spacing={10}
+            divider={<Divider orientation="vertical" flexItem/> } 
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            >
+              <Button href="/">Home</Button>
+              <Button href="/rosters">Rosters</Button>
+              <Button href="/recentTransactions">Recent Transactions</Button>
+              <Button href="/matchups">Matchups</Button>
+              <Button href="/history">League History</Button>
+            </Stack>
           <p className="attribute-self"> Created by Samuel Garmoe: 2024-2026 </p>
         </footer>
       </body>

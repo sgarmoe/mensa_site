@@ -39,7 +39,14 @@ header {
     margin: 0;
     padding: 5px 0;
     box-sizing: border-box;
-    
+}
+
+.header-buttons {
+    padding: 10px 15px;
+}
+
+.footer-buttons {
+    padding: 10px 25px;
 }
 
 footer {
