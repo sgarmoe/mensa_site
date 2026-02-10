@@ -10,6 +10,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 //TODO
+//color scheme for header:
+  //MENSA not showing white
+  //buttons should be orange, not space between them
 //clean up button experimenting
 //set actual button layouts for header and footer
 //properly plan color, MENSA text appearance, etc. 
