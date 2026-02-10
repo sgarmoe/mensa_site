@@ -3,9 +3,6 @@
 import "../../globals.css";
 import { Stack, Divider, Button } from '@mui/material';
 
-//TODO
-//
-
 export default function Header() {
   return (
     <>
