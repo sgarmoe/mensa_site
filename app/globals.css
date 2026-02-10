@@ -94,7 +94,14 @@ h1 {
 }
 
 h2 {
-    font-size: 20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: midnightblue;
+    font-size: 40px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 25px;
 }
 
 .position-qb {

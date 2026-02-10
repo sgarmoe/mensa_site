@@ -3,17 +3,8 @@
 import "../../globals.css";
 import { Stack, Divider, Button } from '@mui/material';
 
-
-
-
 //TODO
-//color scheme for header:
-  //MENSA not showing white
-  //buttons should be orange, not space between them
-//clean up button experimenting
-//set actual button layouts for header and footer
-//properly plan color, MENSA text appearance, etc. 
-
+//
 
 export default function Header() {
   return (
@@ -30,7 +21,6 @@ export default function Header() {
               color: "black",
               mb: 2,
             }}
-
             >
               <Button href="/" variant="contained" color="warning">Home</Button>
               <Button href="/rosters" variant="contained" color="warning">Rosters</Button>
@@ -43,8 +33,6 @@ export default function Header() {
     </>
   );
 }
-
-
 
 export function Footer() {
   return (
