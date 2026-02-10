@@ -1,9 +1,6 @@
-import { Inter } from "next/font/google";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import Header, { Footer } from './components/general/navigation.js';
 import "./globals.css";
-import "./rosters/page.js";
-import Link from 'next/link';
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -14,31 +11,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <header>
-          <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
-            <Link href="/" className="nav-link"> Home Page   </Link>
-
-            <Link href="/rosters" className="nav-link">Rosters Page    
-            </Link>
-
-            <Link href="/recentTransactions" className="nav-link">Recent Transactions   
-            </Link>
-
-            <Link href="/matchups" className="nav-link">Weekly Matchups
-            </Link>
-
-            <Link href="/history" className="nav-link">League History
-            </Link>
-            
-        </header>
-
-        <hr></hr>
-        <main>{children}</main>
-        <hr></hr>
-
-        <footer>Created by Samuel Garmoe - 2024-2026
-
-        </footer>
+        <AppRouterCacheProvider>
+          <div className="page-container">
+            <Header/>
+            <main>{children}</main>
+            <Footer/>
+          </div>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

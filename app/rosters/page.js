@@ -2,6 +2,13 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
+
+
+//TODO
+//sort players on starter/bench/taxi/ir by position & alphabet
+//redesign data display instead of team & section
+
+
 const YEAR = 2026;
 
 function Header({ title }) {
@@ -43,8 +50,7 @@ export default function RostersPage() {
 
     return (
         <div className="p-4 max-w-5xl mx-auto">
-
-            <Header title='Rosters Page' />
+            <h2> Rosters Page </h2>
               <div className="container">
                 {rosters.map((team, i) => (
                   <Team key={i} team={team} />
@@ -58,7 +64,7 @@ export default function RostersPage() {
 function Team({ team }) {
   return (
     <div className='team-item'>
-      <h1>{team.team_name}</h1>
+      <h3>{team.team_name}</h3>
 
       <Section title="Starters" players={team.starters} />
       <hr className='team-divider'/>
