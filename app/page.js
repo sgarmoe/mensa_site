@@ -1,11 +1,15 @@
 import "./globals.css";
 import "./layout.js"
 import "./rosters/page.js";
+import Bio from "./components/homePage/leagueBio.js";
 
 export default function HomePage() {
   return (
     <div>
-      <h2>Home Page for MENSA FFL</h2>
+      <Bio>Test </Bio>
+
     </div>
+
+    
   );
 }
