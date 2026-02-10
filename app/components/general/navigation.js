@@ -60,11 +60,11 @@ export function Footer() {
               alignItems: "center",
             }}
             >
-              <Button href="/">Home</Button>
-              <Button href="/rosters">Rosters</Button>
-              <Button href="/recentTransactions">Recent Transactions</Button>
-              <Button href="/matchups">Matchups</Button>
-              <Button href="/history">League History</Button>
+              <Button href="/" color="white">Home</Button>
+              <Button href="/rosters" color="white">Rosters</Button>
+              <Button href="/recentTransactions" color="white">Recent Transactions</Button>
+              <Button href="/matchups" color="white">Matchups</Button>
+              <Button href="/history" color="white">League History</Button>
             </Stack>
           <p className="attribute-self"> Created by Samuel Garmoe: 2024-2026 </p>
         </footer>

@@ -21,9 +21,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <Header/>
-          <main>{children}</main>
-          <Footer/>
+          <div className="page-container">
+            <Header/>
+            <main>{children}</main>
+            <Footer/>
+          </div>
         </AppRouterCacheProvider>
       </body>
     </html>

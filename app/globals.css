@@ -2,6 +2,13 @@
     display: flex;
     flex-wrap: wrap; 
     gap: 20px;
+    min-height: 100%;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .team-item {
@@ -17,6 +24,10 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 
+main {
+    flex: 1;
+}
+
 hr {
     height: 1px;
     background-color: darkcyan;
@@ -28,32 +39,30 @@ hr {
 attribute-self {
     margin-top: 20;
     font-weight: bold;
-    text-align: center;;
+    text-align: center;
+    color: white,
 
 }
 
 header {
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    background-color: navy;
+    background-color: midnightblue;
     margin: 0;
     padding: 5px 0;
     box-sizing: border-box;
-}
-
-.header-buttons {
-    padding: 10px 15px;
-}
-
-.footer-buttons {
-    padding: 10px 25px;
 }
 
 footer {
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     font-weight: bold;
+    height: 100%;
+    background-color: midnightblue;
+    color: white;
 }
+
+.page-container
 
 body {
     background-color: #f0f0f0;
