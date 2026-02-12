@@ -27,14 +27,7 @@ export default function HomePage() {
         fetchTransactions();
     }, []);
 
-    //DO FRONTEND RENDERIN
-
-    
-
-
-
-
-
+    //DO FRONTEND RENDERING
     
     return (
         <Grid container spacing = {12}>
@@ -63,8 +56,25 @@ export default function HomePage() {
              <Divider orientation="vertical" flexItem sx={{ mx: -5 }} />
 
             <Grid size={3}>
-                Testing second grid
-                //will contain recent TX
+                <Typography variant={h6} sx={{ mb:2 }}> Recent Transactions</Typography>
+                {loading ? (
+                    <Typography variant="body2"> Loading...</Typography>
+                ) : (
+
+//RETURN HERE TO CONTINUE TX RENDERING
+//STYLE TO SELF AFTER FIRST RENDER                    
+                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                        {transactions.slice(0, 10).map((tx, i) => (
+                            <div key={i}>
+                                
+                            </div>
+                        ))}
+
+
+                    </List>
+                )
+                )}
+
 
 
             </Grid>
