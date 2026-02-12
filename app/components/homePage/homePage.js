@@ -1,7 +1,41 @@
-import Grid from '@mui/material/Grid';
+import { useEffect, useState } from "react";
+import Grid from '@mui/material/Grid'; // Using Grid2 as seen in your 'size' prop usage
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
-export default function Bio() {
+export default function HomePage() {
+
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setloading] = useState(true);
+
+    useEffect(() => {
+        async function fetchTransactions() {
+            try {
+                const res = await fetch (`/api/populateRecentTransactions?year=${YEAR}`);
+                if (!res.ok) throw new Error("Failed to populate transactions");
+
+                const data = await res.json();
+                setTransactions(data);
+            } catch (err) {
+                console.error("Fetch error: ", error);
+            } finally {
+                setloading(false);
+            }
+        }
+        fetchTransactions();
+    }, []);
+
+    //DO FRONTEND RENDERIN
+
+    
+
+
+
+
+
+    
     return (
         <Grid container spacing = {12}>
             <Grid 
@@ -31,7 +65,12 @@ export default function Bio() {
             <Grid size={3}>
                 Testing second grid
                 //will contain recent TX
+
+
             </Grid>
         </Grid>
     )
 }
+
+
+
