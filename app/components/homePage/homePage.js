@@ -1,5 +1,6 @@
+'use client'
 import { useEffect, useState } from "react";
-import Grid from '@mui/material/Grid'; // Using Grid2 as seen in your 'size' prop usage
+import Grid from '@mui/material/Grid'; 
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
@@ -59,28 +60,42 @@ export default function HomePage() {
                 <Typography variant={h6} sx={{ mb:2 }}> Recent Transactions</Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
-                ) : (
-
-//RETURN HERE TO CONTINUE TX RENDERING
-//STYLE TO SELF AFTER FIRST RENDER                    
+                ) : (           
                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                         {transactions.slice(0, 10).map((tx, i) => (
                             <div key={i}>
-                                
+                                <MUITransactionItem tx={tx} />
+                                <Divider variant="inset" component="li" />
                             </div>
                         ))}
-
-
                     </List>
-                )
                 )}
-
-
-
             </Grid>
         </Grid>
-    )
+    );
+};
+
+
+function MUITransactionItem({ tx }) {
+    return (
+        <ListItem alignItems="flex-start" sx={{ flexDirection: 'column', px: 0}} >
+            <Typography variant="subtitle2" color="primary">
+                {tx.type} - {new Date(tx.timestamp).toLocaleDateString()}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+                Team: {tx.team_name.teamName}
+            </Typography>
+
+            {tx.adds.map((a, idx) => (
+                <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
+                    + {a.player}
+                </Typography>
+            ))}
+            {tx.drops.map((d, idx) => (
+                <Typography key={idx} variant="caption" display="block" sx={{ color: 'error.main' }}>
+                    - {d.player}
+                </Typography>
+            ))}
+        </ListItem>
+    );
 }
-
-
-
