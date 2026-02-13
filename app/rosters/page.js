@@ -62,9 +62,16 @@ export default function RostersPage() {
 
 
 function Team({ team }) {
+  const avatarUrl = `https://sleepercdn.com{team.avatar}`;
+
   return (
     <div className='team-item'>
-      <h3>{team.team_name}</h3>
+      <img 
+        src={avatarUrl}
+        alt={`${team.team_name} avatar`}
+         style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        />
+      <h3>{team.team_name} </h3>
 
       <Section title="Starters" players={team.starters} />
       <hr className='team-divider'/>

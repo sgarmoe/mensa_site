@@ -28,6 +28,7 @@ export async function populateAllRosters(year) {
 
             const user = users.find(user => user.user_id === roster.owner_id); //matches Sleeper ID of the user to the owner of the roster
             const teamName = user?.metadata?.team_name || 'Unknown Team'; //associates User ID to the team name fetched above
+            const avatar = user.avatar;
 
             const starters = await populateStarters(roster.starters);
             const injuredReserve = await populateIR(roster.reserve);
@@ -37,6 +38,7 @@ export async function populateAllRosters(year) {
             populatedRosters.push({
                 owner_id : roster.owner_id,
                 team_name: teamName,
+                avatar: avatar,
                 starters, 
                 injuredReserve, 
                 taxi,

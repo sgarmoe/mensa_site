@@ -10,10 +10,11 @@ export async function matchRosterIdsToUser(leagueId) {
     }
 
     const userMap = new Map();
-    usersArray.forEach(({ user_id, metadata, username, display_name }) => {
+    usersArray.forEach(({ user_id, metadata, username, display_name, avatar }) => {
         userMap.set(user_id, {
             displayName: display_name,
-            teamName: metadata?.team_name || "Unnamed team"
+            teamName: metadata?.team_name || "Unnamed team",
+            avatar: avatar
         });
     });
 
@@ -25,7 +26,8 @@ export async function matchRosterIdsToUser(leagueId) {
         if (user && roster_id != null) {
             rosterToTeamMap.set(roster_id, {
                 displayName: user.displayName,
-                teamName: user.teamName
+                teamName: user.teamName,
+                avatar: user.avatar
             });
         }
     });

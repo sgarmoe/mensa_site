@@ -62,6 +62,7 @@ export async function processTransactions(year, week) {
             timestamp: tx.created,
             team: tx.roster_ids?.[0] || null,
             team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
+            avatar: profiles.get(tx.roster_ids?.[0]) ?? "No avatar located",
             adds: [],
             drops: []
         };
