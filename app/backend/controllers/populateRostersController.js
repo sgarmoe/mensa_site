@@ -26,9 +26,12 @@ export async function populateAllRosters(year) {
 
         for (const [index, roster] of rosters.entries()) {
 
+
+            //AVATARS NEED CHANGED TO LEAGUE SPECIFIC - CURRENTLY SHOWS PROFILE ICON
+            
             const user = users.find(user => user.user_id === roster.owner_id); //matches Sleeper ID of the user to the owner of the roster
             const teamName = user?.metadata?.team_name || 'Unknown Team'; //associates User ID to the team name fetched above
-            const avatar = user.avatar;
+            const avatar = user?.avatar || user?.metadata?.avatar || null;
 
             const starters = await populateStarters(roster.starters);
             const injuredReserve = await populateIR(roster.reserve);
