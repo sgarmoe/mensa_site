@@ -62,7 +62,8 @@ export default function RostersPage() {
 
 
 function Team({ team }) {
-  const avatarUrl = `https://sleepercdn.com{team.avatar}`;
+  const avatarUrl = `https://sleepercdn.com/avatars/thumbs/${team.avatar}`;
+  console.log(avatarUrl);
 
   return (
     <div className='team-item'>
