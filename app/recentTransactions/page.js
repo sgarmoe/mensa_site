@@ -28,7 +28,6 @@ export default function TransactionsPage() {
                 if (!res.ok) throw new Error("Failed to populate transactions");
 
                 const data = await res.json();
-                console.log("TX Data: ", data);
 
                 setTransactions(data);
             } catch (err) {
