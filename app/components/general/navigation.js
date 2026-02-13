@@ -4,7 +4,10 @@ import "../../globals.css";
 import { Stack, Divider, Button } from '@mui/material';
 
 //TODO
-//
+//template for bg of each page
+//use a light gray maybe?
+//start w home page, go one by one 
+
 
 export default function Header() {
   return (
