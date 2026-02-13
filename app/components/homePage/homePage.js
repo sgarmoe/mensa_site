@@ -1,10 +1,8 @@
 'use client'
 import { useEffect, useState } from "react";
-import Grid from '@mui/material/Grid'; 
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import { Grid, Divider, Typography, List, ListItem } from '@mui/material';
+
+const YEAR = 2026;
 
 export default function HomePage() {
 
@@ -18,24 +16,22 @@ export default function HomePage() {
                 if (!res.ok) throw new Error("Failed to populate transactions");
 
                 const data = await res.json();
+                console.log(data);
                 setTransactions(data);
             } catch (err) {
-                console.error("Fetch error: ", error);
+                console.error("Fetch error: ", err);
             } finally {
                 setloading(false);
             }
         }
         fetchTransactions();
     }, []);
-
-    //DO FRONTEND RENDERING
     
     return (
         <Grid container spacing = {12}>
             <Grid 
             size={8} 
             >
-
                 <h2>MENSA</h2>
                 <p1>
                 Welcome to the home page for the dynasty fantasy football league, MENSA! 
@@ -54,10 +50,10 @@ export default function HomePage() {
 
             </Grid>
 
-             <Divider orientation="vertical" flexItem sx={{ mx: -5 }} />
+             <Divider orientation="vertical" flexItem sx={{ mx: -5, minHeight: '100%' }} />
 
             <Grid size={3}>
-                <Typography variant={h6} sx={{ mb:2 }}> Recent Transactions</Typography>
+                <Typography variant="h6" sx={{ mb:2 }}> Recent Transactions</Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
                 ) : (           
@@ -65,7 +61,7 @@ export default function HomePage() {
                         {transactions.slice(0, 10).map((tx, i) => (
                             <div key={i}>
                                 <MUITransactionItem tx={tx} />
-                                <Divider variant="inset" component="li" />
+                                { i - transactions.length - 1  && <Divider variant="inset" component="li" />}
                             </div>
                         ))}
                     </List>
