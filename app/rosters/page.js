@@ -62,15 +62,26 @@ export default function RostersPage() {
 
 
 function Team({ team }) {
-  const avatarUrl = `https://sleepercdn.com/avatars/thumbs/${team.avatar}`;
-  console.log(avatarUrl);
+  const fullUrl = team.avatar?.startsWith('http');
+
+  const avatarUrl = fullUrl
+    ? team.avatar
+    : `https://sleepercdn.com/avatars/thumbs/${team.avatar}`;
+
+
+  //fallback to profile image if league-specific avatar fails
+  const handleImageError = (e) => {
+    e.target.src = "https://sleepercdn.com";
+    e.target.onerror = null;
+  }
 
   return (
     <div className='team-item'>
       <img 
-        src={avatarUrl}
+        src={avatarUrl || "https.//sleepercdn.com"}
         alt={`${team.team_name} avatar`}
-         style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        onError={handleImageError}
+        style={{ width: '50px', height: '50px', borderRadius: '50%' }}
         />
       <h3>{team.team_name} </h3>
 
