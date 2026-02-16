@@ -62,6 +62,9 @@ export default function RostersPage() {
 
 
 function Team({ team }) {
+
+  //create util function for avatar checking?
+  
   const fullUrl = team.avatar?.startsWith('http');
 
   const avatarUrl = fullUrl

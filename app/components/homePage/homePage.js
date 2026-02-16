@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { Grid, Divider, Typography, List, ListItem } from '@mui/material';
+import AddPlayer from "../transactions/addPlayer.js";
 
 const YEAR = 2026;
 
@@ -52,7 +53,9 @@ export default function HomePage() {
 
              <Divider orientation="vertical" flexItem sx={{ mx: -5, minHeight: '100%' }} />
 
+        
             <Grid size={3}>
+                
                 <Typography variant="h6" sx={{ mb:2 }}> Recent Transactions</Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
@@ -60,7 +63,7 @@ export default function HomePage() {
                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                         {transactions.slice(0, 10).map((tx, i) => (
                             <div key={i}>
-                                <MUITransactionItem tx={tx} />
+                                <AddPlayer tx={tx} />
                                 { i - transactions.length - 1  && <Divider variant="inset" component="li" />}
                             </div>
                         ))}
