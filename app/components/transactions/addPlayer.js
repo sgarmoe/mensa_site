@@ -43,13 +43,16 @@ function Avatar ({ tx }) {
         e.target.onerror = null;
   }
 
-  return (
-    <img
-        src={avatarUrl || "https.//sleepercdn.com"}
-        alt={`${tx.team_name} avatar`}
-        onError={handleImageError}
-        style={{ width: '25px', height: '25px', borderRadius: '50%' }}
-    />
 
-  )
-}
+  //THIS FUCKS UP THE DISPLAY 
+  
+//   return (
+//     <img
+//         src={avatarUrl || "https.//sleepercdn.com"}
+//         alt={`${tx.team_name} avatar`}
+//         onError={handleImageError}
+//         style={{ width: '25px', height: '25px', borderRadius: '50%' }}
+//     />
+
+//   )
+ }
