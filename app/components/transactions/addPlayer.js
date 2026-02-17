@@ -1,34 +1,39 @@
 //component to display player added from waiver wire/FA
 
-import { Grid, Divider, Typography, List, ListItem } from '@mui/material';
+import { Grid, Divider, Typography, List, ListItem, Stack, Box } from '@mui/material';
 
 export default function AddPlayer({ tx }) {
     return (
-        <ListItem alignItems="flex-start" sx={{ flexDirection: 'column', px: 0}} >
-            <Typography variant="subtitle2" color="primary">
-                {tx.type} - {new Date(tx.timestamp).toLocaleDateString()}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-                Team: {tx.team_name.teamName}
-            </Typography>
-
-            {tx.adds.map((a, idx) => (
-                <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
-                    + {a.player}
+        <ListItem sx={{ flexDirection: 'column', alignItems: 'flex-start', px: 0, py: 1}} >
+            
+                <Stack direction="row" alignItems="center" spacing={1} sx={{ width: '100%', mb: 0.5 }}>
+                    <Typography variant="subtitle2" color="primary">
+                        {tx.type} - {tx.team_name.teamName}
+                    </Typography>
                     <Avatar tx= {tx}/>
-                    <p1>${tx.team_name?.avatar}</p1>
-                </Typography>
-                
+                </Stack>
 
-            ))}
-            {tx.drops.map((d, idx) => (
-                <Typography key={idx} variant="caption" display="block" sx={{ color: 'error.main' }}>
-                    - {d.player}
-                </Typography>
-            ))}
+                <Box sx={{  }}> 
+                    {tx.adds.map((a, idx) => (
+                        <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
+                            + {a.player}
+                        </Typography>
+                    ))}
+                    {tx.drops.map((d, idx) => (
+                        <Typography key={idx} variant="caption" display="block" sx={{ color: 'error.main' }}>
+                            - {d.player}
+                        </Typography>
+                ))}
+                </Box>
+
+                <Box alignItems="center">
+                    <Typography variant="body1"> 
+                        {new Date(tx.timestamp).toLocaleDateString()}
+                    </Typography>
+                </Box>
+
         </ListItem>
     );
-
 }
 
 function Avatar ({ tx }) {
@@ -52,7 +57,7 @@ function Avatar ({ tx }) {
             src={avatarUrl}
             alt={`${tx.team_name?.teamName || 'Team' } avatar`}
             onError={handleImageError}
-            style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+            style={{ width: '35px', height: '35px', borderRadius: '50%' }}
         />
     </div> 
   )

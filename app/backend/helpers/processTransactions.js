@@ -86,7 +86,7 @@ function formatTrade(tx, players) {
     }));
 
     return {
-        type: "trade",
+        type: "Trade",
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
@@ -109,7 +109,7 @@ function formatWaiver(tx, players, profiles) {
     }));
     
     return {
-        type: "waiver",
+        type: "Waiver",
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,
@@ -133,7 +133,7 @@ function formatFreeAgent(tx, players, profiles ) {
     }));
     
     return {
-        type: "free agent",
+        type: "Free Agent",
         transactionId: tx.transaction_id, 
         timestamp: tx.created,
         team: tx.roster_ids?.[0]|| null,

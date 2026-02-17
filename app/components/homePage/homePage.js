@@ -56,7 +56,7 @@ export default function HomePage() {
         
             <Grid size={3}>
                 
-                <Typography variant="h6" sx={{ mb:2 }}> Recent Transactions</Typography>
+                <Typography variant="h5" sx={{ mb:2, justifyContent: 'center' }}> Recent Transactions</Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
                 ) : (           
@@ -73,28 +73,3 @@ export default function HomePage() {
         </Grid>
     );
 };
-
-
-function MUITransactionItem({ tx }) {
-    return (
-        <ListItem alignItems="flex-start" sx={{ flexDirection: 'column', px: 0}} >
-            <Typography variant="subtitle2" color="primary">
-                {tx.type} - {new Date(tx.timestamp).toLocaleDateString()}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-                Team: {tx.team_name.teamName}
-            </Typography>
-
-            {tx.adds.map((a, idx) => (
-                <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
-                    + {a.player}
-                </Typography>
-            ))}
-            {tx.drops.map((d, idx) => (
-                <Typography key={idx} variant="caption" display="block" sx={{ color: 'error.main' }}>
-                    - {d.player}
-                </Typography>
-            ))}
-        </ListItem>
-    );
-}
