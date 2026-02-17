@@ -2,12 +2,9 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 
-
-
 //TODO
 //sort players on starter/bench/taxi/ir by position & alphabet
 //redesign data display instead of team & section
-
 
 const YEAR = 2026;
 
@@ -62,8 +59,6 @@ export default function RostersPage() {
 
 
 function Team({ team }) {
-
-  //create util function for avatar checking?
   
   const fullUrl = team.avatar?.startsWith('http');
 

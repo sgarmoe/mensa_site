@@ -16,6 +16,7 @@ export default function AddPlayer({ tx }) {
                 <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
                     + {a.player}
                     <Avatar tx= {tx}/>
+                    <p1>${tx.team_name?.avatar}</p1>
                 </Typography>
                 
 
@@ -32,27 +33,27 @@ export default function AddPlayer({ tx }) {
 
 function Avatar ({ tx }) {
 
-    const avatarId = tx.team_avatar || tx.avatar;
+    const rawAvatar = tx.team_name?.avatar;
 
-    const avatarUrl = avatarId?.startsWith('http')
-        ? avatarId
-        : `https://sleepercdn.com/avatars/thumbs/${avatarId}`;
+    const avatarUrl = rawAvatar.startsWith('http')
+        ? rawAvatar
+        : rawAvatar
+            ?   `https://sleepercdn.com/avatars/thumbs/${rawAvatar}`
+            :   `https://sleepercdn.com`
 
     const handleImageError = (e) => {
         e.target.src = "https://sleepercdn.com";
         e.target.onerror = null;
   }
-
-
-  //THIS FUCKS UP THE DISPLAY 
   
-//   return (
-//     <img
-//         src={avatarUrl || "https.//sleepercdn.com"}
-//         alt={`${tx.team_name} avatar`}
-//         onError={handleImageError}
-//         style={{ width: '25px', height: '25px', borderRadius: '50%' }}
-//     />
-
-//   )
+  return (
+    <div>
+        <img
+            src={avatarUrl}
+            alt={`${tx.team_name?.teamName || 'Team' } avatar`}
+            onError={handleImageError}
+            style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        />
+    </div> 
+  )
  }
