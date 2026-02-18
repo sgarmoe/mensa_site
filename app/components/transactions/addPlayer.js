@@ -1,19 +1,42 @@
 //component to display player added from waiver wire/FA
 
-import { Grid, Divider, Typography, List, ListItem, Stack, Box } from '@mui/material';
+import { Grid, Divider, Typography, List, ListItem, Stack, Box, Paper } from '@mui/material';
 
 export default function AddPlayer({ tx }) {
     return (
-        <ListItem sx={{ flexDirection: 'column', alignItems: 'flex-start', px: 0, py: 1}} >
+        <Paper
+            elevation={2}
+            sx={{ borderRadius: 2,
+                p: 2,
+                mb: 2,
+                width: '100%',
+                overflow: 'hidden'
+            }} >
             
-                <Stack direction="row" alignItems="center" spacing={1} sx={{ width: '100%', mb: 0.5 }}>
-                    <Typography variant="subtitle2" color="primary">
+                <Stack 
+                direction="row" 
+                sx={{ 
+                    width: '100%', 
+                    justifyContent: "space-between",
+                    alignItems:'center',
+                    typography: 'body1',
+                    fontWeight: '500',
+                    fontSize: 'h6.fontSize',
+                    mb: 1
+                    }}>
+                    <Typography color="primary">
                         {tx.type} - {tx.team_name.teamName}
                     </Typography>
                     <Avatar tx= {tx}/>
                 </Stack>
 
-                <Box sx={{  }}> 
+                <Divider sx={{ width: '100%', mb: 1.5 }}/>
+
+                <Stack direction="row" 
+                spacing={0.5} 
+                sx={{ 
+                    mb: 1.5,
+                    }}> 
                     {tx.adds.map((a, idx) => (
                         <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
                             + {a.player}
@@ -24,15 +47,24 @@ export default function AddPlayer({ tx }) {
                             - {d.player}
                         </Typography>
                 ))}
-                </Box>
+                </Stack>
 
-                <Box alignItems="center">
-                    <Typography variant="body1"> 
-                        {new Date(tx.timestamp).toLocaleDateString()}
+                <Box
+                sx={{
+                    width: '100%',
+                    textAlign: 'center'
+                }}>
+                    <Typography variant="caption" display="block"
+                    > 
+                        {new Date(tx.timestamp).toLocaleString(undefined, {
+                            dateStyle: 'short',
+                            timeStyle: 'short'
+                        }
+
+                        )}
                     </Typography>
                 </Box>
-
-        </ListItem>
+        </Paper>
     );
 }
 

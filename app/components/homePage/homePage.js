@@ -31,7 +31,7 @@ export default function HomePage() {
     return (
         <Grid container spacing = {12}>
             <Grid 
-            size={8} 
+            size={7} 
             >
                 <h2>MENSA</h2>
                 <p1>
@@ -54,13 +54,13 @@ export default function HomePage() {
              <Divider orientation="vertical" flexItem sx={{ mx: -5, minHeight: '100%' }} />
 
         
-            <Grid size={3}>
+            <Grid size={4}>
                 
-                <Typography variant="h5" sx={{ mb:2, justifyContent: 'center' }}> Recent Transactions</Typography>
+                <Typography variant="h5" sx={{ mb:1, textAlign: 'center' }}> Recent Transactions</Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
                 ) : (           
-                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <List sx={{ width: '100%' }}>
                         {transactions.slice(0, 10).map((tx, i) => (
                             <div key={i}>
                                 <AddPlayer tx={tx} />
