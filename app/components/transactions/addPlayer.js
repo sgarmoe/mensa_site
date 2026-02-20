@@ -19,12 +19,12 @@ export default function AddPlayer({ tx }) {
                     width: '100%', 
                     justifyContent: "space-between",
                     alignItems:'center',
-                    typography: 'body1',
+                    typography: 'h4',
                     fontWeight: '500',
                     fontSize: 'h6.fontSize',
                     mb: 1
                     }}>
-                    <Typography color="primary">
+                    <Typography color="primary" variant="h5">
                         {tx.type} - {tx.team_name.teamName}
                     </Typography>
                     <Avatar tx= {tx}/>
@@ -38,12 +38,12 @@ export default function AddPlayer({ tx }) {
                     mb: 1.5,
                     }}> 
                     {tx.adds.map((a, idx) => (
-                        <Typography key={idx} variant="caption" display="block" sx={{ color: 'success.main' }}>
+                        <Typography key={idx} variant="body1" display="block" sx={{ color: 'success.main' }}>
                             + {a.player}
                         </Typography>
                     ))}
                     {tx.drops.map((d, idx) => (
-                        <Typography key={idx} variant="caption" display="block" sx={{ color: 'error.main' }}>
+                        <Typography key={idx} variant="body1" display="block" sx={{ color: 'error.main' }}>
                             - {d.player}
                         </Typography>
                 ))}

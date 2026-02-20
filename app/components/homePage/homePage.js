@@ -56,7 +56,7 @@ export default function HomePage() {
         
             <Grid size={4}>
                 
-                <Typography variant="h5" sx={{ mb:1, textAlign: 'center' }}> Recent Transactions</Typography>
+                <Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> Recent Transactions</Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
                 ) : (           
