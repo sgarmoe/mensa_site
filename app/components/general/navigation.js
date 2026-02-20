@@ -7,10 +7,10 @@ export default function Header() {
   return (
     <>
         <header>
-          <h1>Minimally Entertaining NonChildbearing Sport Advocates</h1>
+          <h1>Minimally Entertaining NonChildbearing Sport Advocates - Dynasty Fantasy Football League</h1>
             <Stack 
             direction="row" 
-            spacing={5}
+            spacing={10}
             divider={<Divider orientation="vertical" flexItem/> } 
             sx={{
               justifyContent: "center",

@@ -6,7 +6,7 @@ import HomePage from "./components/homePage/homePage.js";
 export default function Home() {
   return (
     <div>
-      <HomePage>Testing grid fn</HomePage>
+      <HomePage> </HomePage>
     </div>
   );
 }
