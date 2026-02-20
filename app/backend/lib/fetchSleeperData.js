@@ -36,3 +36,15 @@ export async function fetchSpecificLeagueSettings(leagueId) {
       .get(`${BASE_URL}/league/${leagueId}`)
       .then(res => res.data);
 }
+
+export async function fetchWinnerPlayoffBracket(leagueId) {
+  return axios
+    .get(`${BASE_URL}/league/${leagueId}/winners_bracket`)
+    .then(res => res.data);
+}
+
+export async function fetchLoserPlayoffBracket(leagueId) {
+  return axios
+    .get(`${BASE_URL}/league/${leagueId}/losers_bracket`)
+    .then(res => res.data);
+}

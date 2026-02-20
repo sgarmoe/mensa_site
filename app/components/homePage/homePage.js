@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Grid, Divider, Typography, List, ListItem } from '@mui/material';
 import AddPlayer from "../transactions/addPlayer.js";
+import PlayoffBrackets from "./playoffBrackets.js";
 
 const YEAR = 2026;
 
@@ -34,6 +35,7 @@ export default function HomePage() {
             size={7} 
             >
                 <h2>MENSA - 2026 League Results </h2>
+                <PlayoffBrackets />
                 
 
             </Grid>
