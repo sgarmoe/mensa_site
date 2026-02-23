@@ -5,45 +5,52 @@ import { SEASONS } from "../config/seasons.js";
 export async function processPlayoffBrackets(year) {
 
     const leagueId = SEASONS[year].leagueId;
-    console.log(leagueId)
-    const users = await matchRosterIdsToUser(leagueId);
-
-    if (!SEASONS[year]) {
-        throw new Error (`No year detected for ${year}`);
-    }
+    if (!leagueId) throw new Error(`No year detected for ${year}`);
+    const rosterMap = await matchRosterIdsToUser(leagueId);
 
     try {
         const wBracket = await fetchWinnerPlayoffBracket(leagueId);
-        console.log("2026 winner's bracket raw data: ", wBracket);
-
         const lBracket = await fetchLoserPlayoffBracket(leagueId);
-        //console.log("2026 loser's bracket raw data: ", lBracket);
+        
+        const processedWBracket = matchPlayoffResultsToUser(wBracket, rosterMap);
+        const processedLBracket = matchPlayoffResultsToUser(lBracket, rosterMap);
 
-        //matchPlayoffResultsToUser(wBracket, users);
-        console.log("passed playoff processing fn");
+        console.log("Winners bracket: ", processedWBracket);
+        console.log("Losers bracket: ", processedLBracket);
 
         return {
-            wBracket,
-            lBracket
+            processedLBracket, 
+            processedWBracket
         }
+
     } catch (err) {
         console.warn(`Winner PB not found for ${year}`);
-        return [];
+        return { processedWBracket: [], processedLBracket: [] };
     }
-
- 
 }
 
-function matchPlayoffResultsToUser(bracket, users) {
+function matchPlayoffResultsToUser(bracket, rosterMap) {
 
-    console.log("Print users: ", users);
-    console.log("print winner bracket: ", bracket)
+    const rounds = {};
 
-    for (const [playoff] of bracket.entries()) {
-        const rosterId = users.find(user => user.rosterId);
-        console.log("matching bracket ids to usernames");
-        const teamsInRound = matchup.t1;
-        console.log("teams: ", teamsInRound);
-    }
+    const getTeam = (rosterId) => {
+        if (!rosterId) return { teamName: "Not found" , displayName: "not found"}
+        return rosterMap.get(rosterId) || { teamName: "Unknown", displayName: "Unknown" };
+    };
+  
 
+    bracket.forEach(match => {
+        const roundNum = match.r;
+        if (!rounds[roundNum]) rounds[roundNum] = [];
+            rounds[roundNum].push({
+            matchId: match.m,
+            team1: getTeam(match.t1),
+            team2: getTeam(match.t2),
+            isBye: roundNum === 1 && match.t1 && !match.t2 && !match.t2_from,
+            winner: match.w,
+            loser: match.l,
+            rank: match.p
+        });
+    })
+    return rounds;
 }

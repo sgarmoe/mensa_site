@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 
-const YEAR = 2026;
+const YEAR = 2025; //brackets for prior season
 
 export default function PlayoffBrackets() {
 
