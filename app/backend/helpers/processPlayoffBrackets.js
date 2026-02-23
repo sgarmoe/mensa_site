@@ -18,14 +18,26 @@ export async function processPlayoffBrackets(year) {
         console.log("Winners bracket: ", processedWBracket);
         console.log("Losers bracket: ", processedLBracket);
 
+        const champions = getLeagueWinners(processedWBracket, processedLBracket, rosterMap);
+
+        console.log(champions);
+
         return {
             processedLBracket, 
-            processedWBracket
+            processedWBracket,
+            champions
         }
 
     } catch (err) {
-        console.warn(`Winner PB not found for ${year}`);
-        return { processedWBracket: [], processedLBracket: [] };
+        console.warn("Error: ", err);
+        return { 
+            processedWBracket: [], 
+            processedLBracket: [],
+            champions: {
+                champion: null,
+                toiletChamp: null
+            }
+        };
     }
 }
 
@@ -54,3 +66,25 @@ function matchPlayoffResultsToUser(bracket, rosterMap) {
     })
     return rounds;
 }
+
+function getLeagueWinners(processedWBracket, processedLBracket, rosterMap) {
+
+    const winnerMatches = Object.values(processedWBracket).flat();
+    const championship  = winnerMatches.find(m => m.rank === 1);
+
+    const loserMatches = Object.values(processedLBracket).flat();
+    const toiletChampionship = loserMatches.find(m => m.rank === 1);
+
+    const getTeam = (rosterId) => {
+        if (!rosterId) return { teamName: "Not found" , displayName: "not found"}
+        return rosterMap.get(rosterId) || { teamName: "Unknown", displayName: "Unknown" };
+    };
+
+
+    return {
+        champion: getTeam(championship?.winner) || "Champ not found", 
+        runnerUp: getTeam(championship?.loser) || "runner up not found",
+        toiletChamp: getTeam(toiletChampionship?.winner) || "toilet champ not found"
+    };
+}
+

@@ -1,15 +1,14 @@
 'use client'
 import { useEffect, useState } from "react";
+import { Grid, Divider, Typography, List, ListItem } from '@mui/material';
 
 const YEAR = 2025; //brackets for prior season
 
 export default function PlayoffBrackets() {
 
-    const [playoffBracket, setPlayoffBracket] = useState([]);
-    const [loading, setLoading] =useState(true);
+    const [playoffBracket, setPlayoffBracket] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    //ONLY ONE ROUTE TO BACKEND NEEDED
-    //W AND L BRACKETS ARE RETURNED TOGETHER FROM BRACKET CONTROLLER FILE
     useEffect(() => {
         async function fetchPlayoffBrackets() {
             try {
@@ -27,4 +26,30 @@ export default function PlayoffBrackets() {
         }
         fetchPlayoffBrackets();
     }, []);
+    
+    if (loading) return <Typography>Loading...</Typography>;
+    if (!playoffBracket || !playoffBracket.champions) return null;
+
+
+    return (
+        <Grid container>
+            <Champion champs={playoffBracket.champions}/>
+        </Grid>
+        
+    )
 }
+
+
+function Champion({ champs }) {
+
+    if (!champs) return null;
+    
+    return (
+        <Typography variant="h4">
+            {champs.champion?.teamName || "No champ found" } <br/>
+            {champs.toiletChamp.teamName || "No toilet king found"} 
+        </Typography>
+    );
+}
+
+

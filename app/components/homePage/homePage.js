@@ -34,14 +34,11 @@ export default function HomePage() {
             <Grid 
             size={7} 
             >
-                <h2>MENSA - 2026 League Results </h2>
+<Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> 2025 Results</Typography>
                 <PlayoffBrackets />
-                
-
             </Grid>
 
              <Divider orientation="vertical" flexItem sx={{ mx: -5, minHeight: '100%' }} />
-
         
             <Grid size={4}>
                 
