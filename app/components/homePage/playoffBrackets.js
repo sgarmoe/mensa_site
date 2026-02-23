@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Grid, Divider, Typography, List, ListItem } from '@mui/material';
+import { Grid, Divider, Typography, List, ListItem, Box } from '@mui/material';
 
 const YEAR = 2025; //brackets for prior season
 
@@ -43,12 +43,17 @@ export default function PlayoffBrackets() {
 function Champion({ champs }) {
 
     if (!champs) return null;
-    
     return (
-        <Typography variant="h4">
-            {champs.champion?.teamName || "No champ found" } <br/>
-            {champs.toiletChamp.teamName || "No toilet king found"} 
-        </Typography>
+        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)'}}>
+            <Typography variant="h4">
+                {champs.champion?.teamName || "No champ found" } <br/>
+                
+            </Typography>
+
+            <Typography variant="h4">
+                {champs.toiletChamp.teamName || "No toilet king found"} 
+            </Typography>
+        </Box>
     );
 }
 
