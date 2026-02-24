@@ -41,18 +41,37 @@ export default function PlayoffBrackets() {
 
 
 function Champion({ champs }) {
-
     if (!champs) return null;
-    return (
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)'}}>
-            <Typography variant="h4">
-                {champs.champion?.teamName || "No champ found" } <br/>
-                
-            </Typography>
 
-            <Typography variant="h4">
-                {champs.toiletChamp.teamName || "No toilet king found"} 
-            </Typography>
+    return (
+        <Box sx={{  display: 'grid', 
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: 2,
+                    width: '100%', 
+                    mt: 4
+                    }}>
+
+            {/*container for champion  */} 
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
+                <Typography variant="overline" sx={{ fontWeight: 'bold', color: 'goldenrod'}}>
+                    Champion
+                </Typography>
+                <Typography variant='h4'>
+                    {champs.champion?.teamName || "No champ found" } <br/>
+                </Typography>
+
+                {/*SPACE FOR MORE CHAMP COMPONENTS */ }
+            </Box>
+
+            {/*container for toilet king */} 
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
+                <Typography variant="overline" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
+                    Toilet King
+                </Typography>
+                <Typography variant='h4' >
+                    {champs.toiletChamp.teamName || "No toilet king found"} 
+                </Typography>
+            </Box>
         </Box>
     );
 }

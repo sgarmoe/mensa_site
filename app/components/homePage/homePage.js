@@ -30,19 +30,22 @@ export default function HomePage() {
     }, []);
     
     return (
-        <Grid container spacing = {12}>
-            <Grid 
-            size={7} 
-            >
-<Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> 2025 Results</Typography>
+        <Grid container spacing = {{ xs: 4, md: 10 }} sx={{ p: { xs: 2, md: 4 } }}>
+
+            <Grid size={{ xs: 12, md: 7 }} >
+                <Typography variant="h4" sx={{ mb:1 , textAlign: 'center', p:3, fontWeight: '700' }}> 
+                    2025 Results
+                </Typography>
                 <PlayoffBrackets />
             </Grid>
 
-             <Divider orientation="vertical" flexItem sx={{ mx: -5, minHeight: '100%' }} />
-        
-            <Grid size={4}>
+             <Divider orientation="vertical" flexItem sx={{ display: {xs: 'none', md: 'block', }, mx: -1 }} />
+            
+            <Grid size= {{ xs: 12, md: 4 }}>
                 
-                <Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> Recent Transactions</Typography>
+                <Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> 
+                    Recent Transactions
+                </Typography>
                 {loading ? (
                     <Typography variant="body2"> Loading...</Typography>
                 ) : (           
