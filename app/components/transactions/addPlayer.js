@@ -68,7 +68,7 @@ export default function AddPlayer({ tx }) {
     );
 }
 
-function Avatar ({ tx }) {
+export function Avatar ({ tx }) {
 
     const rawAvatar = tx.team_name?.avatar;
 

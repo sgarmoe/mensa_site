@@ -1,6 +1,9 @@
 'use client'
+import "../../globals.css";
 import { useEffect, useState } from "react";
-import { Grid, Divider, Typography, List, ListItem, Box } from '@mui/material';
+import { Grid, Typography, Box } from '@mui/material';
+import { Toilet, Trophy } from 'lucide-react';
+import { Avatar } from '../transactions/addPlayer.js';
 
 const YEAR = 2025; //brackets for prior season
 
@@ -44,7 +47,7 @@ function Champion({ champs }) {
     if (!champs) return null;
 
     return (
-        <Box sx={{  display: 'grid', 
+        <Box className='container' sx={{  display: 'grid', 
                     gridTemplateColumns: '1fr 1fr',
                     gap: 2,
                     width: '100%', 
@@ -53,11 +56,11 @@ function Champion({ champs }) {
 
             {/*container for champion  */} 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
-                <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'goldenrod'}}>
-                    Champion
+                <Typography variant="h3" sx={{ fontWeight: 'bold', color: 'goldenrod'}}>
+                    CHAMPION <Trophy color='gold' size={48}/>
                 </Typography>
                 <Typography variant='h4'>
-                    {champs.champion?.teamName || "No champ found" } <br/>
+                    {champs.champion?.teamName || "No champ found" } 
                 </Typography>
 
                 {/*SPACE FOR MORE CHAMP COMPONENTS */ }
@@ -65,8 +68,8 @@ function Champion({ champs }) {
 
             {/*container for toilet king */} 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
-                <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
-                    Toilet King
+                <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
+                    TOILET KING <Toilet  color='brown' size={48}/>
                 </Typography>
                 <Typography variant='h4' >
                     {champs.toiletChamp.teamName || "No toilet king found"} 
