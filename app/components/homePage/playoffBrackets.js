@@ -53,7 +53,7 @@ function Champion({ champs }) {
 
             {/*container for champion  */} 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
-                <Typography variant="overline" sx={{ fontWeight: 'bold', color: 'goldenrod'}}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'goldenrod'}}>
                     Champion
                 </Typography>
                 <Typography variant='h4'>
@@ -65,7 +65,7 @@ function Champion({ champs }) {
 
             {/*container for toilet king */} 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
-                <Typography variant="overline" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
                     Toilet King
                 </Typography>
                 <Typography variant='h4' >
