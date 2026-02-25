@@ -15,8 +15,8 @@ export async function processPlayoffBrackets(year) {
         const processedWBracket = matchPlayoffResultsToUser(wBracket, rosterMap);
         const processedLBracket = matchPlayoffResultsToUser(lBracket, rosterMap);
 
-        console.log("Winners bracket: ", processedWBracket);
-        console.log("Losers bracket: ", processedLBracket);
+        // console.log("Winners bracket: ", processedWBracket);
+        // console.log("Losers bracket: ", processedLBracket);
 
         const champions = getLeagueWinners(processedWBracket, processedLBracket, rosterMap);
 

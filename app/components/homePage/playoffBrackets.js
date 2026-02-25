@@ -3,7 +3,7 @@ import "../../globals.css";
 import { useEffect, useState } from "react";
 import { Grid, Typography, Box } from '@mui/material';
 import { Toilet, Trophy } from 'lucide-react';
-import { Avatar } from '../transactions/addPlayer.js';
+import  TeamAvatar  from '../general/TeamAvatar.js';
 
 const YEAR = 2025; //brackets for prior season
 
@@ -61,9 +61,14 @@ function Champion({ champs }) {
                 </Typography>
                 <Typography variant='h4'>
                     {champs.champion?.teamName || "No champ found" } 
+                    
+                    <TeamAvatar 
+                       avatarId={champs.champion?.avatar}
+                       teamName={champs.champion?.teamName}
+                       size={45}
+                    />
                 </Typography>
 
-                {/*SPACE FOR MORE CHAMP COMPONENTS */ }
             </Box>
 
             {/*container for toilet king */} 
@@ -73,6 +78,13 @@ function Champion({ champs }) {
                 </Typography>
                 <Typography variant='h4' >
                     {champs.toiletChamp.teamName || "No toilet king found"} 
+
+                      <TeamAvatar 
+                       avatarId={champs.toiletChamp?.avatar}
+                       teamName={champs.toiletChamp?.teamName}
+                       size={45}
+                    />
+                    
                 </Typography>
             </Box>
         </Box>

@@ -1,10 +1,16 @@
-
+import { Avatar as MuiAvatar} from '@mui/material';
+import { Box } from '@mui/material';
 
 export default function TeamAvatar ({ avatarId, teamName = 'Team', size = 35}) {
 
     const getAvatarUrl = (id) =>  {
-        if (!id) return "https://sleepercdn.com";
+
+
+         if (!id) return "https://sleepercdn.com";
+
+        const fullUrl = id.startsWith('http');
         if (id.startsWith('http')) return id;
+
         return `https://sleepercdn.com/avatars/thumbs/${id}`;
     };
 
