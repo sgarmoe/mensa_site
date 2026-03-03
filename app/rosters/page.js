@@ -8,16 +8,6 @@ import "../globals.css";
 
 const YEAR = 2026;
 
-function Header({ title }) {
-    return( 
-      <h1 style={{ textAlign: 'center'}}>
-      {title ? title : 'Default title'}
-      </h1>
-      );
-  }
-
-
-
 export default function RostersPage() {
     const [rosters, setRosters] = useState([]);
     const [loading, setLoading] = useState(true);
