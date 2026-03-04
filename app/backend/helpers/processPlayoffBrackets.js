@@ -47,17 +47,24 @@ function matchPlayoffResultsToUser(bracket, rosterMap) {
 
     const getTeam = (rosterId) => {
         if (!rosterId) return { teamName: "Not found" , displayName: "not found"}
-        return rosterMap.get(rosterId) || { teamName: "Unknown", displayName: "Unknown" };
+        const t = rosterMap.get(rosterId) || { teamName: "Unknown", displayName: "Unknown" };
+        return { ...t, roster_id: rosterId };
     };
   
 
     bracket.forEach(match => {
         const roundNum = match.r;
         if (!rounds[roundNum]) rounds[roundNum] = [];
+            // derive possible score fields from the raw match object if present
+            const team1Score = match.s1 ?? match.score1 ?? match.t1_score ?? (match.scores && match.scores[0]) ?? null;
+            const team2Score = match.s2 ?? match.score2 ?? match.t2_score ?? (match.scores && match.scores[1]) ?? null;
+
             rounds[roundNum].push({
             matchId: match.m,
             team1: getTeam(match.t1),
             team2: getTeam(match.t2),
+            team1Score,
+            team2Score,
             isBye: roundNum === 1 && match.t1 && !match.t2 && !match.t2_from,
             winner: match.w,
             loser: match.l,
