@@ -45,7 +45,7 @@ export default function HomePage() {
 
              <Divider orientation="vertical" flexItem sx={{ display: {xs: 'none', md: 'block', }, mx: -1 }} />
             
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={5}>
                 
                 <Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> 
                     Recent Transactions
@@ -55,7 +55,7 @@ export default function HomePage() {
                 ) : (           
                     <List sx={{ width: '100%' }}>
                         {transactions.slice(0, 10).map((tx, i) => (
-                            <div key={i}>
+                            <div key={tx.tx_id || tx.id || i}>
                                 <AddPlayer tx={tx} />
                                 { i - transactions.length - 1  && <Divider variant="inset" component="li" />}
                             </div>
