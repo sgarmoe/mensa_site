@@ -1,58 +1,105 @@
 "use client"
 
+import React, { useState } from 'react';
 import "../../globals.css";
-import { Stack, Divider, Button } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Rosters', href: '/rosters' },
+  { label: 'Recent Transactions', href: '/recentTransactions' },
+  { label: 'Matchups', href: '/matchups' },
+  { label: 'League History', href: '/history' },
+];
 
 export default function Header() {
+  const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
     <>
-        <header>
-          <h1>Minimally Entertaining NonChildbearing Sport Advocates - Dynasty Fantasy Football League</h1>
-            <Stack 
-            direction="row" 
-            spacing={10}
-            divider={<Divider orientation="vertical" flexItem/> } 
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              color: "black",
-              mb: 2,
-            }}
-            >
-              <Button href="/" variant="contained" color="warning">Home</Button>
-              <Button href="/rosters" variant="contained" color="warning">Rosters</Button>
-              <Button href="/recentTransactions" variant="contained" color="warning">Recent Transactions</Button>
-              <Button href="/matchups" variant="contained" color="warning">Matchups</Button>
-              <Button href="/history" variant="contained" color="warning">League History</Button>
-            </Stack>
-        </header>
-      <hr />
+      <AppBar position="static" color="primary">
+        <Toolbar sx={{ flexDirection: 'column', alignItems: 'center', py: 2 }}>
+          <Typography
+            variant={isMdUp ? 'h4' : 'h5'}
+            component="div"
+            sx={{ fontFamily: 'Times New Roman, Times, serif', textAlign: 'center', mb: 1 }}
+          >
+            Minimally Entertaining NonChildbearing Sport Advocates
+          </Typography>
+
+          {isMdUp ? (
+            <Box sx={{ width: '80%', display: 'flex', gap: 2, justifyContent: 'center' }}>
+              {navItems.map((it) => (
+                <Button
+                  key={it.href}
+                  href={it.href}
+                  variant="contained"
+                  color="secondary"
+                  sx={{ flex: 1, textTransform: 'none' }}
+                >
+                  {it.label}
+                </Button>
+              ))}
+            </Box>
+          ) : (
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setOpen(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+        <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpen(false)}>
+          <List>
+            {navItems.map((item) => (
+              <ListItemButton key={item.href} component="a" href={item.href}>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            ))}
+          </List>
+          <Divider />
+        </Box>
+      </Drawer>
     </>
   );
 }
 
 export function Footer() {
   return (
-    <>
-      <hr />
-        <footer >
-            <Stack 
-            direction="row" 
-            spacing={10}
-            divider={<Divider orientation="vertical" flexItem/> } 
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            >
-              <Button href="/" color="white">Home</Button>
-              <Button href="/rosters" color="white">Rosters</Button>
-              <Button href="/recentTransactions" color="white">Recent Transactions</Button>
-              <Button href="/matchups" color="white">Matchups</Button>
-              <Button href="/history" color="white">League History</Button>
-            </Stack>
-          <p className="attribute-self"> Created by Samuel Garmoe: 2024-2026 </p>
-        </footer>
-    </>
+    <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 2, mt: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 1 }}>
+        {navItems.map((it) => (
+          <Button key={it.href} href={it.href} sx={{ color: 'white' }}>
+            {it.label}
+          </Button>
+        ))}
+      </Box>
+      <Typography align="center" sx={{ fontFamily: 'Times New Roman, Times, serif', fontWeight: 'bold' }}>
+        Created by Samuel Garmoe: 2024-2026
+      </Typography>
+    </Box>
   );
 }

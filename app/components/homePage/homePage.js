@@ -31,9 +31,9 @@ export default function HomePage() {
     }, []);
     
     return (
-        <Grid container spacing = {{ xs: 4, md: 10 }} sx={{ p: { xs: 2, md: 4 } }}>
+        <Grid container spacing={{ xs: 4, md: 10 }} sx={{ p: { xs: 2, md: 4 } }}>
 
-            <Grid size={{ xs: 12, md: 7 }} >
+            <Grid item xs={12} md={7}>
 
                
 
@@ -45,7 +45,7 @@ export default function HomePage() {
 
              <Divider orientation="vertical" flexItem sx={{ display: {xs: 'none', md: 'block', }, mx: -1 }} />
             
-            <Grid size= {{ xs: 12, md: 4 }}>
+            <Grid item xs={12} md={4}>
                 
                 <Typography variant="h4" sx={{ mb:1, textAlign: 'center', p:3, fontWeight: '700' }}> 
                     Recent Transactions

@@ -1,6 +1,6 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import Header, { Footer } from './components/general/navigation.js';
 import "./globals.css";
+import MuiProvidersClient from './components/general/MuiProvidersClient';
 
 export const metadata = {
   title: "Create Next App",
@@ -11,13 +11,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <AppRouterCacheProvider>
+        <MuiProvidersClient>
           <div className="page-container">
-            <Header/>
+            <Header />
             <main>{children}</main>
-            <Footer/>
+            <Footer />
           </div>
-        </AppRouterCacheProvider>
+        </MuiProvidersClient>
       </body>
     </html>
   );
