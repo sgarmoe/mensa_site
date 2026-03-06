@@ -33,7 +33,7 @@ export default function HomePage() {
         <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 } }}>
 
             <Grid item xs={12} md={8}>
-                <Typography variant="h4" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
+                <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
                     2025 Results
                 </Typography>
                 <PlayoffBrackets />
@@ -47,7 +47,7 @@ export default function HomePage() {
             <Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', md: 'block' }, mx: -1 }} />
 
             <Grid item xs={12} md={4}>
-                <Typography variant="h4" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
+                <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
                     Recent Transactions
                 </Typography>
                 {loading ? (
@@ -61,7 +61,12 @@ export default function HomePage() {
                         {transactions.slice(0, 10).map((tx, i) => (
                             <AddPlayer key={tx.tx_id || tx.id || i} tx={tx} />
                         ))}
+
+                        <Button href="/recentTransactions" variant="outlined" size="small" sx={{ mt: 2 }}>
+                            View All Transactions
+                        </Button> 
                     </Box>
+                      
                 )}
             </Grid>
         </Grid>
