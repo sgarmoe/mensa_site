@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Grid, Divider, Typography, Box, Skeleton } from '@mui/material';
+import { Grid, Divider, Typography, Box, Skeleton, Button } from '@mui/material';
 import AddPlayer from "../transactions/addPlayer.js";
 import PlayoffBrackets from "./playoffBrackets.js";
 
@@ -30,18 +30,23 @@ export default function HomePage() {
     }, []);
 
     return (
-        <Grid container spacing={{ xs: 4, md: 10 }} sx={{ p: { xs: 2, md: 4 } }}>
+        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 } }}>
 
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12} md={8}>
                 <Typography variant="h4" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
                     2025 Results
                 </Typography>
                 <PlayoffBrackets />
+                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                    <Button href="/matchups" variant="outlined" size="small">
+                        View Full Playoff Results
+                    </Button>
+                </Box>
             </Grid>
 
             <Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', md: 'block' }, mx: -1 }} />
 
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={4}>
                 <Typography variant="h4" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
                     Recent Transactions
                 </Typography>
