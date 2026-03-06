@@ -1,11 +1,10 @@
 'use client'
-import "../../globals.css";
 import { useEffect, useState } from "react";
-import { Grid, Typography, Box } from '@mui/material';
-import { Toilet, Trophy } from 'lucide-react';
-import  TeamAvatar  from '../general/TeamAvatar.js';
+import { Typography, Box, Card, CardContent } from '@mui/material';
+import { Toilet, Trophy, Award } from 'lucide-react';
+import TeamAvatar from '../general/TeamAvatar.js';
 
-const YEAR = 2025; //brackets for prior season
+const YEAR = 2025;
 
 export default function PlayoffBrackets() {
 
@@ -15,11 +14,10 @@ export default function PlayoffBrackets() {
     useEffect(() => {
         async function fetchPlayoffBrackets() {
             try {
-                const res = await fetch (`/api/playoffBrackets?year=${YEAR}`);
+                const res = await fetch(`/api/playoffBrackets?year=${YEAR}`);
                 if (!res.ok) throw new Error("Failed to fetch brackets");
 
                 const data = await res.json();
-                console.log("playoff brackets: ", data)
                 setPlayoffBracket(data);
             } catch (err) {
                 console.error("Fetch error: ", err);
@@ -29,17 +27,31 @@ export default function PlayoffBrackets() {
         }
         fetchPlayoffBrackets();
     }, []);
-    
+
     if (loading) return <Typography>Loading...</Typography>;
-    if (!playoffBracket || !playoffBracket.champions) return null;
+    if (!playoffBracket?.champions) return null;
+
+    return <Champion champs={playoffBracket.champions} />;
+}
 
 
+function ResultCard({ label, icon, teamName, avatarId, accentColor }) {
     return (
-        <Grid container>
-            <Champion champs={playoffBracket.champions}/>
-        </Grid>
-        
-    )
+        <Card elevation={3} sx={{ borderTop: `4px solid ${accentColor}`, borderRadius: 2 }}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5, py: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {icon}
+                    <Typography variant="h6" fontWeight="bold" sx={{ color: accentColor }}>
+                        {label}
+                    </Typography>
+                </Box>
+                <TeamAvatar avatarId={avatarId} teamName={teamName} size={56} />
+                <Typography variant="h6" textAlign="center">
+                    {teamName || "Unknown"}
+                </Typography>
+            </CardContent>
+        </Card>
+    );
 }
 
 
@@ -47,48 +59,34 @@ function Champion({ champs }) {
     if (!champs) return null;
 
     return (
-        <Box className='container' sx={{  display: 'grid', 
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: 2,
-                    width: '100%', 
-                    mt: 4
-                    }}>
-
-            {/*container for champion  */} 
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
-                <Typography variant="h3" sx={{ fontWeight: 'bold', color: 'goldenrod'}}>
-                    CHAMPION <Trophy color='gold' size={48}/>
-                </Typography>
-                <Typography variant='h4'>
-                    {champs.champion?.teamName || "No champ found" } 
-                    
-                    <TeamAvatar 
-                       avatarId={champs.champion?.avatar}
-                       teamName={champs.champion?.teamName}
-                       size={45}
-                    />
-                </Typography>
-
-            </Box>
-
-            {/*container for toilet king */} 
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}> 
-                <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
-                    TOILET KING <Toilet  color='brown' size={48}/>
-                </Typography>
-                <Typography variant='h4' >
-                    {champs.toiletChamp.teamName || "No toilet king found"} 
-
-                      <TeamAvatar 
-                       avatarId={champs.toiletChamp?.avatar}
-                       teamName={champs.toiletChamp?.teamName}
-                       size={45}
-                    />
-                    
-                </Typography>
-            </Box>
+        <Box sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' },
+            gap: 2,
+            width: '100%',
+            mt: 2
+        }}>
+            <ResultCard
+                label="Champion"
+                icon={<Trophy color="gold" size={28} />}
+                teamName={champs.champion?.teamName}
+                avatarId={champs.champion?.avatar}
+                accentColor="goldenrod"
+            />
+            <ResultCard
+                label="Runner-Up"
+                icon={<Award color="silver" size={28} />}
+                teamName={champs.runnerUp?.teamName}
+                avatarId={champs.runnerUp?.avatar}
+                accentColor="#9e9e9e"
+            />
+            <ResultCard
+                label="Toilet King"
+                icon={<Toilet color="saddlebrown" size={28} />}
+                teamName={champs.toiletChamp?.teamName}
+                avatarId={champs.toiletChamp?.avatar}
+                accentColor="#795548"
+            />
         </Box>
     );
 }
-
-
