@@ -38,7 +38,7 @@ export default function HomePage() {
                 </Typography>
                 <PlayoffBrackets />
                 <Box sx={{ textAlign: 'center', mt: 4 }}>
-                    <Button href="/matchups" variant="outlined" size="medium">
+                    <Button href="/matchups" variant="outlined" size="medium" sx={{ mt: 2, backgroundColor: "white" }}>
                         View Full Playoff Results
                     </Button>
                 </Box>
@@ -62,7 +62,7 @@ export default function HomePage() {
                             <AddPlayer key={tx.tx_id || tx.id || i} tx={tx} />
                         ))}
                         <Box sx={{ textAlign: 'center'}} >
-                            <Button href="/recentTransactions" variant="outlined" size="small" sx={{ mt: 2}}>
+                            <Button href="/recentTransactions" variant="outlined" size="small" sx={{ mt: 2, backgroundColor: "white" }}>
                                 View All Transactions
                             </Button> 
                         </Box>
