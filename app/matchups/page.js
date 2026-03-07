@@ -46,12 +46,17 @@ export default function MatchupsPage() {
 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h6" sx={{ mb: 1, textAlign: 'center' }}>Winner Bracket</Typography>
+                    <Typography variant="h6" sx={{ mb: 1, textAlign: 'center' }}>Winner's Bracket</Typography>
                     <Bracket rounds={processedWBracket} />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h6" sx={{ mb: 1, textAlign: 'center' }}>Loser Bracket</Typography>
+                    <Typography variant="h6" sx={{ mb: 1, textAlign: 'center' }}>Loser's Bracket</Typography>
                     <Bracket rounds={processedLBracket} />
+                </Grid>
+                <Grid>
+                    <Typography variant="h6" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
+                    Check back later for 2026 Matchups! 
+                    </Typography>
                 </Grid>
             </Grid>
         </Box>

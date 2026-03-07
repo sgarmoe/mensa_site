@@ -33,17 +33,27 @@ export default function Header() {
   return (
     <>
       <AppBar position="static" color="primary">
-        <Toolbar sx={{ flexDirection: 'column', alignItems: 'center', py: 2 }}>
+        <Toolbar sx={{ flexDirection: 'column', alignItems: 'center', py: 3 }}>
           <Typography
             variant={isMdUp ? 'h4' : 'h5'}
             component="div"
             sx={{ fontFamily: 'Times New Roman, Times, serif', textAlign: 'center', mb: 1 }}
           >
-            Minimally Entertaining NonChildbearing Sport Advocates
+            {[
+              { first: 'M', rest: 'inimally', color: '#e53935' },
+              { first: 'E', rest: 'ntertaining', color: '#fb8c00' },
+              { first: 'N', rest: 'onChildbearing', color: '#43a047' },
+              { first: 'S', rest: 'port', color: 'brown' },
+              { first: 'A', rest: 'dvocates', color: '#8e24aa' },
+            ].map(({ first, rest, color }, i, arr) => (
+              <span key={first}>
+                <span style={{ color }}>{first}</span>{rest}{i < arr.length - 1 ? ' ' : ''}
+              </span>
+            ))}
           </Typography>
 
           {isMdUp ? (
-            <Box sx={{ width: '80%', display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Box sx={{ width: '70%', display: 'flex', gap: 4, justifyContent: 'center' }}>
               {navItems.map((it) => (
                 <Button
                   key={it.href}

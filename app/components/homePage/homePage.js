@@ -30,21 +30,21 @@ export default function HomePage() {
     }, []);
 
     return (
-        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 } }}>
+        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 }, backgroundColor: 'lightgray' }}>
 
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
                     2025 Results
                 </Typography>
                 <PlayoffBrackets />
-                <Box sx={{ textAlign: 'center', mt: 2 }}>
-                    <Button href="/matchups" variant="outlined" size="small">
+                <Box sx={{ textAlign: 'center', mt: 4 }}>
+                    <Button href="/matchups" variant="outlined" size="medium">
                         View Full Playoff Results
                     </Button>
                 </Box>
             </Grid>
 
-            <Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', md: 'block' }, mx: -1 }} />
+            <Divider orientation="vertical" flexItem sx={{color: 'lightblue',  display: { xs: 'none', md: 'block' }, mx: -1  }} />
 
             <Grid item xs={12} md={4}>
                 <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
@@ -58,15 +58,15 @@ export default function HomePage() {
                     </Box>
                 ) : (
                     <Box sx={{ width: '100%' }}>
-                        {transactions.slice(0, 10).map((tx, i) => (
+                        {transactions.slice(0, 5).map((tx, i) => (
                             <AddPlayer key={tx.tx_id || tx.id || i} tx={tx} />
                         ))}
-
-                        <Button href="/recentTransactions" variant="outlined" size="small" sx={{ mt: 2 }}>
-                            View All Transactions
-                        </Button> 
-                    </Box>
-                      
+                        <Box sx={{ textAlign: 'center'}} >
+                            <Button href="/recentTransactions" variant="outlined" size="small" sx={{ mt: 2}}>
+                                View All Transactions
+                            </Button> 
+                        </Box>
+                    </Box>      
                 )}
             </Grid>
         </Grid>
