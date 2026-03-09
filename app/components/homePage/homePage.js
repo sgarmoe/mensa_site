@@ -31,7 +31,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 } }}>
+        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 }, backgroundColor: 'lightgray' }}>
 
             <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <SectionHeader>2025 Results</SectionHeader>

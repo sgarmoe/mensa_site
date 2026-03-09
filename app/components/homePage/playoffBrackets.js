@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Typography, Box, Card, CardContent } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { Toilet, Trophy, Award } from 'lucide-react';
 import TeamAvatar from '../general/TeamAvatar.js';
 
@@ -31,61 +31,100 @@ export default function PlayoffBrackets() {
     if (loading) return <Typography>Loading...</Typography>;
     if (!playoffBracket?.champions) return null;
 
-    return <Champion champs={playoffBracket.champions} />;
+    return <Podium champs={playoffBracket.champions} />;
 }
 
 
-function ResultCard({ label, icon, teamName, avatarId, accentColor }) {
+function PodiumSlot({ label, icon, teamName, avatarId, podiumHeight, podiumGradient, podiumLabel, avatarSize = 56 }) {
     return (
-        <Card elevation={3} sx={{ borderTop: `4px solid ${accentColor}`, borderRadius: 2 }}>
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5, py: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* Team info card above the podium block */}
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 0.75,
+                mb: 1.5,
+                px: 1,
+            }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     {icon}
-                    <Typography variant="h6" fontWeight="bold" sx={{ color: accentColor }}>
+                    <Typography variant="caption" fontWeight="bold" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5 }}>
                         {label}
                     </Typography>
                 </Box>
-                <TeamAvatar avatarId={avatarId} teamName={teamName} size={56} />
-                <Typography variant="h6" textAlign="center">
-                    {teamName || "Unknown"}
+                <TeamAvatar avatarId={avatarId} teamName={teamName} size={avatarSize} />
+                <Typography variant="body2" textAlign="center" fontWeight={700} sx={{ maxWidth: 110 }}>
+                    {teamName || 'Unknown'}
                 </Typography>
-            </CardContent>
-        </Card>
+            </Box>
+
+            {/* Podium block */}
+            <Box sx={{
+                width: { xs: 90, sm: 120 },
+                height: podiumHeight,
+                background: podiumGradient,
+                borderRadius: '8px 8px 0 0',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 -2px 8px rgba(0,0,0,0.15)',
+            }}>
+                <Typography variant="h5" fontWeight="bold" sx={{ color: 'rgba(255,255,255,0.9)', textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
+                    {podiumLabel}
+                </Typography>
+            </Box>
+        </Box>
     );
 }
 
 
-function Champion({ champs }) {
+function Podium({ champs }) {
     if (!champs) return null;
 
     return (
         <Box sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' },
-            gap: 2,
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            gap: { xs: 1, sm: 2 },
             width: '100%',
-            mt: 2
+            mt: 3,
         }}>
-            <ResultCard
-                label="Champion"
-                icon={<Trophy color="gold" size={28} />}
-                teamName={champs.champion?.teamName}
-                avatarId={champs.champion?.avatar}
-                accentColor="goldenrod"
-            />
-            <ResultCard
+            {/* 2nd — Runner-Up, left, medium height */}
+            <PodiumSlot
                 label="Runner-Up"
-                icon={<Award color="silver" size={28} />}
+                icon={<Award color="silver" size={18} />}
                 teamName={champs.runnerUp?.teamName}
                 avatarId={champs.runnerUp?.avatar}
-                accentColor="#9e9e9e"
+                podiumHeight={90}
+                podiumGradient="linear-gradient(180deg, #e0e0e0 0%, #9e9e9e 100%)"
+                podiumLabel="2"
+                avatarSize={48}
             />
-            <ResultCard
+
+            {/* 1st — Champion, center, tallest */}
+            <PodiumSlot
+                label="Champion"
+                icon={<Trophy color="gold" size={22} />}
+                teamName={champs.champion?.teamName}
+                avatarId={champs.champion?.avatar}
+                podiumHeight={130}
+                podiumGradient="linear-gradient(180deg, #FFD700 0%, #DAA520 100%)"
+                podiumLabel="1"
+                avatarSize={64}
+            />
+
+            {/* Toilet King, right, shortest */}
+            <PodiumSlot
                 label="Toilet King"
-                icon={<Toilet color="saddlebrown" size={28} />}
+                icon={<Toilet color="saddlebrown" size={18} />}
                 teamName={champs.toiletChamp?.teamName}
                 avatarId={champs.toiletChamp?.avatar}
-                accentColor="#795548"
+                podiumHeight={60}
+                podiumGradient="linear-gradient(180deg, #a1887f 0%, #795548 100%)"
+                podiumLabel="💩"
+                avatarSize={48}
             />
         </Box>
     );
