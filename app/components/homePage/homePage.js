@@ -37,7 +37,7 @@ export default function HomePage() {
             alignItems: { md: 'flex-start' },
             p: { xs: 2, md: 5 },
             backgroundColor: 'lightgray',
-            minHeight: '100%',
+            minHeight: '100vh',
         }}>
             {/* Left half — 2025 Results */}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', px: { xs: 1, md: 3 } }}>

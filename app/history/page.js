@@ -33,7 +33,7 @@ export default function LeagueHistoryPage() {
     const sorted = [...history].sort((a, b) => (b.wins || 0) - (a.wins || 0));
 
     return (
-        <Box sx={{ maxWidth: 1100, mx: 'auto', p: 3 }}>
+        <Box sx={{ maxWidth: 1100, mx: 'auto', p: 3, backgroundColor: 'lightgray', minHeight: '100vh' }}>
             <SectionHeader>
                 League History — All-time Records
             </SectionHeader>
