@@ -31,7 +31,12 @@ export default function PlayoffBrackets() {
     if (loading) return <Typography>Loading...</Typography>;
     if (!playoffBracket?.champions) return null;
 
-    return <Podium champs={playoffBracket.champions} />;
+    return (
+        <>
+            <Podium champs={playoffBracket.champions} />
+            <ToiletThrone toiletChamp={playoffBracket.champions.toiletChamp} />
+        </>
+    );
 }
 
 
@@ -126,6 +131,79 @@ function Podium({ champs }) {
                 podiumLabel="💩"
                 avatarSize={48}
             />
+        </Box>
+    );
+}
+
+
+function ToiletThrone({ toiletChamp }) {
+    if (!toiletChamp) return null;
+
+    const porcelain = '#f5f5f0';
+    const porcelainBorder = '#c8c8be';
+    const shadow = '0 2px 6px rgba(0,0,0,0.15)';
+
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 5 }}>
+            <Typography variant="caption" fontWeight="bold" sx={{ textTransform: 'uppercase', letterSpacing: 1, color: 'text.secondary', mb: 1.5 }}>
+                🚽 Throne of Shame
+            </Typography>
+
+            {/* Avatar hovering above the toilet */}
+            <TeamAvatar avatarId={toiletChamp.avatar} teamName={toiletChamp.teamName} size={52} />
+            <Typography variant="body2" fontWeight={700} sx={{ mt: 0.5, mb: 1 }}>
+                {toiletChamp.teamName || 'Unknown'}
+            </Typography>
+
+            {/* Toilet */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {/* Tank (cistern) */}
+                <Box sx={{
+                    width: 58, height: 44,
+                    bgcolor: porcelain,
+                    border: `2px solid ${porcelainBorder}`,
+                    borderRadius: '5px 5px 2px 2px',
+                    borderBottom: 'none',
+                    boxShadow: shadow,
+                }} />
+
+                {/* Lid (open/upright) */}
+                <Box sx={{
+                    width: 82, height: 10,
+                    bgcolor: porcelain,
+                    border: `2px solid ${porcelainBorder}`,
+                    borderRadius: '5px 5px 0 0',
+                    boxShadow: shadow,
+                }} />
+
+                {/* Seat */}
+                <Box sx={{
+                    width: 78, height: 8,
+                    bgcolor: '#e8e8e0',
+                    border: `2px solid ${porcelainBorder}`,
+                    borderTop: 'none',
+                }} />
+
+                {/* Bowl */}
+                <Box sx={{
+                    width: 74, height: 52,
+                    bgcolor: porcelain,
+                    border: `2px solid ${porcelainBorder}`,
+                    borderTop: 'none',
+                    borderRadius: '0 0 37px 37px',
+                    boxShadow: shadow,
+                }} />
+
+                {/* Base */}
+                <Box sx={{
+                    width: 90, height: 12,
+                    bgcolor: porcelain,
+                    border: `2px solid ${porcelainBorder}`,
+                    borderTop: 'none',
+                    borderRadius: '0 0 6px 6px',
+                    boxShadow: shadow,
+                }} />
+            </Box>
         </Box>
     );
 }
