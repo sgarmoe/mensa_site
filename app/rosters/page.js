@@ -53,13 +53,13 @@ export default function RostersPage() {
 
 
 function Team({ team }) {
-  
+  const [reserveCollapsed, setReserveCollapsed] = useState(true);
+
   const fullUrl = team.avatar?.startsWith('http');
 
   const avatarUrl = fullUrl
     ? team.avatar
     : `https://sleepercdn.com/avatars/thumbs/${team.avatar}`;
-
 
   //fallback to profile image if league-specific avatar fails
   const handleImageError = (e) => {
@@ -69,7 +69,7 @@ function Team({ team }) {
 
   return (
     <div className='team-item'>
-      <img 
+      <img
         src={avatarUrl || "https.//sleepercdn.com"}
         alt={`${team.team_name} avatar`}
         onError={handleImageError}
@@ -77,27 +77,37 @@ function Team({ team }) {
         />
       <h3>{team.team_name} </h3>
 
-      <Section title="Starters" players={team.starters} />
+      <StartersSection players={team.starters} />
       <hr className='team-divider'/>
-      <Section title="Bench" players={team.bench} />
-      <hr className='team-divider'/>
-      <Section title="Injured Reserve" players={team.injuredReserve} />
-      <hr className='team-divider'/>
-      <Section title="Taxi Squad" players={team.taxi} />
+      <button
+        onClick={() => setReserveCollapsed(c => !c)}
+        className="text-gray-400 hover:text-gray-200 text-xs border border-gray-600 rounded px-2 py-0.5 my-2"
+      >
+        {reserveCollapsed ? "Show Bench / IR / Taxi" : "Hide Bench / IR / Taxi"}
+      </button>
+      {!reserveCollapsed && (
+        <>
+          <Section title="Bench" players={team.bench} />
+          <hr className='team-divider'/>
+          <Section title="Injured Reserve" players={team.injuredReserve} />
+          <hr className='team-divider'/>
+          <Section title="Taxi Squad" players={team.taxi} />
+        </>
+      )}
     </div>
   );
 }
 
-function Section({ title, players }) {
+function StartersSection({ players }) {
   return (
-    <div className="mb-3">
-      <h3 className="text-lg text-center font-semibold mt-2">{title}</h3>
+    <div className="mb-3 w-full">
+      <h3 className="text-lg text-center font-semibold mt-2">Starters</h3>
       {players.length === 0 ? (
         <p className="text-gray-400 text-sm">No players listed.</p>
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-1">
+        <ul className="mt-1 w-full">
           {players.map((p, i) => (
-            <Player key={i} {...p} />
+            <StarterRow key={i} {...p} />
           ))}
         </ul>
       )}
@@ -105,12 +115,42 @@ function Section({ title, players }) {
   );
 }
 
-function Player({ full_name, position, team }) {
-  const positionClass = `position-${position.toUpperCase()}`;
-
+function StarterRow({ slot, full_name, position, team }) {
+  const positionClass = position ? `position-${position.toUpperCase()}` : "";
   return (
-    <li>
-      {full_name} - <span className={positionClass}>{position}</span> - {team} 
+    <li className="flex items-center gap-2 py-0.5 text-sm border-b border-gray-100 last:border-0">
+      <span className="w-12 text-xs font-bold text-gray-500 shrink-0">{slot}</span>
+      <span className="flex-1 font-medium">{full_name}</span>
+      <span className={`text-xs ${positionClass}`}>{position}</span>
+      <span className="text-xs text-gray-500 w-8 text-right shrink-0">{team}</span>
+    </li>
+  );
+}
+
+function Section({ title, players }) {
+  return (
+    <div className="mb-3 w-full">
+      <h3 className="text-lg text-center font-semibold mt-2">{title}</h3>
+      {players.length === 0 ? (
+        <p className="text-gray-400 text-sm">No players listed.</p>
+      ) : (
+        <ul className="mt-1 w-full">
+          {players.map((p, i) => (
+            <BenchRow key={i} {...p} />
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function BenchRow({ full_name, position, team }) {
+  const positionClass = position ? `position-${position.toUpperCase()}` : "";
+  return (
+    <li className="flex items-center gap-2 py-0.5 text-sm border-b border-gray-100 last:border-0">
+      <span className="flex-1 font-medium">{full_name}</span>
+      <span className={`text-xs ${positionClass}`}>{position}</span>
+      <span className="text-xs text-gray-500 w-8 text-right shrink-0">{team}</span>
     </li>
   );
 }

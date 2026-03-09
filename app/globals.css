@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-wrap: wrap; 
-    gap: 20px;
+    gap: 10px;
     min-height: 100%;
     border: 2px solid midnightblue;
 }
@@ -21,7 +21,7 @@
 .team-item {
     display: flex;
     flex-direction: column;
-    flex: 1 1 calc(33.33% - 20px);
+    flex: 1 1 calc(25% - 20px);
     border: 1px solid #ccc;
     background-color: white;
     padding: 10px; 
