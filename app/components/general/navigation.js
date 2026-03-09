@@ -40,11 +40,11 @@ export default function Header() {
             sx={{ fontFamily: 'Times New Roman, Times, serif', textAlign: 'center', mb: 1 }}
           >
             {[
-              { first: 'M', rest: 'inimally', color: '#e53935' },
+              { first: 'M', rest: 'inimally', color: '#fb8c00' },
               { first: 'E', rest: 'ntertaining', color: '#fb8c00' },
-              { first: 'N', rest: 'onChildbearing', color: '#43a047' },
-              { first: 'S', rest: 'port', color: 'brown' },
-              { first: 'A', rest: 'dvocates', color: '#8e24aa' },
+              { first: 'N', rest: 'onChildbearing', color: '#fb8c00' },
+              { first: 'S', rest: 'port', color: '#fb8c00' },
+              { first: 'A', rest: 'dvocates', color: '#fb8c00' },
             ].map(({ first, rest, color }, i, arr) => (
               <span key={first}>
                 <span style={{ color }}>{first}</span>{rest}{i < arr.length - 1 ? ' ' : ''}

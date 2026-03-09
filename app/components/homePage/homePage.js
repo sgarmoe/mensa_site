@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Grid, Divider, Typography, Box, Skeleton, Button } from '@mui/material';
+import { Grid, Divider, Box, Skeleton, Button } from '@mui/material';
 import AddPlayer from "../transactions/addPlayer.js";
 import PlayoffBrackets from "./playoffBrackets.js";
+import SectionHeader from "../general/SectionHeader.js";
 
 
 const YEAR = 2026;
@@ -30,12 +31,10 @@ export default function HomePage() {
     }, []);
 
     return (
-        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 }, backgroundColor: 'lightgray' }}>
+        <Grid container spacing={{ xs: 4, md: 25 }} sx={{ p: { xs: 2, md: 5 } }}>
 
             <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
-                    2025 Results
-                </Typography>
+                <SectionHeader>2025 Results</SectionHeader>
                 <PlayoffBrackets />
                 <Box sx={{ textAlign: 'center', mt: 4 }}>
                     <Button href="/matchups" variant="outlined" size="medium" sx={{ mt: 2, backgroundColor: "white" }}>
@@ -46,10 +45,8 @@ export default function HomePage() {
 
             <Divider orientation="vertical" flexItem sx={{color: 'lightblue',  display: { xs: 'none', md: 'block' }, mx: -1  }} />
 
-            <Grid item xs={12} md={4}>
-                <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', p: 3, fontWeight: '700' }}>
-                    Recent Transactions
-                </Typography>
+            <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <SectionHeader>Recent Transactions</SectionHeader>
                 {loading ? (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                         {Array.from({ length: 5 }).map((_, i) => (

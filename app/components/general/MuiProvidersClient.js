@@ -8,6 +8,7 @@ const theme = createTheme({
     mode: 'light',
     primary: { main: '#1976d2' },
     secondary: { main: '#ff9800' },
+    background: { default: '#f0f0f0', paper: '#ffffff' },
   },
 });
 
