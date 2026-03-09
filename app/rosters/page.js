@@ -1,5 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
+import SectionHeader from "../components/general/SectionHeader.js";
+import { Box } from '@mui/material';
 import "../globals.css";
 
 //TODO
@@ -36,14 +38,16 @@ export default function RostersPage() {
     if (error) return <p className="text-center mt-8">Error: {error} </p>;
 
     return (
-        <div className="p-4 max-w-5xl mx-auto">
-            <h2> Rosters Page </h2>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
+            <SectionHeader>Rosters Page</SectionHeader>
               <div className="container">
                 {rosters.map((team, i) => (
                   <Team key={i} team={team} />
                 ))}
               </div>
-        </div>
+      
+        </Box>
+        
     );
 }
 

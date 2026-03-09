@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, Paper, Typography, Stack, Avatar, Divider, Chip } from '@mui/material';
 import TeamAvatar from '../components/general/TeamAvatar';
+import SectionHeader from "../components/general/SectionHeader.js";
 import "../globals.css";
 
 const YEAR = 2026;
@@ -50,7 +51,7 @@ export default function TransactionsPage() {
 
   return (
     <Box sx={{ p: 3, maxWidth: 1100, mx: 'auto' }}>
-      <Title title="Recent Transactions" />
+      <SectionHeader>Recent Transactions</SectionHeader>
 
       <Stack spacing={2}>
         {sorted.map((tx, i) => (

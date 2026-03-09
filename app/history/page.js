@@ -1,7 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Box, Paper, Stack, Typography, Avatar, Divider, Grid } from '@mui/material';
+import { Box, Paper, Stack, Typography, Divider, Grid } from '@mui/material';
 import TeamAvatar from '../components/general/TeamAvatar';
+import SectionHeader from "../components/general/SectionHeader.js";
 import "../globals.css";
 
 export default function LeagueHistoryPage() {
@@ -33,9 +34,9 @@ export default function LeagueHistoryPage() {
 
     return (
         <Box sx={{ maxWidth: 1100, mx: 'auto', p: 3 }}>
-            <Typography variant="h4" align="center" sx={{ mb: 2, fontWeight: 700 }}>
+            <SectionHeader>
                 League History — All-time Records
-            </Typography>
+            </SectionHeader>
 
             <Grid container spacing={2} alignItems="stretch">
                 {sorted.map((team, i) => (

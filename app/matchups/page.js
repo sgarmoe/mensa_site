@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, Grid, Typography, Paper, Stack, Divider } from '@mui/material';
 import TeamAvatar from '../components/general/TeamAvatar';
+import SectionHeader from "../components/general/SectionHeader.js";
 import "../globals.css";
 
 const YEAR = 2025; // show last season playoffs by default
@@ -42,7 +43,7 @@ export default function MatchupsPage() {
 
     return (
         <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
-            <Header title={`Playoff Brackets — ${YEAR}`} />
+            <SectionHeader>Playoff Brackets — {YEAR}</SectionHeader>
 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
