@@ -1,7 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import SectionHeader from "../components/general/SectionHeader.js";
-import { Box } from '@mui/material';
+import PositionIcon from "../components/general/PositionIcon.js";
+import { Box, Typography } from '@mui/material';
 import "../globals.css";
 
 //TODO
@@ -73,9 +74,9 @@ function Team({ team }) {
         src={avatarUrl || "https.//sleepercdn.com"}
         alt={`${team.team_name} avatar`}
         onError={handleImageError}
-        style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        style={{ width: '64px', height: '64px', borderRadius: '50%' }}
         />
-      <h3>{team.team_name} </h3>
+      <Typography variant="h4" >{team.team_name}</Typography>
 
       <StartersSection players={team.starters} />
       <hr className='team-divider'/>
@@ -101,9 +102,8 @@ function Team({ team }) {
 function StartersSection({ players }) {
   return (
     <div className="mb-3 w-full">
-      <h3 className="text-lg text-center font-semibold mt-2">Starters</h3>
       {players.length === 0 ? (
-        <p className="text-gray-400 text-sm">No players listed.</p>
+        <p className="text-gray-400 text-sm text-center">No players listed.</p>
       ) : (
         <ul className="mt-1 w-full">
           {players.map((p, i) => (
@@ -116,12 +116,11 @@ function StartersSection({ players }) {
 }
 
 function StarterRow({ slot, full_name, position, team }) {
-  const positionClass = position ? `position-${position.toUpperCase()}` : "";
   return (
     <li className="flex items-center gap-2 py-0.5 text-sm border-b border-gray-100 last:border-0">
-      <span className="w-12 text-xs font-bold text-gray-500 shrink-0">{slot}</span>
+      <span className="w-16 shrink-0"><PositionIcon slot={slot} /></span>
       <span className="flex-1 font-medium">{full_name}</span>
-      <span className={`text-xs ${positionClass}`}>{position}</span>
+      <PositionIcon slot={position} />
       <span className="text-xs text-gray-500 w-8 text-right shrink-0">{team}</span>
     </li>
   );
@@ -132,7 +131,7 @@ function Section({ title, players }) {
     <div className="mb-3 w-full">
       <h3 className="text-lg text-center font-semibold mt-2">{title}</h3>
       {players.length === 0 ? (
-        <p className="text-gray-400 text-sm">No players listed.</p>
+        <p className="text-gray-400 text-sm text-center">No players listed.</p>
       ) : (
         <ul className="mt-1 w-full">
           {players.map((p, i) => (
@@ -145,11 +144,10 @@ function Section({ title, players }) {
 }
 
 function BenchRow({ full_name, position, team }) {
-  const positionClass = position ? `position-${position.toUpperCase()}` : "";
   return (
     <li className="flex items-center gap-2 py-0.5 text-sm border-b border-gray-100 last:border-0">
       <span className="flex-1 font-medium">{full_name}</span>
-      <span className={`text-xs ${positionClass}`}>{position}</span>
+      <PositionIcon slot={position} />
       <span className="text-xs text-gray-500 w-8 text-right shrink-0">{team}</span>
     </li>
   );
