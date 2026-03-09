@@ -78,6 +78,7 @@ function getLeagueWinners(processedWBracket, processedLBracket, rosterMap) {
 
     const winnerMatches = Object.values(processedWBracket).flat();
     const championship  = winnerMatches.find(m => m.rank === 1);
+    const thirdPlaceMatch = winnerMatches.find(m => m.rank === 3);
 
     const loserMatches = Object.values(processedLBracket).flat();
     const toiletChampionship = loserMatches.find(m => m.rank === 1);
@@ -89,8 +90,9 @@ function getLeagueWinners(processedWBracket, processedLBracket, rosterMap) {
 
 
     return {
-        champion: getTeam(championship?.winner) || "Champ not found", 
+        champion: getTeam(championship?.winner) || "Champ not found",
         runnerUp: getTeam(championship?.loser) || "runner up not found",
+        thirdPlace: getTeam(thirdPlaceMatch?.winner) || "third place not found",
         toiletChamp: getTeam(toiletChampionship?.winner) || "toilet champ not found"
     };
 }
