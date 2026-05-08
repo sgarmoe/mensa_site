@@ -25,16 +25,19 @@ export async function processWeeklyMatchupData(year) {
         }
     }
     
-    for (const currentWeek of allWeeks) {
-        let matchups;
+    const weekResults = await Promise.all(
+        allWeeks.map(async (week) => {
+            try {
+                const matchups = await fetchAllMatchups(leagueId, week);
+                return { week, matchups };
+            } catch (err) {
+                console.warn(`No matchups available for ${year} week ${week}`);
+                return { week, matchups: null };
+            }
+        })
+    );
 
-        try {
-            matchups = await fetchAllMatchups(leagueId, currentWeek);
-        } catch (err) {
-            console.warn(`No matchups available for ${year}`);
-            continue;
-        }
-        
+    for (const { week: currentWeek, matchups } of weekResults) {
         if (!Array.isArray(matchups) || matchups.length === 0) {
             continue;
         }
