@@ -35,7 +35,7 @@ export default function LeagueHistoryPage() {
     return (
         <Box sx={{ maxWidth: 1100, mx: 'auto', p: 3, backgroundColor: 'lightgray', minHeight: '100vh' }}>
             <SectionHeader>
-                League History — All-time Records
+                League History — All-Time Records
             </SectionHeader>
 
             <Grid container spacing={2} alignItems="stretch">
@@ -78,11 +78,11 @@ function TeamHistoryCard({ team }) {
                 <Stack direction="row" spacing={2}>
                     <Box>
                         <Typography variant="caption" color="text.secondary">Points For</Typography>
-                        <Typography>{team.pf || 0}</Typography>
+                        <Typography>{team.pf.toFixed(2) || 0}</Typography>
                     </Box>
                     <Box>
                         <Typography variant="caption" color="text.secondary">Points Against</Typography>
-                        <Typography>{team.pa || 0}</Typography>
+                        <Typography>{team.pa.toFixed(2) || 0}</Typography>
                     </Box>
                 </Stack>
             </Box>
