@@ -54,8 +54,6 @@ export async function processWeeklyMatchupData(year) {
             matchupMap.get(matchupId).push(entry);
         }
 
-            const firstMatchup = matchupMap.entries().next().value;
-    
     for (const [matchup_id, teams] of matchupMap.entries()) {
         if (teams.length !== 2) continue; 
 

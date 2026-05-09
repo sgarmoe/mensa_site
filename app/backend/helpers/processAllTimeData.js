@@ -57,16 +57,10 @@ export async function calculateAllTimeStatistics() {
 
 //calculate all time records for each team
 export function calculateAllTimeWins(teams) {
-
-    console.log("Entered win tracker fn");
-
     for (const team of teams) {
-        const gamesPlayed = 
-            team.wins + team.losses;
-
-        const winPercentage = 
-            gamesPlayed > 0 
+        const gamesPlayed = team.wins + team.losses;
+        team.winPercentage = gamesPlayed > 0
             ? (team.wins / gamesPlayed).toFixed(3)
-            : "0.0";
+            : "0.000";
     }
 }
