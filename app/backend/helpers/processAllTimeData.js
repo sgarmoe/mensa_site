@@ -14,22 +14,24 @@ export async function calculateAllTimeStatistics() {
         .filter(season => Boolean(season.leagueId))
         .sort((a, b) => a.year - b.year);
     
+    const allSeasonData = await Promise.all(
+        seasons.map(({ year }) => processWeeklyMatchupData(year))
+    );
+
     const allTimeTeams = new Map();
 
-    //may need to change to week/other var to iterate over
-    for (const { year } of seasons) {
-        const seasonData = await processWeeklyMatchupData(year);
+    for (const seasonData of allSeasonData) {
         const teams = Object.values(seasonData);
 
         for (const team of teams) {
-            const { roster_id, team_name, wins, losses, pf, pa } = team; 
+            const { roster_id, team_name, wins, losses, pf, pa } = team;
 
             if (!allTimeTeams.has(roster_id)) {
                 allTimeTeams.set(roster_id, {
-                    roster_id, 
+                    roster_id,
                     team_name,
-                    wins: 0, 
-                    losses: 0, 
+                    wins: 0,
+                    losses: 0,
                     pf: 0,
                     pa: 0
                 });

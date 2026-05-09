@@ -2,8 +2,11 @@ import { fetchUserTeamNames, fetchCurrentRosters } from "../lib/fetchSleeperData
 
 export async function matchRosterIdsToUser(leagueId) {
 
-    const usersArray = await fetchUserTeamNames(leagueId);
-    const rostersArray = await fetchCurrentRosters(leagueId);
+
+    const [usersArray, rostersArray] = await Promise.all([
+        fetchUserTeamNames(leagueId),
+        fetchCurrentRosters(leagueId)
+    ]);
 
     if (!Array.isArray(usersArray) || !Array.isArray(rostersArray)) {
         throw new Error("Invalid Sleeper data format");
