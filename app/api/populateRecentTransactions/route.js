@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { processTransactionsController } from "../../backend/controllers/processTransactionsController.js";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function GET(request) {
   try {
