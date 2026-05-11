@@ -4,9 +4,8 @@ import { SEASONS } from "../config/seasons.js";
 
 export async function processWeeklyMatchupData(year) {
 
-    const week = 0;
     const { leagueId, regularWeeks } = SEASONS[year];
-    const allWeeks = week ? [week] : Array.from({ length : regularWeeks }, (_, i) => i + 1); 
+    const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
     const teamHistory = new Map();
     const profiles = await matchRosterIdsToUser(leagueId);  
 
