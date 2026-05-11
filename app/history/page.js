@@ -1,35 +1,12 @@
-"use client"
-import { useEffect, useState } from "react";
+import { calculateAllTimeStatistics } from '../backend/helpers/processAllTimeData.js';
 import { Box, Paper, Stack, Typography, Divider, Grid } from '@mui/material';
 import TeamAvatar from '../components/general/TeamAvatar';
 import SectionHeader from "../components/general/SectionHeader.js";
-import "../globals.css";
 
-export default function LeagueHistoryPage() {
-    const [history, setHistory] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+export const revalidate = 3600;
 
-    useEffect(() => {
-        async function fetchHistory() {
-            try {
-                const res = await fetch(`/api/leagueHistory`);
-                if (!res.ok) throw new Error("Failed to acquire league history");
-                const data = await res.json();
-                setHistory(data || []);
-            } catch (err) {
-                setError(err.message || String(err));
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchHistory();
-    }, []);
-
-    if (loading) return <Typography align="center">Loading history...</Typography>;
-    if (error) return <Typography align="center" color="error">Error: {error}</Typography>;
-
-    // sort by wins desc
+export default async function LeagueHistoryPage() {
+    const history = await calculateAllTimeStatistics();
     const sorted = [...history].sort((a, b) => (b.wins || 0) - (a.wins || 0));
 
     return (
@@ -78,11 +55,11 @@ function TeamHistoryCard({ team }) {
                 <Stack direction="row" spacing={2}>
                     <Box>
                         <Typography variant="caption" color="text.secondary">Points For</Typography>
-                        <Typography>{team.pf.toFixed(2) || 0}</Typography>
+                        <Typography>{(team.pf || 0).toFixed(2)}</Typography>
                     </Box>
                     <Box>
                         <Typography variant="caption" color="text.secondary">Points Against</Typography>
-                        <Typography>{team.pa.toFixed(2) || 0}</Typography>
+                        <Typography>{(team.pa || 0).toFixed(2)}</Typography>
                     </Box>
                 </Stack>
             </Box>
