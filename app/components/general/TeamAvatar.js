@@ -1,3 +1,4 @@
+"use client";
 import Avatar from '@mui/material/Avatar';
 
 export default function TeamAvatar({ avatarId, teamName = 'Team', size = 35 }) {
@@ -16,7 +17,7 @@ export default function TeamAvatar({ avatarId, teamName = 'Team', size = 35 }) {
         <Avatar
             alt={`${teamName} avatar`}
             src={getAvatarUrl(avatarId)}
-            imgProps={{ onError: handleImageError }}
+            slotProps={{ img: { onError: handleImageError } }}
             sx={{ width: size, height: size }}
         />
     );

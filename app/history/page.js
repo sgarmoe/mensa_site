@@ -37,9 +37,9 @@ function TeamHistoryCard({ team }) {
             <Box>
                 <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                     <Stack direction="row" spacing={2} alignItems="center">
-                        <TeamAvatar avatarId={team.team_name?.avatar || team.avatar} teamName={team.team_name?.teamName || team.team} size={56} />
+                        <TeamAvatar avatarId={team.avatar} teamName={team.team_name} size={56} />
                         <Box>
-                            <Typography variant="h6">{team.team_name?.teamName || team.team || 'Unknown'}</Typography>
+                            <Typography variant="h6">{team.team_name || 'Unknown'}</Typography>
                             <Typography variant="caption" color="text.secondary">Roster ID: {team.roster_id || '—'}</Typography>
                         </Box>
                     </Stack>

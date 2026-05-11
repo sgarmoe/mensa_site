@@ -24,12 +24,13 @@ export async function calculateAllTimeStatistics() {
         const teams = Object.values(seasonData);
 
         for (const team of teams) {
-            const { roster_id, team_name, wins, losses, pf, pa } = team;
+            const { roster_id, team_name, avatar, wins, losses, pf, pa } = team;
 
             if (!allTimeTeams.has(roster_id)) {
                 allTimeTeams.set(roster_id, {
                     roster_id,
                     team_name,
+                    avatar,
                     wins: 0,
                     losses: 0,
                     pf: 0,
