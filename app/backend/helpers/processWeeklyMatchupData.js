@@ -48,7 +48,8 @@ export async function processWeeklyMatchupData(year) {
     
 
         for (const entry of matchups) {
-        const matchupId = entry.matchup_id;
+            const matchupId = entry.matchup_id;
+            if (matchupId == null) continue;
 
             if (!matchupMap.has(matchupId)) {
                 matchupMap.set(matchupId, []);
