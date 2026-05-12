@@ -72,7 +72,7 @@ export async function processTransactions(year, week) {
     return processedData;
 }
 
-function formatTrade(tx, players) {
+function formatTrade(tx, players, profiles) {
     //console.log("Entered trade format ");
     
     const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
