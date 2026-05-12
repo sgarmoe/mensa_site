@@ -14,9 +14,19 @@ export async function calculateAllTimeStatistics() {
         .filter(season => Boolean(season.leagueId))
         .sort((a, b) => a.year - b.year);
     
-    const allSeasonData = await Promise.all(
+    const seasonResults = await Promise.allSettled(
         seasons.map(({ year }) => processWeeklyMatchupData(year))
     );
+
+    const allSeasonData = seasonResults
+        .filter((r, i) => {
+            if (r.status === 'rejected') {
+                console.warn(`Season ${seasons[i].year} failed to load:`, r.reason);
+                return false;
+            }
+            return true;
+        })
+        .map(r => r.value);
 
     const allTimeTeams = new Map();
 
