@@ -21,9 +21,7 @@ export async function calculateAllTimeStatistics() {
     const allTimeTeams = new Map();
 
     for (const seasonData of allSeasonData) {
-        const teams = Object.values(seasonData);
-
-        for (const team of teams) {
+        for (const team of seasonData) {
             const { roster_id, team_name, avatar, wins, losses, pf, pa } = team;
 
             if (!allTimeTeams.has(roster_id)) {
@@ -48,12 +46,8 @@ export async function calculateAllTimeStatistics() {
     }
     const teamsArray = Array.from(allTimeTeams.values());
 
-        //RETURNED AS IMPROPER DATA STRUCTURE
-
-
     calculateAllTimeWins(teamsArray);
-    //console.log(Array.from(teamsArray.values()));
-    return Array.from(teamsArray.values()); 
+    return teamsArray;
 }
 
 //calculate all time records for each team

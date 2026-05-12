@@ -7,7 +7,13 @@ export const revalidate = 3600;
 
 export default async function LeagueHistoryPage() {
     const history = await calculateAllTimeStatistics();
-    const sorted = [...history].sort((a, b) => (b.wins || 0) - (a.wins || 0));
+    const sorted = [...history].sort((a, b) => {
+        const winDiff = (b.wins || 0) - (a.wins || 0);
+        if (winDiff !== 0) return winDiff;
+        const pctDiff = parseFloat(b.winPercentage || 0) - parseFloat(a.winPercentage || 0);
+        if (pctDiff !== 0) return pctDiff;
+        return (b.pf || 0) - (a.pf || 0);
+    });
 
     return (
         <Box sx={{ maxWidth: 1100, mx: 'auto', p: 3, backgroundColor: 'lightgray', minHeight: '100vh' }}>
@@ -30,7 +36,9 @@ function TeamHistoryCard({ team }) {
     const wins = team.wins || 0;
     const losses = team.losses || 0;
     const games = wins + losses || 0;
-    const winPct = games > 0 ? ((wins / games) * 100).toFixed(1) : '0.0';
+    const winPct = team.winPercentage
+        ? (parseFloat(team.winPercentage) * 100).toFixed(1)
+        : '0.0';
 
     return (
         <Paper elevation={2} sx={{ p: 2, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
