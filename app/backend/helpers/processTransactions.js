@@ -5,16 +5,29 @@ import { SEASONS } from "../config/seasons.js";
 
 
 export async function processTransactions(year, week) {
-    const leagueId = SEASONS[year].leagueId;
-    const profiles = await matchRosterIdsToUser(leagueId);
 
-    if (!SEASONS[year]) {
+    if (!SEASONS[year]) { //guard for invalid year input
         throw new Error(`No year detected for ${year}`);
     }
 
-    const allWeeks = week ? [week] : Array.from({ length : 18 }, (_, i) => i + 1); 
+    const { leagueId, regularWeeks } = SEASONS[year];
+    const profiles = await matchRosterIdsToUser(leagueId);
+    const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
 
     let rawData = [];
+
+
+    // const rawTxData = await Promise.all(
+    //     allWeeks.map(async (week) => {
+    //         try {
+    //             const weeklyData = await fetchTransactions(leagueId, week);
+    //             return { week, weeklyData };
+    //         } catch (err) {
+    //             console.warn(`No transactions available for ${year} week ${week}`);
+    //             return { week, weeklyData: [] };
+    //         }
+    //     })
+    // )
 
     for (const w of allWeeks) {
         const weekData = await fetchTransactions(leagueId, w);
