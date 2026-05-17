@@ -27,7 +27,7 @@ export async function processTransactions(year, week) {
     );
 
     const rawData = weekResults.flat();
-    
+
     const playerIds = [];
 
     rawData.forEach(tx => {
@@ -61,19 +61,19 @@ export async function processTransactions(year, week) {
             return formatFreeAgent(tx, playerLookup, profiles);
         }
 
+        const unknownProfile = profiles.get(tx.roster_ids?.[0]);
         return {
             type: tx.type,
             transactionId: tx.transaction_id,
             timestamp: tx.created,
             team: tx.roster_ids?.[0] || null,
-            team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
-            avatar: profiles.get(tx.roster_ids?.[0]) ?? "No avatar located",
+            team_name: unknownProfile?.teamName ?? "No team found",
+            avatar: unknownProfile?.avatar ?? null,
             adds: [],
             drops: []
         };
     });
     processedData.sort((a, b) => b.timestamp - a.timestamp);
-    //console.dir(processedData.slice(0, 100), { depth: null });
     return processedData;
 }
 
@@ -90,13 +90,15 @@ function formatTrade(tx, players, profiles) {
         fromTeam: teamId
     }));
 
+    const tradeProfile = profiles.get(tx.roster_ids?.[0]);
     return {
         type: "Trade",
-        transactionId: tx.transaction_id, 
+        transactionId: tx.transaction_id,
         timestamp: tx.created,
-        team: tx.roster_ids?.[0]|| null,
-        team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
-        adds, 
+        team: tx.roster_ids?.[0] || null,
+        team_name: tradeProfile?.teamName ?? "No team found",
+        avatar: tradeProfile?.avatar ?? null,
+        adds,
         drops
     };
 }
@@ -113,14 +115,15 @@ function formatWaiver(tx, players, profiles) {
         fromTeam: teamId
     }));
     
+    const waiverProfile = profiles.get(tx.roster_ids?.[0]);
     return {
         type: "Waiver",
-        transactionId: tx.transaction_id, 
+        transactionId: tx.transaction_id,
         timestamp: tx.created,
-        team: tx.roster_ids?.[0]|| null,
-        team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
-        avatar: profiles.get(tx.roster_ids?.[0]) ?? "No avatar located",
-        adds, 
+        team: tx.roster_ids?.[0] || null,
+        team_name: waiverProfile?.teamName ?? "No team found",
+        avatar: waiverProfile?.avatar ?? null,
+        adds,
         drops
     };
 }
@@ -137,14 +140,15 @@ function formatFreeAgent(tx, players, profiles ) {
         fromTeam: teamId
     }));
     
+    const faProfile = profiles.get(tx.roster_ids?.[0]);
     return {
         type: "Free Agent",
-        transactionId: tx.transaction_id, 
+        transactionId: tx.transaction_id,
         timestamp: tx.created,
-        team: tx.roster_ids?.[0]|| null,
-        team_name: profiles.get(tx.roster_ids?.[0]) ?? "No team found",
-        avatar: profiles.get(tx.roster_ids?.[0]) ?? "No avatar located",
-        adds, 
+        team: tx.roster_ids?.[0] || null,
+        team_name: faProfile?.teamName ?? "No team found",
+        avatar: faProfile?.avatar ?? null,
+        adds,
         drops
     };
 }

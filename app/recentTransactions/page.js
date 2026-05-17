@@ -69,9 +69,9 @@ function Transaction({ tx }) {
     <Paper elevation={2} sx={{ p: 2 }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" spacing={2} alignItems="center">
-          <TeamAvatar avatarId={tx.team_name?.avatar} teamName={tx.team_name?.teamName} size={56} />
+          <TeamAvatar avatarId={tx.avatar} teamName={tx.team_name} size={56} />
           <div>
-            <Typography variant="h6">{tx.team_name?.teamName || 'Unknown Team'}</Typography>
+            <Typography variant="h6">{tx.team_name || 'Unknown Team'}</Typography>
             <Typography variant="caption" color="text.secondary">
               {tx.type} {ts && `• ${ts.toLocaleString()}`}
             </Typography>

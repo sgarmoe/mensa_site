@@ -22,9 +22,9 @@ export default function AddPlayer({ tx }) {
                     mb: 1
                 }}>
                 <Typography color="primary" variant="h6" fontWeight={500}>
-                    {tx.type} - {tx.team_name.teamName}
+                    {tx.type} - {tx.team_name}
                 </Typography>
-                <TeamAvatar avatarId={tx.team_name?.avatar} teamName={tx.team_name?.teamName} size={35} />
+                <TeamAvatar avatarId={tx.avatar} teamName={tx.team_name} size={35} />
             </Stack>
 
             <Divider sx={{ width: '100%', mb: 1.5 }} />
