@@ -14,27 +14,19 @@ export async function processTransactions(year, week) {
     const profiles = await matchRosterIdsToUser(leagueId);
     const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
 
-    let rawData = [];
+    const weekResults = await Promise.all(
+        allWeeks.map(async (w) => {
+            try {
+                const weeklyData = await fetchTransactions(leagueId, w);
+                return Array.isArray(weeklyData) ? weeklyData : [];
+            } catch (err) {
+                console.warn(`No transactions available for ${year} week ${w}`);
+                return [];
+            }
+        })
+    );
 
-
-    // const rawTxData = await Promise.all(
-    //     allWeeks.map(async (week) => {
-    //         try {
-    //             const weeklyData = await fetchTransactions(leagueId, week);
-    //             return { week, weeklyData };
-    //         } catch (err) {
-    //             console.warn(`No transactions available for ${year} week ${week}`);
-    //             return { week, weeklyData: [] };
-    //         }
-    //     })
-    // )
-
-    for (const w of allWeeks) {
-        const weekData = await fetchTransactions(leagueId, w);
-        if (Array.isArray(weekData)) {
-            rawData.push(...weekData);
-        }
-    }
+    const rawData = weekResults.flat();
     
     const playerIds = [];
 
