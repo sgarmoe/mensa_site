@@ -12,7 +12,7 @@ export async function processTransactions(year, week) {
 
     const { leagueId, regularWeeks } = SEASONS[year];
     const profiles = await matchRosterIdsToUser(leagueId);
-    const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
+    const allWeeks = week ? [week] : Array.from({ length: regularWeeks }, (_, i) => i + 1);
 
     const weekResults = await Promise.all(
         allWeeks.map(async (w) => {

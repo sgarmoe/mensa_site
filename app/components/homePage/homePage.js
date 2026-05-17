@@ -4,9 +4,7 @@ import { Divider, Box, Skeleton, Button } from '@mui/material';
 import AddPlayer from "../transactions/addPlayer.js";
 import PlayoffBrackets from "./playoffBrackets.js";
 import SectionHeader from "../general/SectionHeader.js";
-
-
-const YEAR = 2026;
+import { CURRENT_YEAR } from "../../backend/config/seasons.js";
 
 export default function HomePage() {
 
@@ -16,7 +14,7 @@ export default function HomePage() {
     useEffect(() => {
         async function fetchTransactions() {
             try {
-                const res = await fetch(`/api/populateRecentTransactions?year=${YEAR}`);
+                const res = await fetch(`/api/populateRecentTransactions?year=${CURRENT_YEAR}`);
                 if (!res.ok) throw new Error("Failed to populate transactions");
 
                 const data = await res.json();

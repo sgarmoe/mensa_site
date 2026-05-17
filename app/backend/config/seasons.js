@@ -1,3 +1,5 @@
+export const CURRENT_YEAR = 2026;
+
 export const SEASONS = {
     2023: {
         leagueId: process.env.LEAGUE_ID_2023,

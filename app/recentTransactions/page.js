@@ -4,16 +4,8 @@ import { Box, Paper, Typography, Stack, Avatar, Divider, Chip } from '@mui/mater
 import TeamAvatar from '../components/general/TeamAvatar';
 import SectionHeader from "../components/general/SectionHeader.js";
 import "../globals.css";
+import { CURRENT_YEAR } from "../backend/config/seasons.js";
 
-const YEAR = 2026;
-
-function Title({ title }) {
-  return (
-    <Typography variant="h4" align="center" sx={{ mb: 2, fontWeight: 700 }}>
-      {title}
-    </Typography>
-  );
-}
 
 function playerInitials(name) {
   if (!name) return '';
@@ -29,7 +21,7 @@ export default function TransactionsPage() {
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const res = await fetch(`/api/populateRecentTransactions?year=${YEAR}`);
+        const res = await fetch(`/api/populateRecentTransactions?year=${CURRENT_YEAR}`);
         if (!res.ok) throw new Error("Failed to populate transactions");
 
         const data = await res.json();
@@ -55,7 +47,7 @@ export default function TransactionsPage() {
 
       <Stack spacing={2}>
         {sorted.map((tx, i) => (
-          <Transaction key={tx._id || tx.tx_id || i} tx={tx} />
+          <Transaction key={tx.transactionId || i} tx={tx} />
         ))}
       </Stack>
     </Box>
@@ -126,7 +118,7 @@ function Transaction({ tx }) {
 
         <Stack spacing={1} sx={{ alignItems: { xs: 'flex-start', md: 'flex-end' } }}>
           <Typography variant="caption" color="text.secondary">
-            Transaction ID: {tx.tx_id || tx._id || '—'}
+            Transaction ID: {tx.transactionId || '—'}
           </Typography>
         </Stack>
       </Stack>
