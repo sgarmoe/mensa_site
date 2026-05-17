@@ -78,28 +78,30 @@ export async function processTransactions(year, week) {
 }
 
 function formatTrade(tx, players, profiles) {
-    //console.log("Entered trade format ");
-    
-    const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
-        player: players[playerId]?.full_name || "Unknown player", 
-        toTeam: teamId
-    }));
+    const sides = (tx.roster_ids || []).map(rosterId => {
+        const profile = profiles.get(rosterId);
 
-    const drops = Object.entries(tx.drops || {}).map(([playerId, teamId]) => ({
-        player: players[playerId]?.full_name || "Unknown Player",
-        fromTeam: teamId
-    }));
+        const playersReceived = Object.entries(tx.adds || {})
+            .filter(([, toRosterId]) => toRosterId === rosterId)
+            .map(([playerId]) => players[playerId]?.full_name || "Unknown player");
 
-    const tradeProfile = profiles.get(tx.roster_ids?.[0]);
+        const picksReceived = (tx.draft_picks || [])
+            .filter(pick => pick.roster_id === rosterId)
+            .map(pick => `${pick.season} Round ${pick.round} Pick`);
+
+        return {
+            roster_id: rosterId,
+            team_name: profile?.teamName ?? "No team found",
+            avatar: profile?.avatar ?? null,
+            received: [...playersReceived, ...picksReceived]
+        };
+    });
+
     return {
         type: "Trade",
         transactionId: tx.transaction_id,
         timestamp: tx.created,
-        team: tx.roster_ids?.[0] || null,
-        team_name: tradeProfile?.teamName ?? "No team found",
-        avatar: tradeProfile?.avatar ?? null,
-        adds,
-        drops
+        sides
     };
 }
 

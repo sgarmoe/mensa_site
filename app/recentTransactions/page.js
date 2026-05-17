@@ -57,6 +57,57 @@ export default function TransactionsPage() {
 function Transaction({ tx }) {
   const ts = tx.timestamp ? new Date(tx.timestamp) : null;
 
+  if (tx.type === "Trade") {
+    return (
+      <Paper elevation={2} sx={{ p: 2 }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+          <Typography variant="h6" fontWeight={600}>Trade</Typography>
+          <Typography variant="caption" color="text.secondary">
+            {ts && ts.toLocaleString()}
+          </Typography>
+        </Stack>
+
+        <Divider sx={{ mb: 1.5 }} />
+
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={2}
+          divider={<Divider orientation="vertical" flexItem />}
+        >
+          {(tx.sides || []).map((side, i) => (
+            <Box key={side.roster_id || i} sx={{ flex: 1 }}>
+              <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                <TeamAvatar avatarId={side.avatar} teamName={side.team_name} size={32} />
+                <Typography variant="subtitle2" fontWeight={600}>{side.team_name}</Typography>
+              </Stack>
+              <Typography variant="caption" color="text.secondary">Received</Typography>
+              <Stack direction="row" sx={{ flexWrap: 'wrap', mt: 0.5 }}>
+                {side.received.length > 0
+                  ? side.received.map((item, idx) => (
+                      <Chip
+                        key={idx}
+                        avatar={<Avatar>{playerInitials(item)}</Avatar>}
+                        label={item}
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                        sx={{ mr: 0.5, mt: 0.5 }}
+                      />
+                    ))
+                  : <Typography variant="caption" color="text.secondary">—</Typography>
+                }
+              </Stack>
+            </Box>
+          ))}
+        </Stack>
+
+        <Typography variant="caption" color="text.secondary" sx={{ mt: 1.5, display: 'block' }}>
+          Transaction ID: {tx.transactionId || '—'}
+        </Typography>
+      </Paper>
+    );
+  }
+
   return (
     <Paper elevation={2} sx={{ p: 2 }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -69,7 +120,6 @@ function Transaction({ tx }) {
             </Typography>
           </div>
         </Stack>
-
         <Typography variant="body2" color="text.secondary">
           {ts && ts.toLocaleDateString()}
         </Typography>
@@ -96,7 +146,6 @@ function Transaction({ tx }) {
               </Stack>
             </Box>
           )}
-
           {tx.drops && tx.drops.length > 0 && (
             <Box>
               <Typography variant="subtitle2" color="error.main">Drops</Typography>
@@ -115,7 +164,6 @@ function Transaction({ tx }) {
             </Box>
           )}
         </Stack>
-
         <Stack spacing={1} sx={{ alignItems: { xs: 'flex-start', md: 'flex-end' } }}>
           <Typography variant="caption" color="text.secondary">
             Transaction ID: {tx.transactionId || '—'}
