@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Box, Paper, Typography, Stack, Avatar, Divider, Chip } from '@mui/material';
 import TeamAvatar from '../components/general/TeamAvatar';
 import SectionHeader from "../components/general/SectionHeader.js";
-import "../globals.css";
 import { CURRENT_YEAR } from "../backend/config/seasons.js";
 
 
@@ -38,8 +37,7 @@ export default function TransactionsPage() {
   if (loading) return <Typography align="center">Loading Transactions...</Typography>;
   if (error) return <Typography align="center" color="error">Error: {error}</Typography>;
 
-  // sort most recent first
-  const sorted = [...transactions].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const sorted = transactions;
 
   return (
     <Box sx={{ p: 3, maxWidth: 1100, mx: 'auto' }}>

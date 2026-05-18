@@ -54,11 +54,11 @@ export async function processTransactions(year, week) {
         }
 
         if (tx.type == "waiver") {
-            return formatWaiver(tx, playerLookup, profiles);
+            return formatPickup(tx, playerLookup, profiles, "Waiver");
         }
 
         if (tx.type == "free_agent") {
-            return formatFreeAgent(tx, playerLookup, profiles);
+            return formatPickup(tx, playerLookup, profiles, "Free Agent");
         }
 
         const unknownProfile = profiles.get(tx.roster_ids?.[0]);
@@ -105,51 +105,23 @@ function formatTrade(tx, players, profiles) {
     };
 }
 
-function formatWaiver(tx, players, profiles) {
-    
-    const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
-        player: players[playerId]?.full_name || "Unknown player", 
-        toTeam: teamId
+function formatPickup(tx, players, profiles, type) {
+    const adds = Object.entries(tx.adds || {}).map(([playerId]) => ({
+        player: players[playerId]?.full_name || "Unknown player"
     }));
 
-    const drops = Object.entries(tx.drops || {}).map(([playerId, teamId]) => ({
-        player: players[playerId]?.full_name || "Unknown Player",
-        fromTeam: teamId
+    const drops = Object.entries(tx.drops || {}).map(([playerId]) => ({
+        player: players[playerId]?.full_name || "Unknown player"
     }));
-    
-    const waiverProfile = profiles.get(tx.roster_ids?.[0]);
+
+    const profile = profiles.get(tx.roster_ids?.[0]);
     return {
-        type: "Waiver",
+        type,
         transactionId: tx.transaction_id,
         timestamp: tx.created,
         team: tx.roster_ids?.[0] || null,
-        team_name: waiverProfile?.teamName ?? "No team found",
-        avatar: waiverProfile?.avatar ?? null,
-        adds,
-        drops
-    };
-}
-
-function formatFreeAgent(tx, players, profiles ) {
-    
-    const adds = Object.entries(tx.adds || {}).map(([playerId, teamId]) => ({
-        player: players[playerId]?.full_name || "Unknown player", 
-        toTeam: teamId
-    }));
-
-    const drops = Object.entries(tx.drops || {}).map(([playerId, teamId]) => ({
-        player: players[playerId]?.full_name || "Unknown Player",
-        fromTeam: teamId
-    }));
-    
-    const faProfile = profiles.get(tx.roster_ids?.[0]);
-    return {
-        type: "Free Agent",
-        transactionId: tx.transaction_id,
-        timestamp: tx.created,
-        team: tx.roster_ids?.[0] || null,
-        team_name: faProfile?.teamName ?? "No team found",
-        avatar: faProfile?.avatar ?? null,
+        team_name: profile?.teamName ?? "No team found",
+        avatar: profile?.avatar ?? null,
         adds,
         drops
     };
