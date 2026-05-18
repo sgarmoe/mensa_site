@@ -4,7 +4,7 @@ import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { SEASONS } from "../config/seasons.js";
 
 
-export async function processTransactions(year, week) {
+export async function processTransactions(year, week, limit = null) {
 
     if (!SEASONS[year]) { //guard for invalid year input
         throw new Error(`No year detected for ${year}`);
@@ -74,7 +74,7 @@ export async function processTransactions(year, week) {
         };
     });
     processedData.sort((a, b) => b.timestamp - a.timestamp);
-    return processedData;
+    return limit ? processedData.slice(0, limit) : processedData;
 }
 
 function formatTrade(tx, players, profiles) {
