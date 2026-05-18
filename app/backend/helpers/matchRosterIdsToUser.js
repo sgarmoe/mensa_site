@@ -1,7 +1,13 @@
 import { fetchUserTeamNames, fetchCurrentRosters } from "../lib/fetchSleeperData.js";
 
-export async function matchRosterIdsToUser(leagueId) {
+const profilesCache = new Map(); // leagueId → { data: Map, expiresAt: number }
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
+export async function matchRosterIdsToUser(leagueId) {
+    const cached = profilesCache.get(leagueId);
+    if (cached && Date.now() < cached.expiresAt) {
+        return cached.data;
+    }
 
     const [usersArray, rostersArray] = await Promise.all([
         fetchUserTeamNames(leagueId),
@@ -34,5 +40,6 @@ export async function matchRosterIdsToUser(leagueId) {
             });
         }
     });
+    profilesCache.set(leagueId, { data: rosterToTeamMap, expiresAt: Date.now() + CACHE_TTL });
     return rosterToTeamMap;
 }
