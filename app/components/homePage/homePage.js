@@ -14,7 +14,7 @@ export default function HomePage() {
     useEffect(() => {
         async function fetchTransactions() {
             try {
-                const res = await fetch(`/api/populateRecentTransactions?year=${CURRENT_YEAR}&limit=5`);
+                const res = await fetch(`/api/populateRecentTransactions?year=${CURRENT_YEAR}`);
                 if (!res.ok) throw new Error("Failed to populate transactions");
 
                 const data = await res.json();
