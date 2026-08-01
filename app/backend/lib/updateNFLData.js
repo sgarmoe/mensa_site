@@ -3,6 +3,10 @@ import { connectToDatabase, client } from '../config/mongoClient.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
+
+//should use cached db instead of new connection
+//may need better error handling/validation?
+
 async function run() {
   try {
     const db = await connectToDatabase();

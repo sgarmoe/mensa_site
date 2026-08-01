@@ -7,6 +7,8 @@ export async function fetchAndStoreNFLData(db) {
         const response = await axios.get('https://api.sleeper.app/v1/players/nfl');
         const playerData = response.data;
 
+
+        //removeable? unsure if actually used or needed for data validation before over write
       if (typeof playerData === 'object' && playerData !== null) {
         const playersArray = Object.keys(playerData).map(playerId => ({
           _id: playerId,

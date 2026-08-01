@@ -16,6 +16,11 @@ export const client = new MongoClient(uri, {
 
 let cachedDb = null;
 
+
+//return to cache - unsure if works as is 
+//would want any MDB connection to be cached and reused 
+//try to validate cache before expanding 
+
 export async function connectToDatabase(dbName = 'nfl_data') {
     if (cachedDb) return cachedDb;
 
