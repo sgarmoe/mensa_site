@@ -5,6 +5,10 @@ import SectionHeader from "../components/general/SectionHeader.js";
 
 export const revalidate = 3600;
 
+
+//FIX DIRECT CALL TO BACKEND HELPER FN
+//jfc how did this make it in I am not good at this yet 
+
 export default async function LeagueHistoryPage() {
     const history = await calculateAllTimeStatistics();
     const sorted = [...history].sort((a, b) => {

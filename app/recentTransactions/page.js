@@ -5,6 +5,10 @@ import TeamAvatar from '../components/general/TeamAvatar';
 import SectionHeader from "../components/general/SectionHeader.js";
 import { CURRENT_YEAR } from "../backend/config/seasons.js";
 
+//seems like direct call to backend for CURRENT_YEAR is not correct
+//look for way to have current season wihtout that call
+
+
 
 function playerInitials(name) {
   if (!name) return '';
