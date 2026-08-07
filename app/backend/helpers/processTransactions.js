@@ -14,6 +14,9 @@ export async function processTransactions(year, week) {
     const profiles = await matchRosterIdsToUser(leagueId);
     const allWeeks = week ? [week] : Array.from({ length: regularWeeks }, (_, i) => i + 1);
 
+
+    //is Promise.all structure ideal? unsure 
+
     const weekResults = await Promise.all(
         allWeeks.map(async (w) => {
             try {
@@ -28,7 +31,7 @@ export async function processTransactions(year, week) {
 
     const rawData = weekResults.flat();
 
-    const playerIds = [];
+    const playerIds = []; //is populated by raw data iterated to find player IDs involved in adds or drops 
 
     rawData.forEach(tx => {
         if (tx.adds) {
@@ -39,12 +42,14 @@ export async function processTransactions(year, week) {
         }
     });
 
-    const uniqueIds = [...new Set(playerIds)];
+    const uniqueIds = [...new Set(playerIds)]; //duplicate of player IDs
 
-    const players = await getPlayersByArray(uniqueIds);
+    const players = await getPlayersByArray(uniqueIds); //used to get full info of players from IDs
 
+
+    //unsure if needed? seem to have access to IDs without a new playerLookup
     const playerLookup = {};
-    players.forEach(p => {
+    players.forEach(p => {      //looks up each player found in players     
         playerLookup[p.player_id] = p;
     });
 
@@ -61,6 +66,7 @@ export async function processTransactions(year, week) {
             return formatPickup(tx, playerLookup, profiles, "Free Agent");
         }
 
+        //does this do anything? perhaps a null return to prevent crashing when no TXs
         const unknownProfile = profiles.get(tx.roster_ids?.[0]);
         return {
             type: tx.type,
