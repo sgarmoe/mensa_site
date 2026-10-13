@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:neon": "node scripts/testNeonConnection.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -23,6 +24,7 @@
     "mongodb": "^6.18.0",
     "mongoose": "^8.6.2",
     "next": "^16.1.6",
+    "pg": "^8.23.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
