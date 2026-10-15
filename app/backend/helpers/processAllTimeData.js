@@ -3,9 +3,7 @@ import { SEASONS } from "../config/seasons.js";
 import { processWeeklyMatchupData } from './processWeeklyMatchupData.js';
 
 export async function calculateAllTimeStatistics() {
-    
-    //SORTS DATA INTO SEASONS --->> POOR CHOICE FOR ITERATING
-    //NEED MORE DISCRETE STRUCTURE. FILTER BY GAME & YEAR INSTEAD (ex: )
+
     const seasons = Object.entries(SEASONS)
         .map(([year, season]) => ({
             year: Number(year),
@@ -14,11 +12,12 @@ export async function calculateAllTimeStatistics() {
         .filter(season => Boolean(season.leagueId))
         .sort((a, b) => a.year - b.year);
     
+        //szn results 
     const seasonResults = await Promise.allSettled(
-        seasons.map(({ year }) => processWeeklyMatchupData(year))
+        seasons.map(({ year }) => processWeeklyMatchupData(year)) //all matchup data for each past season
     );
 
-    const allSeasonData = seasonResults
+    const allSeasonData = seasonResults //unsure if needed? checks season after processing already occurred
         .filter((r, i) => {
             if (r.status === 'rejected') {
                 console.warn(`Season ${seasons[i].year} failed to load:`, r.reason);
@@ -30,8 +29,8 @@ export async function calculateAllTimeStatistics() {
 
     const allTimeTeams = new Map();
 
-    for (const seasonData of allSeasonData) {
-        for (const team of seasonData) {
+    for (const seasonData of allSeasonData) { //one season at a time
+        for (const team of seasonData) {    //one team within one season 
             const { roster_id, team_name, avatar, wins, losses, pf, pa } = team;
 
             if (!allTimeTeams.has(roster_id)) {
@@ -46,6 +45,7 @@ export async function calculateAllTimeStatistics() {
                 });
             }
 
+            //adds total per season to record each iteration
         const record = allTimeTeams.get(roster_id);
 
         record.wins += (wins || 0);
