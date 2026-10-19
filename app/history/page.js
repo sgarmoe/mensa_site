@@ -27,7 +27,7 @@ export default async function LeagueHistoryPage() {
 
             <Grid container spacing={2} alignItems="stretch">
                 {sorted.map((team, i) => (
-                    <Grid item xs={12} md={6} key={team.roster_id || i} sx={{ display: 'flex', alignItems: 'stretch' }}>
+                    <Grid key={team.roster_id || i} sx={{ display: 'flex', alignItems: 'stretch' }}>
                         <TeamHistoryCard team={team} />
                     </Grid>
                 ))}
