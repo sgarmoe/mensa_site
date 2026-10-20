@@ -42,10 +42,8 @@ export async function processWeeklyMatchupData(year) {
         if (!Array.isArray(matchups) || matchups.length === 0) {
             continue;
         }
-        
-        const matchupMap = new Map();
     
-
+        const matchupMap = new Map();
         for (const entry of matchups) {
             const matchupId = entry.matchup_id;
             if (matchupId == null) continue;
@@ -56,8 +54,8 @@ export async function processWeeklyMatchupData(year) {
             matchupMap.get(matchupId).push(entry);
         }
 
-
         //need to clarify below section - unsure which portions make it into final teamHistory array
+        //how does teamARecord (and B) make it into history?
     for (const [matchup_id, teams] of matchupMap.entries()) {
         if (teams.length !== 2) continue; 
 
@@ -97,7 +95,7 @@ export async function processWeeklyMatchupData(year) {
             resultA = 'tie';
             resultB = 'tie';
         }
-
+        
          teamARecord.games.push({
             year, 
             week: currentWeek, 
@@ -109,7 +107,6 @@ export async function processWeeklyMatchupData(year) {
             result: resultA
         });
 
-
         teamBRecord.games.push({
             year, 
             week: currentWeek, 
@@ -120,29 +117,11 @@ export async function processWeeklyMatchupData(year) {
             pa: teamAPoints,
             result: resultB
         });
-
         }
     }
 
     if (teamHistory.size === 0) {
         return [];
     }
-
-    //4 calls to processWeeklyMatchupData x 12 teams = 48 entries
-    //console.log("printing all team history values", teamHistory.size); //48 values 
-    const histories = Array.from(teamHistory.values());
- 
-    //each outer loop goes to week #i and prints all games for that week
-    //each history.games[i] is all 12 games data for a single season week (ex 2026 wk 3)
-
-    for (let i = 0; i < 2; i++) {
-        //console.log("Entered loop #", i);
-        for (const history of histories) {
-            //console.log("History values test", history.team_name, history.games[i]);
-        }
-    }
-    //returns array of objects containing roster id, team name etc, along with another 
-    //array of all game data from one team for a season
-    //will update weekly to add games
     return Array.from(teamHistory.values());
 }
