@@ -84,22 +84,23 @@ export async function processWeeklyMatchupData(year) {
         if (teamAPoints > teamBPoints) {
             teamARecord.wins++;
             teamBRecord.losses++;
-            resultA = 'win';
-            resultB = 'loss';
+            resultA = 'W';
+            resultB = 'L';
         } else if (teamBPoints > teamAPoints) {
             teamARecord.losses++;
             teamBRecord.wins++;
-            resultA = 'loss';
-            resultB = 'win';
-        } else {
-            resultA = 'tie';
-            resultB = 'tie';
+            resultA = 'L';
+            resultB = 'W';
+       } else {
+            resultA = 'T';
+            resultB = 'T';
         }
         
          teamARecord.games.push({
             year, 
             week: currentWeek, 
             matchup_id, 
+            roster_id: teamA.roster_id,
             opponent_roster_id: teamB.roster_id, 
             opponent_name: teamBName,
             pf: teamAPoints,
@@ -111,6 +112,7 @@ export async function processWeeklyMatchupData(year) {
             year, 
             week: currentWeek, 
             matchup_id, 
+            roster_id: teamB.roster_id,
             opponent_roster_id: teamA.roster_id, 
             opponent_name: teamAName,
             pf: teamBPoints,
