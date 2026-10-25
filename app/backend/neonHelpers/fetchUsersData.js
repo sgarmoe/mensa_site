@@ -1,21 +1,37 @@
-import { fetchUserTeamNames } from "../lib/fetchSleeperData.js";
-import { SEASONS } from "../config/seasons.js";
+import { fetchCurrentRosters, fetchUserTeamNames } from "../lib/fetchSleeperData.js";
 
-//used to fetch user data from sleeper & structure for storage in neon
+export async function processUserDataForNeon(leagueId) {
+    if (!leagueId) {
+        throw new Error("A league ID is required to fetch user and roster data");
+    }
 
-//will also need helper(?) file to prompt all Neon helper functions to 
-//conduct the data processing for each season
+    const [users, rosters] = await Promise.all([
+        fetchUserTeamNames(leagueId),
+        fetchCurrentRosters(leagueId)
+    ]);
 
-//may want a quick test script to throw in a season while writing 
-//for sake of checks on data correctness
+    if (!Array.isArray(users) || !Array.isArray(rosters)) {
+        throw new Error("Invalid users or rosters response from Sleeper");
+    }
 
-const leagueId = SEASONS[year];
+    const userDataMap = new Map();
 
-async function processUserDataForNeon() {
+    for (const { user_id, username } of users) {
+        if (user_id == null) continue;
 
-    const userData = await fetchUserTeamNames(year);
-    console.log(userData);
+        userDataMap.set(user_id, {
+            userId: user_id,
+            username: username,
+            rosterId: null
+        });
+    }
 
-    //loop to deconstruct json objects and assign to each user
+    for (const { owner_id, roster_id } of rosters) {
+        const user = userDataMap.get(owner_id);
+        if (user && roster_id != null) {
+            user.rosterId = roster_id;
+        }
+    }
 
+    return userDataMap;
 }
