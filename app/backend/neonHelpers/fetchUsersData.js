@@ -15,16 +15,13 @@ export async function processUserDataForNeon(leagueId) {
     }
 
     const userDataMap = new Map();
-
-    for (const { user_id, username } of users) {
-        if (user_id == null) continue;
-
+    users.forEach(({ user_id, display_name, metadata }) => {
         userDataMap.set(user_id, {
-            userId: user_id,
-            username: username,
-            rosterId: null
+            userId: user_id, 
+            displayName: display_name, 
+            teamName: metadata?.team_name
         });
-    }
+    });
 
     for (const { owner_id, roster_id } of rosters) {
         const user = userDataMap.get(owner_id);
@@ -32,6 +29,5 @@ export async function processUserDataForNeon(leagueId) {
             user.rosterId = roster_id;
         }
     }
-
     return userDataMap;
 }
