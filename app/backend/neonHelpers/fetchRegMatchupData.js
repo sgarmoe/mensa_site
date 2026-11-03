@@ -6,13 +6,14 @@ export async function processMatchupDataForNeon(year) {
         throw new Error("A league ID is required to fetch matchup data");
     }
 
+    console.log("in processMatchupDataforNeon ", year);
     const matchups = await processWeeklyMatchupData(year);
 
     if (!Array.isArray(matchups)) {
         throw new Error("Invalid matchup data response");
     }
 
-    const matchupMap = new Map(); 
+    return matchups;
 }
 
 

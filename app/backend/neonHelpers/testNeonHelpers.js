@@ -6,12 +6,13 @@ import { SEASONS } from "../config/seasons.js";
 const { leagueId } = SEASONS[2026];
 
 async function testNeonProcessing(leagueId) {
-    //const usersById = await processUserDataForNeon(leagueId);
-    //const users = Array.from(usersById.values());
-    //console.log("User data for 2026", users);
+    // const usersById = await processUserDataForNeon(leagueId);
+    // const users = Array.from(usersById.values());
+    // console.log("User data for 2026", users);
 
+    console.log("starting matchup raw data fetch");
     const matchupRawData = await processMatchupDataForNeon(2026);
-    console.log("raw matchup data: ", matchupRawData);
+    //console.log("raw matchup data: ", matchupRawData);
 
 }
 
