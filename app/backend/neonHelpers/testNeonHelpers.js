@@ -12,7 +12,7 @@ async function testNeonProcessing(leagueId) {
 
     console.log("starting matchup raw data fetch");
     const matchupRawData = await processMatchupDataForNeon(2026);
-    //console.log("raw matchup data: ", matchupRawData);
+    console.log("raw matchup data: ", matchupRawData[1]);
 
 }
 
