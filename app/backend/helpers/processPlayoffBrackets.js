@@ -1,4 +1,4 @@
-import { fetchWinnerPlayoffBracket, fetchLoserPlayoffBracket, fetchUserTeamNames } from "../lib/fetchSleeperData.js";
+import { fetchWinnerPlayoffBracket, fetchLoserPlayoffBracket } from "../lib/fetchSleeperData.js";
 import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { SEASONS } from "../config/seasons.js";
 
@@ -6,9 +6,9 @@ export async function processPlayoffBrackets(year) {
 
     const leagueId = SEASONS[year].leagueId;
     if (!leagueId) throw new Error(`No year detected for ${year}`);
-    const rosterMap = await matchRosterIdsToUser(leagueId);
 
     try {
+        const rosterMap = await matchRosterIdsToUser(leagueId);
         const wBracket = await fetchWinnerPlayoffBracket(leagueId);
         const lBracket = await fetchLoserPlayoffBracket(leagueId);
         
@@ -20,7 +20,7 @@ export async function processPlayoffBrackets(year) {
 
         const champions = getLeagueWinners(processedWBracket, processedLBracket, rosterMap);
 
-        console.log(champions);
+        //console.log(champions);
 
         return {
             processedLBracket, 
@@ -29,17 +29,11 @@ export async function processPlayoffBrackets(year) {
         }
 
     } catch (err) {
-        console.warn("Error: ", err);
-        return { 
-            processedWBracket: [], 
-            processedLBracket: [],
-            champions: {
-                champion: null,
-                toiletChamp: null
-            }
+        throw new Error(`failed to fetch or process playoff brackets for ${year}`, {
+            cause: err
+            });
         };
     }
-}
 
 function matchPlayoffResultsToUser(bracket, rosterMap) {
 
@@ -96,4 +90,3 @@ function getLeagueWinners(processedWBracket, processedLBracket, rosterMap) {
         toiletChamp: getTeam(toiletChampionship?.winner) || "toilet champ not found"
     };
 }
-

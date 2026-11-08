@@ -8,7 +8,6 @@ export async function processMatchupDataForNeon(year) {
 
     console.log("in processMatchupDataforNeon ", year);
     const matchups = await processWeeklyMatchupData(year);
-    //console.log(matchups[1]);
 
     if (!Array.isArray(matchups)) {
         throw new Error("Invalid matchup data response");
@@ -30,16 +29,4 @@ export async function processMatchupDataForNeon(year) {
             matchupId: game.matchup_id
         }));
     });
-
-    console.log("testing matchup map: ", matchupDataMap);
-
-    return matchups;
 }
-
-
-
-
-
-
-
-
