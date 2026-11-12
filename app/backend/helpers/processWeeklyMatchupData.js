@@ -2,15 +2,34 @@ import { fetchAllMatchups } from "../lib/fetchSleeperData.js";
 import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { SEASONS } from "../config/seasons.js";
 
+    const { leagueId, regularWeeks, playoffWeeks } = SEASONS[year];
+
+//reg szn fn: use current fomratting 
+//playoff fn: limits to only the three weeks of playoff
+
+//helper fn: calculate all matchup data based on the year passed, 
+// limited to the weeks specified 
+
+
+export async function processRegSznWeeklyMatchups(year) {
+    const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
+
+
+
+}
+
+
+export async function processPlayoffWeeklyMatchups(year) {
+    const playoffWeeks = SEASONS[year];
+
+
+}
+
+
+
+
 export async function processWeeklyMatchupData(year) {
 
-    const { leagueId, regularWeeks } = SEASONS[year];
-    console.log("in processWeeklyMatchupData");
-    console.log("year: ", year);
-    console.log("league id ", leagueId);
-    console.log("regular weeks ", regularWeeks);
-
-    const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
     const teamHistory = new Map();
     const profiles = await matchRosterIdsToUser(leagueId);  
 
@@ -35,7 +54,6 @@ export async function processWeeklyMatchupData(year) {
         allWeeks.map(async (week) => {
             try {
                 const matchups = await fetchAllMatchups(leagueId, week);
-                //console.log("matchups for week ${week}", matchups[0]);
                 return { week, matchups };
             } catch (err) {
                 console.warn(`No matchups available for ${year} week ${week}`);

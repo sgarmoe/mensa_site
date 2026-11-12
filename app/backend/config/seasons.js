@@ -3,18 +3,22 @@ export const CURRENT_YEAR = 2026;
 export const SEASONS = {
     2023: {
         leagueId: process.env.LEAGUE_ID_2023,
-        regularWeeks: 13
+        regularWeeks: 13,
+        playoffWeeks: [14, 15, 16]
     },
     2024: { 
         leagueId: process.env.LEAGUE_ID_2024,
-        regularWeeks: 14
+        regularWeeks: 14,
+        playoffWeeks: [15, 16, 17]
     }, 
     2025: { 
         leagueId: process.env.LEAGUE_ID_2025,
-        regularWeeks: 14
+        regularWeeks: 14,
+        playoffWeeks: [15, 16, 17]
     },
     2026: {
         leagueId: process.env.LEAGUE_ID_2026,
-        regularWeeks: 14
+        regularWeeks: 14,
+        playoffWeeks: [15, 16, 17]
     }
 };

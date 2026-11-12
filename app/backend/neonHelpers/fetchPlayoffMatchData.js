@@ -76,3 +76,8 @@ function validateChampions(champions) {
         }
     }
 }
+
+function fetchScoresOfPlayoffMatchups() {
+
+    
+}
