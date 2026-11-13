@@ -2,33 +2,31 @@ import { fetchAllMatchups } from "../lib/fetchSleeperData.js";
 import { matchRosterIdsToUser } from "./matchRosterIdsToUser.js";
 import { SEASONS } from "../config/seasons.js";
 
-    const { leagueId, regularWeeks, playoffWeeks } = SEASONS[year];
-
-//reg szn fn: use current fomratting 
-//playoff fn: limits to only the three weeks of playoff
-
-//helper fn: calculate all matchup data based on the year passed, 
-// limited to the weeks specified 
+function getSeasonConfig(year) {
+    const season = SEASONS[year];
+    if (!season) throw new Error(`Season not found: ${year}`);
+    return season;
+}
 
 
 export async function processRegSznWeeklyMatchups(year) {
-    const allWeeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
-
-
-
+    const { regularWeeks } = getSeasonConfig(year);
+    const weeks = Array.from({ length: regularWeeks }, (_, i) => i + 1);
+    return processWeeklyMatchupData(year, weeks);
 }
-
 
 export async function processPlayoffWeeklyMatchups(year) {
-    const playoffWeeks = SEASONS[year];
-
-
+    const { playoffWeeks } = getSeasonConfig(year);
+    return processWeeklyMatchupData(year, playoffWeeks);
 }
 
-
-
-
-export async function processWeeklyMatchupData(year) {
+export async function processWeeklyMatchupData(year, weeks) {
+    const season = getSeasonConfig(year);
+    const { leagueId, regularWeeks } = season;
+    const weeksToProcess = weeks ?? Array.from({ length: regularWeeks }, (_, i) => i + 1);
+    if (!Array.isArray(weeksToProcess)) {
+        throw new TypeError("Weeks to process must be an array");
+    }
 
     const teamHistory = new Map();
     const profiles = await matchRosterIdsToUser(leagueId);  
@@ -51,7 +49,7 @@ export async function processWeeklyMatchupData(year) {
     }
     
     const weekResults = await Promise.all(
-        allWeeks.map(async (week) => {
+        weeksToProcess.map(async (week) => {
             try {
                 const matchups = await fetchAllMatchups(leagueId, week);
                 return { week, matchups };

@@ -1,4 +1,5 @@
 import { processPlayoffBrackets } from "../helpers/processPlayoffBrackets.js";
+import { processPlayoffWeeklyMatchups } from "../helpers/processWeeklyMatchupData.js";
 
 export async function processPlayoffBracketForNeon(year) {
     if (!Number.isInteger(Number(year)) || !year) {
@@ -6,7 +7,12 @@ export async function processPlayoffBracketForNeon(year) {
     }
 
     console.log("In processPlayoffDataForNeon ", year);
+
+    //returns playoff bracket and podium dataa
     const playoffBracket = await processPlayoffBrackets(year);
+
+    //returns scores and other playoff match data
+    const playoffBracketScores = await processPlayoffWeeklyMatchups(year);
 
     if (!isRecord(playoffBracket)) {
         throw new Error("Invalid playoff data response: expected an object");
@@ -16,8 +22,26 @@ export async function processPlayoffBracketForNeon(year) {
     validateRoundMap(playoffBracket.processedLBracket, "processedLBracket");
     validateChampions(playoffBracket.champions);
 
-    return playoffBracket;
+    //need to combine data needed for Neon from the two playoff result objects
+
+    combinePlayoffDataForNeon(playoffBracket, playoffBracketScores);
+
+    return playoffBracket, playoffBracketScores;
 }
+
+function combinePlayoffDataForNeon(playoffBracket, playoffBracketScores) {
+    const playoffBracketMap = new Map();
+    // playoffBracket.forEach(({ matchId, team1, team2, isBye, winner, loser, rank }) => {
+    //     playoffBracketMap.set()
+    // });
+
+    const playoffBracketScoresMap = new Map();
+
+    console.log("logging playoff bracket WITHOUT SCORES", playoffBracket);
+    console.log("logging bracket WITH SCORES: ", playoffBracketScores);
+
+}
+
 
 function isRecord(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value);
