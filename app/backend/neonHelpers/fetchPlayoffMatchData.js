@@ -2,17 +2,15 @@ import { processPlayoffBrackets } from "../helpers/processPlayoffBrackets.js";
 import { processPlayoffWeeklyMatchups } from "../helpers/processWeeklyMatchupData.js";
 
 export async function processPlayoffBracketForNeon(year) {
-    if (!Number.isInteger(Number(year)) || !year) {
+    const leagueYear = Number(year);
+    if (!Number.isInteger(leagueYear) || leagueYear < 1) {
         throw new Error("A valid league year is needed to fetch playoff data");
     }
 
-    console.log("In processPlayoffDataForNeon ", year);
-
-    //returns playoff bracket and podium dataa
-    const playoffBracket = await processPlayoffBrackets(year);
-
-    //returns scores and other playoff match data
-    const playoffBracketScores = await processPlayoffWeeklyMatchups(year);
+    const [playoffBracket, playoffBracketScores] = await Promise.all([
+        processPlayoffBrackets(year),
+        processPlayoffWeeklyMatchups(year)
+    ]);
 
     if (!isRecord(playoffBracket)) {
         throw new Error("Invalid playoff data response: expected an object");
@@ -22,24 +20,86 @@ export async function processPlayoffBracketForNeon(year) {
     validateRoundMap(playoffBracket.processedLBracket, "processedLBracket");
     validateChampions(playoffBracket.champions);
 
-    //need to combine data needed for Neon from the two playoff result objects
+    const rows = combinePlayoffDataForNeon(
+        playoffBracket,
+        playoffBracketScores,
+        leagueYear
+    );
 
-    combinePlayoffDataForNeon(playoffBracket, playoffBracketScores);
-
-    return playoffBracket, playoffBracketScores;
+    return { playoffBracket, playoffBracketScores, rows };
 }
 
-function combinePlayoffDataForNeon(playoffBracket, playoffBracketScores) {
-    const playoffBracketMap = new Map();
-    // playoffBracket.forEach(({ matchId, team1, team2, isBye, winner, loser, rank }) => {
-    //     playoffBracketMap.set()
-    // });
+function combinePlayoffDataForNeon(playoffBracket, playoffBracketScores, year) {
+    if (!Array.isArray(playoffBracketScores)) {
+        throw new Error("Invalid playoff scores response: expected an array");
+    }
 
-    const playoffBracketScoresMap = new Map();
+    const pairKey = (rosterId, opponentRosterId) =>
+        JSON.stringify([String(rosterId), String(opponentRosterId)]);
+    const gamesByPair = new Map();
 
-    console.log("logging playoff bracket WITHOUT SCORES", playoffBracket);
-    console.log("logging bracket WITH SCORES: ", playoffBracketScores);
+    for (const team of playoffBracketScores) {
+        if (!isRecord(team) || !Array.isArray(team.games)) {
+            throw new Error("Invalid playoff scores response: each team must contain a games array");
+        }
 
+        for (const game of team.games) {
+            if (
+                !isRecord(game) ||
+                game.roster_id == null ||
+                game.opponent_roster_id == null ||
+                !Number.isFinite(game.pf)
+            ) {
+                throw new Error("Invalid playoff scores response: each game must contain roster IDs and a numeric score");
+            }
+
+            const key = pairKey(game.roster_id, game.opponent_roster_id);
+            if (gamesByPair.has(key)) {
+                throw new Error(
+                    `Invalid playoff scores response: multiple games found for roster pair ${key}`
+                );
+            }
+            gamesByPair.set(key, game);
+        }
+    }
+
+    const rows = [];
+    const brackets = [
+        ["winner", playoffBracket.processedWBracket],
+        ["loser", playoffBracket.processedLBracket]
+    ];
+
+    for (const [bracketType, rounds] of brackets) {
+        for (const [round, matches] of Object.entries(rounds)) {
+            for (const match of matches) {
+                const team1RosterId = match.team1.roster_id;
+                const team2RosterId = match.team2.roster_id;
+                const team1Game = team2RosterId == null
+                    ? undefined
+                    : gamesByPair.get(pairKey(team1RosterId, team2RosterId));
+                const team2Game = team1RosterId == null
+                    ? undefined
+                    : gamesByPair.get(pairKey(team2RosterId, team1RosterId));
+
+                rows.push({
+                    year,
+                    bracket_type: bracketType,
+                    round: Number(round),
+                    match_id: match.matchId,
+                    team1: match.team1,
+                    team2: match.team2,
+                    team1_score: team1Game?.pf ?? match.team1Score ?? null,
+                    team2_score: team2Game?.pf ?? match.team2Score ?? null,
+                    winner: match.winner,
+                    loser: match.loser,
+                    rank: match.rank,
+                    is_bye: match.isBye
+                });
+            }
+        }
+    }
+
+    return rows;
 }
 
 
@@ -99,9 +159,4 @@ function validateChampions(champions) {
             );
         }
     }
-}
-
-function fetchScoresOfPlayoffMatchups() {
-
-    
 }

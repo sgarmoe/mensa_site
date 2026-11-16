@@ -22,8 +22,7 @@ async function testNeonProcessing(leagueId) {
     //TESTING PLAYOFF DATA PROCESSING
     console.log("starting playoff data processing");
     const playoffData = await processPlayoffBracketForNeon(year);
-    //console.log(`Playoff data ${year}`, playoffData.processedWBracket);
-    //console.log(playoffData.processedLBracket);
+    console.log(playoffData);
 }
 
 const year = 2025;
