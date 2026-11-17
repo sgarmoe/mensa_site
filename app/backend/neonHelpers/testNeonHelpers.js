@@ -6,7 +6,7 @@ import { processPlayoffBracketForNeon } from "./fetchPlayoffMatchData.js";
 
 const { leagueId } = SEASONS[2025];
 
-async function testNeonProcessing(leagueId) {
+async function testNeonProcessing(year) {
 
     //TESTING USER PROCESSING
     // const usersById = await processUserDataForNeon(leagueId);
@@ -22,7 +22,9 @@ async function testNeonProcessing(leagueId) {
     //TESTING PLAYOFF DATA PROCESSING
     console.log("starting playoff data processing");
     const playoffData = await processPlayoffBracketForNeon(year);
-    console.log(playoffData);
+    //only need ROWS for neon processing info
+    console.log(playoffData.rows);
+
 }
 
 const year = 2025;

@@ -86,14 +86,21 @@ function combinePlayoffDataForNeon(playoffBracket, playoffBracketScores, year) {
                     bracket_type: bracketType,
                     round: Number(round),
                     match_id: match.matchId,
-                    team1: match.team1,
-                    team2: match.team2,
+                    team1_roster_id: team1RosterId ?? null,
+                    team1_name: match.team1.teamName,
                     team1_score: team1Game?.pf ?? match.team1Score ?? null,
+                    team2_roster_id: team2RosterId ?? null,
+                    team2_name: match.team2.teamName,
                     team2_score: team2Game?.pf ?? match.team2Score ?? null,
                     winner: match.winner,
                     loser: match.loser,
                     rank: match.rank,
-                    is_bye: match.isBye
+                    is_bye: match.isBye,
+                    source_data: {
+                        bracket_match: match,
+                        team1_game: team1Game ?? null,
+                        team2_game: team2Game ?? null
+                    }
                 });
             }
         }
