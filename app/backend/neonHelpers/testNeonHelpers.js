@@ -20,10 +20,10 @@ async function testNeonProcessing(year) {
 
 
     //TESTING PLAYOFF DATA PROCESSING
-    console.log("starting playoff data processing");
-    const playoffData = await processPlayoffBracketForNeon(year);
-    //only need ROWS for neon processing info
-    console.log(playoffData.rows);
+    // console.log("starting playoff data processing");
+    // const playoffData = await processPlayoffBracketForNeon(year);
+    // //only need ROWS for neon processing info
+    // console.log(playoffData.rows);
 
 }
 
